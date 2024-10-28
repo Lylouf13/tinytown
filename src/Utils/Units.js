@@ -5,7 +5,6 @@ class Unit{
         this.strength = strength
     }
 }
-
 class Melee extends Unit{
     constructor(name, strength){
         super(name, strength)
@@ -28,7 +27,6 @@ export class Berserk extends Melee{
         this.pillager = true
     }
 }
-
 //#endregion
 
 //#region Ranged Units
