@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react'
-import { Bower, Berserk } from './Units'
+import { Bower, Berserk } from './Units.ts'
+import { enemyForces, generateForces } from './EnemyCamp.js'
 
 export const GameContext = createContext()
 
@@ -23,7 +24,8 @@ export function GameProvider({ children }){
         setHumans,
         units,
         setUnits,
-
+        enemyForces,
+        generateForces
     }
 
     return(

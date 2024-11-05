@@ -1,8 +1,8 @@
 
 import './App.css';
-import Town from './Components/Town';
-import FightPreview from './Components/FightPreview/FightPreview';
-import { GameProvider } from './Utils/GameContext';
+import Town from './components/Town.tsx';
+import FightPreview from './features/FightPreview/FightPreview.tsx';
+import { GameProvider } from './utils/GameContext';
 
 function App() {
 
