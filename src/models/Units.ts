@@ -13,7 +13,6 @@ export class Berserk extends Unit{
 }
 export class Bower extends Unit{
     constructor() {
-
         super({ 
             name: "Bower", 
             strength: 2, 
