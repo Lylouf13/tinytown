@@ -1,0 +1,29 @@
+.academy{
+    background-color: #1b1f21;
+    color: #f7eed6;
+    border: 2px solid #f7eed6;
+    border-radius: 20px;
+    padding: 30px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    /* remove margin after implementing flex */
+    margin: 30px 20px;
+    transition : 0.5s;
+
+    &__title{
+        margin: 0;
+        padding: 0;
+        font-size: 25px;
+    }
+
+    &__text{
+        &-red{
+            color: red;
+            display: inline;
+            padding-left: 2px;
+            font-size: 20px;
+        }
+    }
+}

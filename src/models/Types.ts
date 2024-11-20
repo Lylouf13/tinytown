@@ -1,4 +1,4 @@
-type PassiveType = ('pillager' | 'salva' | 'diviner' | null)[]
+type PassiveType = ('pillager' | 'salva' | 'diviner')[]
 
 interface UnitProps{
     name:string
@@ -8,12 +8,18 @@ interface UnitProps{
     passives: PassiveType
 }
 
+export interface UnitCount {
+    unit: Unit;
+    count: number;
+}
+
 export class Unit implements UnitProps{
     name: string;
     strength: number;
     cost: number;
     ranged: boolean;
     passives : PassiveType
+
     constructor({name, strength, cost, ranged, passives}:UnitProps){
         this.name = name
         this.strength = strength
@@ -21,12 +27,14 @@ export class Unit implements UnitProps{
         this.ranged = ranged
         this.passives = passives
     }
+
     // Method to add a passive to the unit
     addPassive(newPassive: PassiveType[number]){
         if(!this.passives.includes(newPassive)){
             this.passives.push(newPassive)
         }
     }
+    
     // Method to get unit Datas
     getInfos(){
         return {

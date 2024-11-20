@@ -1,5 +1,5 @@
 import {Unit} from './Types.ts'
-
+  
 export class Berserk extends Unit{
     constructor() {
         super({ 
@@ -18,7 +18,27 @@ export class Bower extends Unit{
             strength: 2, 
             cost: 2 , 
             ranged: true, 
-            passives: ['salva', 'diviner']
+            passives: ['salva']
         });
     }
 }
+
+// Define unit types as string constants
+export enum UNIT_TYPES  {
+    BERSERK= 'berserk',
+    BOWER= 'bower'
+  }
+  
+  
+export const unitDatabase: { [key: string]: Unit } = {
+    [UNIT_TYPES.BERSERK]: new Berserk(),
+  
+    [UNIT_TYPES.BOWER]: new Bower()
+  }
+  
+  export enum UNIT_PASSIVES{
+    PILLAGER= 'pillager',
+    SALVA= 'salva',
+    DIVINER= 'diviner'  
+  }
+  
