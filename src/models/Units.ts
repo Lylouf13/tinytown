@@ -11,6 +11,7 @@ export class Berserk extends Unit{
         });
     }
 }
+
 export class Bower extends Unit{
     constructor() {
         super({ 
@@ -27,18 +28,17 @@ export class Bower extends Unit{
 export enum UNIT_TYPES  {
     BERSERK= 'berserk',
     BOWER= 'bower'
-  }
-  
+}
   
 export const unitDatabase: { [key: string]: Unit } = {
     [UNIT_TYPES.BERSERK]: new Berserk(),
   
     [UNIT_TYPES.BOWER]: new Bower()
-  }
+}
   
-  export enum UNIT_PASSIVES{
+export enum UNIT_PASSIVES{
     PILLAGER= 'pillager',
     SALVA= 'salva',
     DIVINER= 'diviner'  
-  }
+}
   

@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 import { UNIT_TYPES, UNIT_PASSIVES, unitDatabase } from '../../models/Units'
-import { act } from 'react'
 
 type ArmyState = {
   units: {
@@ -26,7 +24,7 @@ const initialState: ArmyState = {
   totalStrength: 0,
 }
 
-// Takes unitName and quantity to modify passives count accordingly
+// Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
 const modifyPassives = (currentPassives:{[key: string]: number}, unitPassives: string[], quantity: number) => {
   const passives = {...currentPassives}
   unitPassives.forEach((passive) => {
@@ -38,24 +36,26 @@ const modifyPassives = (currentPassives:{[key: string]: number}, unitPassives: s
   return passives
 }
 
+const modifyTotalStrength = (units: {[key: string]: number}) => {
+  return Object.keys(units).reduce((total: number, value) => total + (units[value] * unitDatabase[value].strength),
+    0
+  )
+}
+
 export const armyManagerSlice = createSlice({
     name: 'armyManager',
     initialState,
     reducers:{
       addUnit: (state, action) => {
-        var passives: { [key: string]: number } = state.passives
-        
         var units: { [key: string]: number }={
           ...state.units,
           [action.payload.unit]: state.units[action.payload.unit] + action.payload.quantity
         }
 
-        var totalStrength = Object.keys(units).reduce(
-          (total: number, value) => total + (units[value] * unitDatabase[value].strength),
-          0
-        )
-        
+        var passives: { [key: string]: number } = state.passives
         passives = modifyPassives(passives, unitDatabase[action.payload.unit].passives, action.payload.quantity)
+
+        var totalStrength = modifyTotalStrength(units)
 
         return{
             ...state,
@@ -64,7 +64,7 @@ export const armyManagerSlice = createSlice({
             passives
           }
       },
-      // Destroy units after fight (takes units in order of declaration for now)
+      // Destroy units after fight
       destroyUnits: (state, action) => {
         var units: { [key: string]: number } = {...state.units}
         var passives: { [key: string]: number } = state.passives
@@ -81,10 +81,12 @@ export const armyManagerSlice = createSlice({
           while(action.payload > 0 && units[unitDestroyed] > 0){
             units[unitDestroyed]--
             passives = modifyPassives(passives, unitDatabase[unitDestroyed].passives, -1)
-            totalStrength -= unitDatabase[unitDestroyed].strength
             action.payload --
           }
-          if (action.payload === 0) break
+          if (action.payload === 0){ 
+            totalStrength = modifyTotalStrength(units)
+            break
+          }
         }
 
       return{

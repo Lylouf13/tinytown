@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addUnit } from '../../utils/reducers/armyManager'
 import { UNIT_TYPES, unitDatabase } from '../../models/Units'
