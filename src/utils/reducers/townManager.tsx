@@ -1,6 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+enum RESOURCES{
+    GOLD = "gold",
+    SCAVENGED = "scavenged",
+    SOULS = "souls"
+}
+
+type TownState = {
+    resources: {
+      [key: string]: number
+    },
+    week: number,
+    humans: number,
+    humansPerWeek: number
+}
+
+const initialState: TownState = {
+    resources:{
+        [RESOURCES.GOLD]: 0,
+        [RESOURCES.SCAVENGED]: 0,
+        [RESOURCES.SOULS]: 0
+    },
     week: 0,
     humans: 0,
     humansPerWeek: 10,

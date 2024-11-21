@@ -1,7 +1,7 @@
 import Button from './button/Button.tsx'
 import { useAppDispatch, useAppSelector } from '../app/hooks.ts'
 import { setNextWeek, generateWeeklyHumans } from '../utils/reducers/townManager.tsx'
-import { generateForces } from '../utils/reducers/enemyManager.tsx'
+import { generateEnemy } from '../utils/reducers/enemyManager.tsx'
 
 import AcademyPannel from '../features/academyPannel/AcademyPannel.tsx'
 import FightPannel from '../features/fightPannel/FightPannel.tsx'
@@ -17,7 +17,7 @@ export default function Town() {
     const nextWeek=() => {
         dispatch(setNextWeek())
         dispatch(generateWeeklyHumans())
-        dispatch(generateForces(townSelector.week))
+        dispatch(generateEnemy(townSelector.week))
     }
 
    

@@ -1,7 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { AppThunk } from '../../app/store.ts'
 import Button from '../../components/button/Button.tsx' 
-import { clearForces, destroyForces } from '../../utils/reducers/enemyManager.tsx'
+import { clearEnemy, destroyEnemy } from '../../utils/reducers/enemyManager.tsx'
+import { destroyUnits } from '../../utils/reducers/armyManager.tsx'
+import { useState } from 'react'
 
 
 export default function FightPannel() {
@@ -9,27 +11,30 @@ export default function FightPannel() {
     const dispatch = useAppDispatch()
     const armySelector = useAppSelector((state) => state.army)
     const enemySelector = useAppSelector((state) => state.enemy)
+    // CHANGE THIS TO USE REDUX -- TEST ONLY
+    var [defeat, setDefeat] = useState(false)
     
 
-    const salvaPassive = () => dispatch(destroyForces(armySelector.passives.salva))
+    const salvaPassive = () => dispatch(destroyEnemy(armySelector.passives.salva))
     
-    const pillagerPassive = () => dispatch(destroyForces(armySelector.passives.pillager))
+    // eslint-disable-next-line 
+    const pillagerPassive = () => dispatch(destroyEnemy(armySelector.passives.pillager))
     
     const fight = (): AppThunk => async (dispatch, getState) => {
         try {
-            console.log(enemySelector.enemyForces + " Enemies Pre Passives")
-            pillagerPassive()
+            //pillagerPassive()
             salvaPassive()
 
             const state=getState()
             const armyStrength = state.army.totalStrength;
-            const enemyForces = state.enemy.enemyForces;
+            const remainingEnemyForces = state.enemy.enemyForces;
     
-            if (armyStrength >= enemyForces) {
-                console.log(enemyForces + " Enemies Post Passives")
-                dispatch(clearForces())
+            if (armyStrength >= remainingEnemyForces) {
+                dispatch(destroyUnits(remainingEnemyForces))
+                dispatch(clearEnemy())
             } else {
                 console.log("no gud")
+                setDefeat(true)
             }
         } catch (error) {
             console.error("Fight sequence error:", error)
@@ -41,6 +46,7 @@ export default function FightPannel() {
     return(
         <div>
             <p>{enemySelector.enemyForces} at our doors</p>
+            {defeat && <p>they took our town</p>}
             <Button active={enemySelector.enemyForces > 0 ? true : false}label="fight" onClick={handleFight}/>
         </div>
     )

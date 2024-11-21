@@ -42,6 +42,8 @@ export default function AcademyPannel() {
                     label={`Train 5 ${unit[0]}`} 
                     onClick={()=>trainUnit(5, unit[0] as UNIT_TYPES)}
                 />
+                <p>Pillager = {armySelector.passives["pillager"]}</p>
+                <p>Salva = {armySelector.passives["salva"]}</p>
             </div>
         )}
 

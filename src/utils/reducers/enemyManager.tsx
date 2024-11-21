@@ -9,7 +9,7 @@ export const enemyManagerSlice = createSlice({
     name: 'enemyManager',
     initialState,
     reducers:{
-        generateForces: (state, action) => {
+        generateEnemy: (state, action) => {
             var enemyForces = state.enemyForces + (state.weeklyForces * (action.payload+1))
             console.log(enemyForces)
             return{
@@ -18,7 +18,7 @@ export const enemyManagerSlice = createSlice({
             }
         },
         // Destroys a set amount of forces
-        destroyForces:(state, action) => {
+        destroyEnemy:(state, action) => {
             console.log(state.enemyForces + "-" + action.payload + " enemies performed")
             var enemyForces= state.enemyForces - action.payload
 
@@ -28,7 +28,7 @@ export const enemyManagerSlice = createSlice({
             }
         },
         // Destroys all forces
-        clearForces: (state) => {
+        clearEnemy: (state) => {
             return{
                 ...state,
                 enemyForces: 0
@@ -37,6 +37,6 @@ export const enemyManagerSlice = createSlice({
     }
 })
 
-export const { generateForces, clearForces, destroyForces } = enemyManagerSlice.actions
+export const { generateEnemy, clearEnemy, destroyEnemy } = enemyManagerSlice.actions
 
 export default enemyManagerSlice.reducer
