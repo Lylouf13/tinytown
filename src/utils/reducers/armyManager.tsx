@@ -70,7 +70,7 @@ export const armyManagerSlice = createSlice({
         var passives: { [key: string]: number } = state.passives
         var totalStrength = state.totalStrength
 
-        // Sets priority order for destruction
+        // Sets priority order for destruction, might move it outside of the function at some point to allow for modification
         const destructionOrder: UNIT_TYPES[] = [
           UNIT_TYPES.BERSERK,
           UNIT_TYPES.BOWER,

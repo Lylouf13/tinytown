@@ -51,9 +51,19 @@ export const townManagerSlice = createSlice({
                 humans
             }
         },
+        generateResources: (state, action) => {
+            var resources : { [key: string]: number } = {
+                ...state.resources,
+                [action.payload.resource]: state.resources[action.payload.resource] + action.payload.quantity
+                }
+            return{
+                ...state,
+                resources
+            }
+        }
     }
 })
 
-export const { setNextWeek, generateWeeklyHumans, removeHumans } = townManagerSlice.actions
+export const { setNextWeek, generateWeeklyHumans, removeHumans, generateResources } = townManagerSlice.actions
 
 export default townManagerSlice.reducer

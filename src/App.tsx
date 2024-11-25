@@ -1,5 +1,5 @@
 import './App.css'
-import Town from './components/Town';
+import Town from './components/town/Town';
 
 function App() {
   return (

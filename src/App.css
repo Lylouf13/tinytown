@@ -1,3 +1,9 @@
+*{
+  font-family: 'inknut antiqua', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
   background-color: #1b1f21;
@@ -7,22 +13,13 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #f7eed6;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.flex-row{
+  display: flex;
+  margin-top: 25px;
+  gap: 75px;
+  justify-content: center;
+  width: 100%;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-
-.App-link {
-  color: #61dafb;
-}
-

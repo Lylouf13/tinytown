@@ -1,0 +1,29 @@
+.resources{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    
+    background-color: #1b1f21;
+    color: #f7eed6;
+    border: 2px solid #f7eed6;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+
+    &__text{
+
+        font-size: 18px;
+
+        &--gold{
+            color: gold;
+        }
+        &--scavenged{
+            color: rgb(186, 199, 198);
+        }
+        &--souls{
+            color: #77aaa2;
+        }
+    }
+}

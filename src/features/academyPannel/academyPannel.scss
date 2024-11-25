@@ -1,21 +1,49 @@
 .academy{
+    box-sizing: border-box;
     background-color: #1b1f21;
     color: #f7eed6;
     border: 2px solid #f7eed6;
     border-radius: 20px;
-    padding: 30px 30px;
+    padding: 30px 0;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
-    /* remove margin after implementing flex */
-    margin: 30px 20px;
-    transition : 0.5s;
 
+    transition : 0.5s;
+    
     &__title{
         margin: 0;
         padding: 0;
         font-size: 25px;
+    }
+
+    &__icons{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 5px;
+        
+        &__container{
+            display: flex;
+            flex-direction: column;
+            &--row{
+                flex-direction: row;
+                gap: 20px;
+            }
+        }
+        &__caption{
+            font-size: 25px;
+        }
+    }
+    &__icon{
+        width: 64px;
+        height: 64px;
+        &--inactive{
+            filter: grayscale(100%);
+        }
     }
 
     &__text{
@@ -24,6 +52,21 @@
             display: inline;
             padding-left: 2px;
             font-size: 20px;
+        }
+    }
+
+    &__unit{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        padding: 30px 30px;
+        border-top: #5c5c5c 2px solid;
+        background-color: #24282b;
+        &__buttons{
+            display: flex;
+            gap: 30px;
         }
     }
 }
