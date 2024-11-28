@@ -34,15 +34,4 @@ export class Unit implements UnitProps{
             this.passives.push(newPassive)
         }
     }
-    
-    // Method to get unit Datas
-    getInfos(){
-        return {
-            name: this.name,
-            strength: this.strength,
-            cost: this.cost,
-            ranged: this.ranged,
-            passives: this.passives
-        }
-    }   
 }

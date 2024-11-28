@@ -23,3 +23,10 @@
   justify-content: center;
   width: 100%;
 }
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+}

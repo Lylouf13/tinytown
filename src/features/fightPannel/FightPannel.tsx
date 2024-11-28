@@ -1,60 +1,108 @@
-import { useState } from 'react'
-import { AppThunk } from '../../app/store.ts'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { clearEnemy, destroyEnemy } from '../../utils/reducers/enemyManager.tsx'
-import { destroyUnits } from '../../utils/reducers/armyManager.tsx'
-import { generateResources } from '../../utils/reducers/townManager.tsx'
+import { useState } from "react";
+import { AppThunk } from "../../app/store.ts";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  clearEnemy,
+  destroyEnemy,
+} from "../../utils/reducers/enemyManager.tsx";
+import { destroyUnits } from "../../utils/reducers/armyManager.tsx";
+import { generateResources } from "../../utils/reducers/townManager.tsx";
 
-import Button from '../../components/button/Button.tsx' 
-import './fightPannel.scss'
-
+import Button from "../../components/button/Button.tsx";
+import "./fightPannel.scss";
 
 export default function FightPannel() {
+  const dispatch = useAppDispatch();
+  const armySelector = useAppSelector((state) => state.army);
+  const enemySelector = useAppSelector((state) => state.enemy);
+  const townSelector = useAppSelector((state) => state.town);
 
-    const dispatch = useAppDispatch()
-    const armySelector = useAppSelector((state) => state.army)
-    const enemySelector = useAppSelector((state) => state.enemy)
-    // CHANGE THIS TO USE REDUX -- TEST ONLY
-    // Game win / loss state
-    var [defeat, setDefeat] = useState(false)
-    
+  // CHANGE THIS TO USE REDUX -- TEST ONLY
+  // Game win / loss state
+  var [defeat, setDefeat] = useState(false);
 
-    const salvaPassive = () => dispatch(destroyEnemy(armySelector.passives.salva))
-    const pillagerPassive = () => dispatch(generateResources({resource: "scavenged", quantity: armySelector.passives.pillager}))
-    
-    const generateFightResources = (quantity: number) => dispatch(generateResources({resource: "gold", quantity: quantity}))
+  const salvaPassive = () =>
+    dispatch(destroyEnemy(armySelector.passives.salva));
 
-    const fight = (): AppThunk => async (dispatch, getState) => {
-        try {
-            salvaPassive()
+  const generateFightResources = (
+    gold: number,
+    scavenged: number,
+    souls: number
+  ) =>
+    dispatch(
+      generateResources({
+        gold: gold ?? 0,
+        scavenged: scavenged ?? 0,
+        souls: souls ?? 0,
+      })
+    );
 
-            const state=getState()
-            const armyStrength = state.army.totalStrength;
-            const remainingEnemyForces = state.enemy.enemyForces;
-    
-            if (armyStrength >= remainingEnemyForces) {
-                dispatch(destroyUnits(remainingEnemyForces))
-                dispatch(clearEnemy())
-            } else {
-                console.log("no gud")
-                setDefeat(true)
-            }
+  const fight = (): AppThunk => async (dispatch, getState) => {
+    try {
+      salvaPassive();
 
-            pillagerPassive()
-            generateFightResources(enemySelector.enemyForces)
+      const state = getState();
+      const armyStrength = state.army.totalStrength;
+      const remainingEnemyForces = state.enemy.enemyForces;
 
-            } catch (error) {
-                console.error("Fight sequence error:", error)
-        }
+      if (armyStrength >= remainingEnemyForces) {
+        dispatch(destroyUnits(remainingEnemyForces));
+        dispatch(clearEnemy());
+        generateFightResources(
+          enemySelector.enemyForces,
+          armySelector.passives.pillager,
+          0
+        );
+      } else {
+        setDefeat(true);
+      }
+    } catch (error) {
+      console.error("Fight sequence error:", error);
     }
+  };
 
-    const handleFight = () => dispatch(fight())
-    
-    return(
-        <div className='fight'>
-            <p>{enemySelector.enemyForces} at our doors</p>
-            {defeat && <p>they took our town</p>}
-            <Button active={enemySelector.enemyForces > 0 ? true : false}label="fight" onClick={handleFight}/>
-        </div>
-    )
+  const handleFight = () => dispatch(fight());
+
+  return (
+    <div className="fight">
+      <p>{enemySelector.enemyForces} at our doors</p>
+      {defeat && <p>they took our town</p>}
+      <Button
+        active={enemySelector.enemyForces > 0 ? true : false}
+        label="fight"
+        onClick={handleFight}
+      />
+
+      {/* FIGHT RECAP */}
+      <div className="fight__recap">
+        <h2 className="fight__recap__title">Fight Recap</h2>
+        {Object.keys(townSelector.previousFightResources).length > 0 && (
+          <h3 className="fight__recap__title">Resources salvaged</h3>
+        )}
+        {townSelector.previousFightResources
+          ? Object.entries(townSelector.previousFightResources).map(
+              (resource) =>
+                resource[1] > 0 && (
+                  <p
+                    className="fight__recap__text"
+                    key={`resourceRecap - ${resource[0]}`}
+                  >{`${resource[1]} ${resource[0]}`}</p>
+                )
+            )
+          : null}
+
+        {Object.keys(armySelector.lostUnits).length > 0 && (
+          <h3 className="fight__recap__title">Units lost</h3>
+        )}
+        {armySelector.lostUnits
+          ? Object.entries(armySelector.lostUnits).map((unit) => (
+              <p
+                className="fight__recap__text"
+                key={`deathRecap - ${unit[0]}`}
+              >{`${unit[1]} ${unit[0]} lost`}</p>
+            ))
+          : null}
+      </div>
+    </div>
+  );
 }

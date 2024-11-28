@@ -43,10 +43,9 @@ export default function AcademyPannel() {
                   ? "academy__icon"
                   : "academy__icon academy__icon--inactive"
               }
-              alt={`${unit[0]}-icon`}
               key={`${unit[0]}-img`}
-              src={`/assets/icons/units/${unit[0]}_icon.png`
-            }
+              src={`/assets/icons/units/${unit[0]}_icon.png`}
+              alt={`${unit[0]}-icon`}
             />
           </div>
         ))}
@@ -71,6 +70,7 @@ export default function AcademyPannel() {
                 }
                 key={`${unit[0]}-img`}
                 src={`/assets/icons/units/${unit[0]}_icon.png`}
+                alt={`${unit[0]}-icon`}
               />
             </div>
             <h3 key={`${unit[0]}-title`}>

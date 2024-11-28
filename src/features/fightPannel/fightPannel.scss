@@ -5,13 +5,34 @@
     align-items: center;
     gap: 20px;
 
+    min-width: 400px;
+
     background-color: #1b1f21;
     color: #f7eed6;
     border: 2px solid #f7eed6;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 10px 0px;
     font-size: 16px;
     font-weight: 700;
 
     box-sizing: border-box;
+    &__recap{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 100%;
+        background-color: #24282b;
+
+        &__title{
+            padding-top: 20px;
+            padding-left:20px;
+            font-size: 20px;
+        }
+        &__text{
+            padding-left:50px;
+            margin: 0;
+            color: hsl(44, 67%, 65%)
+
+        }
+    }
 }
