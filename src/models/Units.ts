@@ -7,7 +7,8 @@ export class Berserk extends Unit{
             strength: 1, 
             cost: 1 , 
             ranged: false, 
-            passives: ['pillager']
+            passives: ['pillager'],
+            description: "A cheap unit that can find resources to salvage during fights"
         });
     }
 }
@@ -19,7 +20,8 @@ export class Bower extends Unit{
             strength: 2, 
             cost: 2 , 
             ranged: true, 
-            passives: ['salva']
+            passives: ['salva'],
+            description: "A potent but fragile unit, can pick down enemies before they can attack"
         });
     }
 }

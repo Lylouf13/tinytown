@@ -1,0 +1,18 @@
+.unitIcon{
+    display: flex;
+    flex-direction: column;
+    &--row{
+        flex-direction: row;
+        gap: 20px;
+    }
+    &__image{
+        width: 64px;
+        height: 64px;
+        &--inactive{
+            filter: grayscale(100%);
+        }
+    }
+    &__caption{
+        font-size: 25px;
+    }
+}

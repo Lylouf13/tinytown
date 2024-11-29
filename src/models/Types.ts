@@ -6,6 +6,7 @@ interface UnitProps{
     cost:number
     ranged:boolean
     passives: PassiveType
+    description: string
 }
 
 export interface UnitCount {
@@ -18,14 +19,16 @@ export class Unit implements UnitProps{
     strength: number;
     cost: number;
     ranged: boolean;
-    passives : PassiveType
+    passives : PassiveType;
+    description: string
 
-    constructor({name, strength, cost, ranged, passives}:UnitProps){
+    constructor({name, strength, cost, ranged, passives, description}:UnitProps){
         this.name = name
         this.strength = strength
         this.cost = cost
         this.ranged = ranged
         this.passives = passives
+        this.description = description
     }
 
     // Method to add a passive to the unit
