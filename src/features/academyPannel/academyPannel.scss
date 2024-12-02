@@ -26,14 +26,6 @@
         margin-bottom: 20px;
         gap: 5px;
     }
-    &__icon{
-        width: 64px;
-        height: 64px;
-        &--inactive{
-            filter: grayscale(100%);
-        }
-    }
-
     &__text{
         &-red{
             color: red;

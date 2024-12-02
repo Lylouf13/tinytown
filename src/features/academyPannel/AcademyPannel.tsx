@@ -1,7 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addUnit } from "../../utils/reducers/armyManager";
+import { useAppSelector } from "../../app/hooks";
 import { unitDatabase } from "../../models/Units";
-import { removeHumans } from "../../utils/reducers/townManager";
 
 import UnitIcon from "../../components/unitIcon/UnitIcon";
 import UnitTrainingRow from "./unitTrainingRow/UnitTrainingRow";
@@ -9,17 +7,7 @@ import UnitTrainingRow from "./unitTrainingRow/UnitTrainingRow";
 import "./academyPannel.scss";
 
 export default function AcademyPannel() {
-  const dispatch = useAppDispatch();
   const armySelector = useAppSelector((state) => state.army);
-  const townSelector = useAppSelector((state) => state.town);
-
-  const trainUnit = (quantity: number, unit: string) => {
-    const cost = unitDatabase[unit].cost;
-    if (townSelector.humans >= quantity * cost) {
-      dispatch(removeHumans(quantity * cost));
-      dispatch(addUnit({ unit, quantity }));
-    }
-  };
 
   return (
     <div className="academy">
@@ -36,20 +24,16 @@ export default function AcademyPannel() {
             className="academy__icons__container"
             key={`${unit}-iconContainer`}
           >
-            <UnitIcon unit={unit} quantity={armySelector.units[unit]} />
+            <UnitIcon unit={unit} />
           </div>
         ))}
       </div>
 
-      {/*   UNIT PANNEL GENERATION  */}
+      {/*   UNIT TRAINING PANNEL GENERATION  */}
       {Object.keys(unitDatabase).map((unit) => (
         <UnitTrainingRow
           key={`${unit}-trainingRow`}
           unit={unit}
-          cost={unitDatabase[unit].cost}
-          quantity={armySelector.units[unit]}
-          currentHumans={townSelector.humans}
-          trainUnit={trainUnit}
         />
       ))}
     </div>

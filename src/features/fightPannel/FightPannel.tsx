@@ -80,13 +80,13 @@ export default function FightPannel() {
           <h3 className="fight__recap__title">Resources salvaged</h3>
         )}
         {townSelector.previousFightResources
-          ? Object.entries(townSelector.previousFightResources).map(
+          ? Object.keys(townSelector.previousFightResources).map(
               (resource) =>
-                resource[1] > 0 && (
+                townSelector.previousFightResources[resource] > 0 && (
                   <p
                     className="fight__recap__text"
-                    key={`resourceRecap - ${resource[0]}`}
-                  >{`${resource[1]} ${resource[0]}`}</p>
+                    key={`resourceRecap - ${resource}`}
+                  >{`${townSelector.previousFightResources[resource]} ${resource}`}</p>
                 )
             )
           : null}
@@ -95,11 +95,11 @@ export default function FightPannel() {
           <h3 className="fight__recap__title">Units lost</h3>
         )}
         {armySelector.lostUnits
-          ? Object.entries(armySelector.lostUnits).map((unit) => (
+          ? Object.keys(armySelector.lostUnits).map((unit) => (
               <p
                 className="fight__recap__text"
-                key={`deathRecap - ${unit[0]}`}
-              >{`${unit[1]} ${unit[0]} lost`}</p>
+                key={`deathRecap - ${unit}`}
+              >{`${armySelector.lostUnits[unit]} ${unit} lost`}</p>
             ))
           : null}
       </div>

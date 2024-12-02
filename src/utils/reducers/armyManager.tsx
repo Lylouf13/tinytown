@@ -18,12 +18,14 @@ const initialState: ArmyState = {
   units: {
     [UNIT_TYPES.BERSERK]: 0,
     [UNIT_TYPES.BOWER]: 0,
+    [UNIT_TYPES.GUARDIAN]: 0,
   },
   lostUnits: {},
   passives: {
     [UNIT_PASSIVES.PILLAGER]: 0,
     [UNIT_PASSIVES.SALVA]: 0,
     [UNIT_PASSIVES.DIVINER]: 0,
+    [UNIT_PASSIVES.PROTECTOR]: 0
   },
   totalStrength: 0,
 };
@@ -88,6 +90,7 @@ export const armyManagerSlice = createSlice({
 
       // Sets priority order for destruction, might move it outside of the function at some point to allow for modification
       const destructionOrder: UNIT_TYPES[] = [
+        UNIT_TYPES.GUARDIAN,
         UNIT_TYPES.BERSERK,
         UNIT_TYPES.BOWER,
       ];
@@ -102,9 +105,9 @@ export const armyManagerSlice = createSlice({
             unitDatabase[unitDestroyed].passives,
             -1
           );
-          action.payload--;
+          action.payload -= unitDatabase[unitDestroyed].defense;
         }
-        if (action.payload === 0) {
+        if (action.payload  === 0) {
           totalStrength = modifyTotalStrength(units);
           break;
         }

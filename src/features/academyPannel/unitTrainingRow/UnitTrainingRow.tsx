@@ -1,20 +1,31 @@
 import UnitIcon from "../../../components/unitIcon/UnitIcon";
 import Button from "../../../components/button/Button";
 
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { addUnit } from "../../../utils/reducers/armyManager";
+import { removeHumans } from "../../../utils/reducers/townManager";
+import { unitDatabase } from "../../../models/Units";
+
 interface UnitTrainingRowProps {
   unit: string;
-  cost: number;
-  quantity: number;
-  currentHumans: number;
-  trainUnit: (quantity: number, unit: string) => void;
 }
+
 export default function UnitTrainingRow({
   unit,
-  cost,
-  quantity,
-  currentHumans,
-  trainUnit,
 }: UnitTrainingRowProps) {
+
+  const dispatch = useAppDispatch();
+  const armySelector = useAppSelector((state) => state.army);
+  const townSelector = useAppSelector((state) => state.town);
+
+  const trainUnit = (quantity: number, unit: string) => {
+    const cost = unitDatabase[unit].cost;
+    if (townSelector.humans >= quantity * cost) {
+      dispatch(removeHumans(quantity * cost));
+      dispatch(addUnit({ unit, quantity }));
+    }
+  }
+
   return (
     <div className="academy__unit" key={`${unit}-div`}>
       <div className="flex-row">
@@ -22,22 +33,22 @@ export default function UnitTrainingRow({
           className="academy__icons__container academy__icons__container--row"
           key={`${unit}-iconContainer`}
         >
-          <UnitIcon unit={unit} quantity={quantity} row />
+          <UnitIcon unit={unit} row />
         </div>
         <h3 key={`${unit}-title`}>
-          {unit} ({cost} human{cost > 1 && "s"})
+          {unit} ({unitDatabase[unit].cost} human{unitDatabase[unit].cost > 1 && "s"})
         </h3>
       </div>
       <div className="academy__unit__buttons">
         <Button
           key={`${unit}-btn1`}
-          active={cost <= currentHumans}
+          active={unitDatabase[unit].cost <= townSelector.humans}
           label={`Train 1 ${unit}`}
           onClick={() => trainUnit(1, unit)}
         />
         <Button
           key={`${unit}-btn5`}
-          active={cost * 5 <= currentHumans}
+          active={unitDatabase[unit].cost * 5 <= townSelector.humans}
           label={`Train 5 ${unit}`}
           onClick={() => trainUnit(5, unit)}
         />

@@ -1,0 +1,37 @@
+.tooltip{
+    padding: 15px 25px;
+    max-width: 350px;
+    background-color: #1b1f21 ;
+    color: #f7eed6 ;
+    border: #f7eed6 2px solid ;
+
+    &__title{
+        font-size: 20px;
+        padding: 0;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: #f7eed6 1px solid ;
+    }
+
+    &__data{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }
+    &__text{
+        font-size: 14px;
+        text-align: left;
+        &--strength{
+            color: rgb(219, 128, 43);
+        }
+        &--cost{
+            color: gold;
+        }
+        &--passive{
+            padding: 0 25px;
+            background-color: rgb(95, 85, 115);
+            border: #f7eed6 2px solid ;
+        }
+    }
+}

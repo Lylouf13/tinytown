@@ -1,8 +1,11 @@
-import Button from "../button/Button.tsx";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { setNextWeek, generateWeeklyHumans } from "../../utils/reducers/townManager.tsx";
+import {
+  setNextWeek,
+  generateWeeklyHumans,
+} from "../../utils/reducers/townManager.tsx";
 import { generateEnemy } from "../../utils/reducers/enemyManager.tsx";
 
+import Button from "../button/Button.tsx";
 import EconomyPannel from "../../features/economyPannel/EconomyPannel.tsx";
 import AcademyPannel from "../../features/academyPannel/AcademyPannel.tsx";
 import FightPannel from "../../features/fightPannel/FightPannel.tsx";
@@ -24,7 +27,7 @@ export default function Town() {
   return (
     <div className="town">
       <h2>Week {townSelector.week}</h2>
-      <img src="assets/TownTest.png" alt="villeTest"/>
+      <img src="assets/TownTest.png" alt="villeTest" />
       <ResourcesPannel />
       <div className="flex-row">
         <p>{townSelector.humans} left to guide</p>
