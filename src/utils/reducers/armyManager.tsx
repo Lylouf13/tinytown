@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UNIT_TYPES, UNIT_PASSIVES, unitDatabase } from "../../models/Units";
+import { UNIT_TYPES, UNIT_PASSIVES, unitDatabase } from "models/Units";
 
 type ArmyState = {
   units: {

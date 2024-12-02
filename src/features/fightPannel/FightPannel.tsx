@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { AppThunk } from "../../app/store.ts";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  clearEnemy,
-  destroyEnemy,
-} from "../../utils/reducers/enemyManager.tsx";
-import { destroyUnits } from "../../utils/reducers/armyManager.tsx";
-import { generateResources } from "../../utils/reducers/townManager.tsx";
+import { AppThunk } from "app/store";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import {clearEnemy, destroyEnemy } from "utils/reducers/enemyManager";
+import { destroyUnits } from "utils/reducers/armyManager";
+import { generateResources } from "utils/reducers/townManager";
 
-import Button from "../../components/button/Button.tsx";
+import Button from "components/button/Button";
 import "./fightPannel.scss";
 
 export default function FightPannel() {

@@ -1,7 +1,7 @@
 import "./unitIcon.scss";
-import { useAppSelector } from "../../app/hooks";
-import { unitDatabase } from "../../models/Units";
-import UnitTooltip from "../tooltip/UnitTooltip";
+import { useAppSelector } from "app/hooks";
+import { unitDatabase } from "models/Units";
+import UnitTooltip from "components/tooltip/UnitTooltip";
 
 interface UnitIconProps {
   unit: string;

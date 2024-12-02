@@ -1,15 +1,12 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import {
-  setNextWeek,
-  generateWeeklyHumans,
-} from "../../utils/reducers/townManager.tsx";
-import { generateEnemy } from "../../utils/reducers/enemyManager.tsx";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { setNextWeek, generateWeeklyHumans } from "utils/reducers/townManager";
+import { generateEnemy } from "utils/reducers/enemyManager";
 
-import Button from "../button/Button.tsx";
-import EconomyPannel from "../../features/economyPannel/EconomyPannel.tsx";
-import AcademyPannel from "../../features/academyPannel/AcademyPannel.tsx";
-import FightPannel from "../../features/fightPannel/FightPannel.tsx";
-import ResourcesPannel from "../../features/resourcesPannel/ResourcesPannel.tsx";
+import Button from "components/button/Button";
+import EconomyPannel from "features/economyPannel/EconomyPannel";
+import AcademyPannel from "features/academyPannel/AcademyPannel";
+import FightPannel from "features/fightPannel/FightPannel";
+import ResourcesPannel from "features/resourcesPannel/ResourcesPannel";
 
 import "./town.scss";
 

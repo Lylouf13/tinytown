@@ -1,7 +1,7 @@
-import { useAppSelector } from "../../app/hooks";
-import { unitDatabase } from "../../models/Units";
+import { useAppSelector } from "app/hooks";
+import { unitDatabase } from "models/Units";
 
-import UnitIcon from "../../components/unitIcon/UnitIcon";
+import UnitIcon from "components/unitIcon/UnitIcon";
 import UnitTrainingRow from "./unitTrainingRow/UnitTrainingRow";
 
 import "./academyPannel.scss";

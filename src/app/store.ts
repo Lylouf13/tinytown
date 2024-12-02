@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import { townManagerSlice } from '../utils/reducers/townManager'
-import { armyManagerSlice } from '../utils/reducers/armyManager'
-import { enemyManagerSlice } from '../utils/reducers/enemyManager'
+import { townManagerSlice } from 'utils/reducers/townManager'
+import { armyManagerSlice } from 'utils/reducers/armyManager'
+import { enemyManagerSlice } from 'utils/reducers/enemyManager'
 
 
     // const actionCreator = payload => dispatch =>

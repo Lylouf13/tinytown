@@ -1,10 +1,10 @@
-import UnitIcon from "../../../components/unitIcon/UnitIcon";
-import Button from "../../../components/button/Button";
+import UnitIcon from "components/unitIcon/UnitIcon";
+import Button from "components/button/Button";
 
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { addUnit } from "../../../utils/reducers/armyManager";
-import { removeHumans } from "../../../utils/reducers/townManager";
-import { unitDatabase } from "../../../models/Units";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { addUnit } from "utils/reducers/armyManager";
+import { removeHumans } from "utils/reducers/townManager";
+import { unitDatabase } from "models/Units";
 
 interface UnitTrainingRowProps {
   unit: string;
@@ -15,7 +15,6 @@ export default function UnitTrainingRow({
 }: UnitTrainingRowProps) {
 
   const dispatch = useAppDispatch();
-  const armySelector = useAppSelector((state) => state.army);
   const townSelector = useAppSelector((state) => state.town);
 
   const trainUnit = (quantity: number, unit: string) => {
