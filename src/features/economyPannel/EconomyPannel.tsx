@@ -10,6 +10,8 @@ export default function EconomyPannel() {
 
     
   return (
-    <div>EconomyPannel</div>
+    <div className='economy'>
+        <h2 className='economy__title'>Economy</h2>
+    </div>
   )
 }

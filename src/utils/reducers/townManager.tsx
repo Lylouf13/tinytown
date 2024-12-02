@@ -25,8 +25,8 @@ const initialState: TownState = {
     [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
-  week: 0,
-  humans: 0,
+  week: 1,
+  humans: 10,
   humansPerWeek: 10,
 };
 

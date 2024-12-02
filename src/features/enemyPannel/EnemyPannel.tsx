@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { AppThunk } from "app/store";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import {clearEnemy, destroyEnemy } from "utils/reducers/enemyManager";
+import {clearEnemy, destroyEnemy, generateEnemy } from "utils/reducers/enemyManager";
 import { destroyUnits } from "utils/reducers/armyManager";
 import { generateResources } from "utils/reducers/townManager";
+import { setNextWeek, generateWeeklyHumans } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
-import "./fightPannel.scss";
+import "./enemyPannel.scss";
 
-export default function FightPannel() {
+export default function EnemyPannel() {
   const dispatch = useAppDispatch();
   const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
@@ -17,6 +18,13 @@ export default function FightPannel() {
   // CHANGE THIS TO USE REDUX -- TEST ONLY
   // Game win / loss state
   var [defeat, setDefeat] = useState(false);
+
+
+  const nextWeek = () => {
+    dispatch(setNextWeek());
+    dispatch(generateWeeklyHumans());
+    dispatch(generateEnemy(townSelector.week));
+  };
 
   const salvaPassive = () =>
     dispatch(destroyEnemy(armySelector.passives.salva));
@@ -50,6 +58,7 @@ export default function FightPannel() {
           armySelector.passives.pillager,
           0
         );
+        nextWeek();
       } else {
         setDefeat(true);
       }
@@ -61,8 +70,9 @@ export default function FightPannel() {
   const handleFight = () => dispatch(fight());
 
   return (
-    <div className="fight">
-      <p>{enemySelector.enemyForces} at our doors</p>
+    <div className="enemy">
+      <h2 className="enemy__title">Barbarian Camp</h2>
+      <p className="enemy__text">They are <span className="enemy__text--red"> {enemySelector.enemyForces}</span> waiting to attack us</p>
       {defeat && <p>they took our town</p>}
       <Button
         active={enemySelector.enemyForces > 0 ? true : false}
@@ -71,17 +81,17 @@ export default function FightPannel() {
       />
 
       {/* FIGHT RECAP */}
-      <div className="fight__recap">
-        <h2 className="fight__recap__title">Fight Recap</h2>
+      <div className="enemy__recap">
+        <h2 className="enemy__recap__title">Fight Recap</h2>
         {Object.keys(townSelector.previousFightResources).length > 0 && (
-          <h3 className="fight__recap__title">Resources salvaged</h3>
+          <h3 className="enemy__recap__title">Resources salvaged</h3>
         )}
         {townSelector.previousFightResources
           ? Object.keys(townSelector.previousFightResources).map(
               (resource) =>
                 townSelector.previousFightResources[resource] > 0 && (
                   <p
-                    className="fight__recap__text"
+                    className="enemy__recap__text"
                     key={`resourceRecap - ${resource}`}
                   >{`${townSelector.previousFightResources[resource]} ${resource}`}</p>
                 )
@@ -89,12 +99,12 @@ export default function FightPannel() {
           : null}
 
         {Object.keys(armySelector.lostUnits).length > 0 && (
-          <h3 className="fight__recap__title">Units lost</h3>
+          <h3 className="enemy__recap__title">Units lost</h3>
         )}
         {armySelector.lostUnits
           ? Object.keys(armySelector.lostUnits).map((unit) => (
               <p
-                className="fight__recap__text"
+                className="enemy__recap__text"
                 key={`deathRecap - ${unit}`}
               >{`${armySelector.lostUnits[unit]} ${unit} lost`}</p>
             ))

@@ -4,6 +4,9 @@
     background-color: #1b1f21 ;
     color: #f7eed6 ;
     border: #f7eed6 2px solid ;
+    z-index: 2;
+    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 35%);
+
 
     &__title{
         font-size: 20px;

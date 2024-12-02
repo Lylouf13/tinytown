@@ -1,19 +1,32 @@
-.fight{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-
-    min-width: 400px;
-
+.enemy{
+    box-sizing: border-box;
     background-color: #1b1f21;
     color: #f7eed6;
     border: 2px solid #f7eed6;
+
+    min-width: 400px;
     border-radius: 20px;
-    padding: 10px 0px;
+    padding: 30px 0;
+    text-align: center;
+    text-decoration: none;
     font-size: 16px;
     font-weight: 700;
+
+    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 50%);
+    margin-bottom: 75px;;
+    
+    &__title{
+        margin: 0;
+        padding: 0;
+        background-color: #24282b;
+        font-size: 25px;
+    }
+    &__text{
+        &--red{
+            color: red;
+            font-size: 20px;
+        }
+    }
 
     box-sizing: border-box;
     &__recap{

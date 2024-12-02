@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    enemyForces: 0,
+    enemyForces: 5,
     weeklyForces: 5
 }
 

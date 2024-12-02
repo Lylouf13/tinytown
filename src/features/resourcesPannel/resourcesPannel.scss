@@ -1,9 +1,12 @@
 .resources{
     display: flex;
+    position: sticky;
+    top: 20px;
     justify-content: space-around;
     align-items: center;
     gap: 20px;
     
+    z-index: 1;
     background-color: #1b1f21;
     color: #f7eed6;
     border: 2px solid #f7eed6;
@@ -11,6 +14,8 @@
     padding: 10px 20px;
     font-size: 16px;
     font-weight: 700;
+
+    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 50%);
 
     &__text{
 
