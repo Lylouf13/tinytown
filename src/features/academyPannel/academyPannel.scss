@@ -17,10 +17,16 @@
         margin: 0;
         padding: 0;
         background-color: #24282b;
-        font-size: 25px;
+        font-size: 26px;
+    }
+    &__subtitle{
+        margin: 0;
+        padding: 0;
+        font-size: 23px;
+        border-bottom: #24282b 2px solid;
     }
 
-    &__icons{
+    &__iconContainer{
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -33,22 +39,7 @@
             color: red;
             display: inline;
             padding-left: 2px;
-            font-size: 20px;
-        }
-    }
-
-    &__unit{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        padding: 30px 30px;
-        border-top: #5c5c5c 2px solid;
-        background-color: #24282b;
-        &__buttons{
-            display: flex;
-            gap: 30px;
+            font-size: 23px;
         }
     }
 }

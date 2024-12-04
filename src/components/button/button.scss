@@ -3,19 +3,19 @@
     color: #f7eed6;
     border: 2px solid #f7eed6;
     border-radius: 20px;
-    padding: 15px 30px;
+    padding: 5px 30px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
     font-weight: 700;
+    min-width: 150px;
 
-    cursor: pointer;
     transition : 0.5s;
 
-    &:hover{
+    &:hover:not(&-disabled){
         background-color: #f7eed6;
         color: #1b1f21;
+        cursor: pointer;
         transition : 0.5s;
     }
     
@@ -23,13 +23,7 @@
         background-color: #1b1f21;
         color: #615e56;
         border: 2px solid #615e56;
-        border-radius: 20px;
-        padding: 15px 30px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        font-weight: 700;
+
 
         transition : 0.5s;
     }

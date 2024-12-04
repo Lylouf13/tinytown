@@ -12,20 +12,15 @@ export default function AcademyPannel() {
   return (
     <div className="academy">
       <h1 className="academy__title">Academy</h1>
-      <p>
-        We represent an army of{" "}
+      <h2 className="academy__subtitle">
+        Total strength :{" "}
         <span className="academy__text-red">{armySelector.totalStrength}</span>
-      </p>
+      </h2>
 
       {/*   ICONS GENERATION  */}
-      <div className="academy__icons">
+      <div className="academy__iconContainer">
         {Object.keys(unitDatabase).map((unit) => (
-          <div
-            className="academy__icons__container"
-            key={`${unit}-iconContainer`}
-          >
             <UnitIcon unit={unit} />
-          </div>
         ))}
       </div>
 
