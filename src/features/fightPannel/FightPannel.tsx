@@ -14,6 +14,7 @@ export default function FightPannel() {
         <p>{armySelector.totalStrength}</p>
         <p>{enemySelector.enemyForces}</p>
       </div>
+      <img className="fight__art" src="" alt="placeholder"/>
     </div>
   )
 }

@@ -1,11 +1,8 @@
-@import "utils/style/mixins";
+@use "utils/style/mixins";
 
 .enemy{
-
-    @include pannel;
+    @include mixins.pannel;
     min-width: 400px;
-
-    
     &__title{
         margin: 0;
         padding: 0;
@@ -18,8 +15,6 @@
             font-size: 20px;
         }
     }
-
-    box-sizing: border-box;
     &__recap{
         display: flex;
         flex-direction: column;
@@ -36,7 +31,6 @@
             padding-left:50px;
             margin: 0;
             color: hsl(44, 67%, 65%)
-
         }
     }
 }

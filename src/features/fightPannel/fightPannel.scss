@@ -1,8 +1,9 @@
-@import 'utils/style/colors.scss';
-@import 'utils/style/mixins.scss';
+@use 'sass:color';
+@use 'utils/style/variables.scss';
+@use 'utils/style/mixins.scss';
 
 .fight{
-    @include pannel;
+    @include mixins.pannel;
     position: fixed;
     top:50%;
     left: 50%;
@@ -16,5 +17,9 @@
         align-items: center;
         justify-content: center;
         gap: 40px;
+    }
+    &__art{
+        background-color: color.adjust(variables.$primary-color, $lightness: -30%);
+        width: 1000px;
     }
 }
