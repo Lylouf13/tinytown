@@ -1,4 +1,4 @@
-import UnitIcon from "components/unitIcon/UnitIcon";
+import UnitIcon from "features/academyPannel/components/unitIcon/UnitIcon";
 import Button from "components/button/Button";
 
 import { useAppDispatch, useAppSelector } from "app/hooks";

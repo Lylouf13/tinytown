@@ -5,7 +5,7 @@
     color: #f7eed6 ;
     border: #f7eed6 2px solid ;
     z-index: 2;
-    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 35%);
+    box-shadow:  9px 13px 4px 0 #04040459;
 
 
     &__title{
@@ -25,15 +25,18 @@
     &__text{
         font-size: 14px;
         text-align: left;
-        &--strength{
-            color: rgb(219, 128, 43);
+        &-strength{
+            color: #db802b;
         }
-        &--cost{
+        &-defense{
+            color: #5cacee;
+        }
+        &-cost{
             color: gold;
         }
-        &--passive{
+        &-passive{
             padding: 0 25px;
-            background-color: rgb(95, 85, 115);
+            background-color: #5f5573;
             border: #f7eed6 2px solid ;
         }
     }

@@ -1,0 +1,20 @@
+@import 'utils/style/colors.scss';
+@import 'utils/style/mixins.scss';
+
+.fight{
+    @include pannel;
+    position: fixed;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    z-index: 10;
+    width: 1000px;
+    height: 65%;
+    &__overview{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+}

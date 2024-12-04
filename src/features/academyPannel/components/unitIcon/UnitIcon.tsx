@@ -32,6 +32,7 @@ export default function UnitIcon({ unit, row }: UnitIconProps) {
         title={unit}
         description={unitDatabase[unit].description}
         strength={unitDatabase[unit].strength}
+        defense={unitDatabase[unit].defense}
         cost={unitDatabase[unit].cost}
         passives={unitDatabase[unit].passives}
       />
