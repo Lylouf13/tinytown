@@ -19,13 +19,32 @@
         background-color: #24282b;
         font-size: 26px;
     }
-    &__subtitle{
-        margin: 0;
-        padding: 0;
-        font-size: 23px;
+    &__statContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
         border-bottom: #24282b 2px solid;
-    }
 
+        &__stat{
+            margin: 0;
+            padding: 0;
+            font-size: 23px;
+            &-red{
+                color: #db802b;
+                display: inline;
+                padding-left: 2px;
+                font-size: 23px;
+            }
+            &-blue{
+                color: #5cacee;
+                display: inline;
+                padding-left: 2px;
+                font-size: 23px;
+            }
+        }
+    }
     &__iconContainer{
         display: flex;
         flex-direction: row;
@@ -34,12 +53,5 @@
         margin-bottom: 20px;
         gap: 5px;
     }
-    &__text{
-        &-red{
-            color: red;
-            display: inline;
-            padding-left: 2px;
-            font-size: 23px;
-        }
-    }
+
 }

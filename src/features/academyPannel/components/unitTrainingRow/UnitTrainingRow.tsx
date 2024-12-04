@@ -49,7 +49,7 @@ export default function UnitTrainingRow({ unit }: UnitTrainingRowProps) {
         <Button
           key={`${unit}-btn5`}
           active={unitDatabase[unit].cost * 5 <= townSelector.humans}
-          label={`Train- 5`}
+          label={`Train 5`}
           onClick={() => trainUnit(5, unit)}
         />
       </div>

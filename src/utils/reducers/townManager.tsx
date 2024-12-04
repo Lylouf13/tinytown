@@ -8,6 +8,7 @@ enum RESOURCES {
 enum CURRENT_STATE {
   PREPARATION = "preparation",
   FIGHT = "fight",
+  DEFEAT = "defeat",
 }
 enum FIGHT_STATE {
   ATTACK = "attack",

@@ -12,6 +12,7 @@ type ArmyState = {
     [key: string]: number;
   };
   totalStrength: number;
+  totalDefense: number;
 };
 
 const initialState: ArmyState = {
@@ -28,6 +29,7 @@ const initialState: ArmyState = {
     [UNIT_PASSIVES.PROTECTOR]: 0
   },
   totalStrength: 0,
+  totalDefense: 0,
 };
 
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
@@ -54,6 +56,14 @@ const modifyTotalStrength = (units: { [key: string]: number }) => {
   );
 };
 
+const modifyTotalDefense = (units: { [key: string]: number }) => {
+  return Object.keys(units).reduce(
+    (total: number, value) =>
+      total + units[value] * unitDatabase[value].defense,
+    0
+  );
+};
+
 export const armyManagerSlice = createSlice({
   name: "armyManager",
   initialState,
@@ -73,11 +83,13 @@ export const armyManagerSlice = createSlice({
       );
 
       var totalStrength = modifyTotalStrength(units);
+      var totalDefense = modifyTotalDefense(units);
 
       return {
         ...state,
         units,
         totalStrength,
+        totalDefense,
         passives,
       };
     },
@@ -87,6 +99,7 @@ export const armyManagerSlice = createSlice({
       var lostUnits: { [key: string]: number } = {};
       var passives: { [key: string]: number } = state.passives;
       var totalStrength = state.totalStrength;
+      var totalDefense = state.totalDefense;
 
       // Sets priority order for destruction, might move it outside of the function at some point to allow for modification
       const destructionOrder: UNIT_TYPES[] = [
@@ -109,6 +122,7 @@ export const armyManagerSlice = createSlice({
         }
         if (action.payload  === 0) {
           totalStrength = modifyTotalStrength(units);
+          totalDefense = modifyTotalDefense(units);
           break;
         }
       }
@@ -118,6 +132,7 @@ export const armyManagerSlice = createSlice({
         units,
         lostUnits,
         totalStrength,
+        totalDefense,
         passives,
       };
     }

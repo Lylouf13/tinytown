@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AppThunk } from "app/store";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import {
@@ -7,7 +6,11 @@ import {
   generateEnemy,
 } from "utils/reducers/enemyManager";
 import { destroyUnits } from "utils/reducers/armyManager";
-import { updateFightState, generateResources, updateState } from "utils/reducers/townManager";
+import {
+  updateFightState,
+  generateResources,
+  updateState,
+} from "utils/reducers/townManager";
 import { setNextWeek, generateWeeklyHumans } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
@@ -18,10 +21,6 @@ export default function FightPannel() {
   const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
   const townSelector = useAppSelector((state) => state.town);
-
-  // CHANGE THIS TO USE REDUX -- TEST ONLY
-  // Game win / loss state
-  var [defeat, setDefeat] = useState(false);
 
   const nextWeek = () => {
     dispatch(setNextWeek());
@@ -45,51 +44,68 @@ export default function FightPannel() {
       })
     );
 
-  const fight = (): AppThunk => async (dispatch, getState) => {
+  const attack = (): AppThunk => async (dispatch, getState) => {
     try {
       salvaPassive();
+      dispatch(destroyEnemy(armySelector.totalStrength));
+      dispatch(updateFightState("defense"))
 
-      const state = getState();
-      const armyStrength = state.army.totalStrength;
-      const remainingEnemyForces = state.enemy.enemyForces;
-
-      if (armyStrength >= remainingEnemyForces) {
-        dispatch(destroyUnits(remainingEnemyForces));
-        dispatch(clearEnemy());
+      if (getState().enemy.enemyForces === 0) {
         generateFightResources(
           enemySelector.enemyForces,
           armySelector.passives.pillager,
           0
         );
-        nextWeek();
-      } else {
-        setDefeat(true);
       }
     } catch (error) {
       console.error("Fight sequence error:", error);
     }
   };
 
-  const handleFight = () => dispatch(fight());
+  const handleAttack = () => dispatch(attack());
 
-  const attack = () => {
-      salvaPassive();
-      dispatch(destroyEnemy(armySelector.totalStrength));
-      dispatch(updateFightState("defense"));
+  const defend = (): AppThunk => async (dispatch, getState) => {
+    try {
+      if (armySelector.totalDefense >= enemySelector.enemyForces) {
+        dispatch(destroyUnits(enemySelector.enemyForces));
+        dispatch(clearEnemy());
+        generateFightResources(
+          enemySelector.enemyForces,
+          armySelector.passives.pillager,
+          0
+        );
+      } else {
+        dispatch(updateState("defeat"));
+      }
+    } catch (error) {
+      console.error("Fight sequence error:", error);
+    }
+  };
+  const handleDefend = () => dispatch(defend());
+  const handleFightEnd = () => {
+    dispatch(updateState("preparation"));
+    dispatch(updateFightState("attack"));
+    nextWeek();
   };
 
-  const defend = () => {
-    if (armySelector.totalStrength >= enemySelector.enemyForces) {
-      dispatch(destroyUnits(enemySelector.enemyForces));
-      dispatch(clearEnemy());
-      generateFightResources(
-        enemySelector.enemyForces,
-        armySelector.passives.pillager,
-        0
-      );
-      nextWeek();
+  const currentPhase = (): string => {
+    switch (townSelector.fightState) {
+      case "attack":
+        return "Attack";
+      case "defense":
+        return enemySelector.enemyForces !== 0 ? "Defend" : "Back to Town";
+      default:
+        return "Back to Town";
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (townSelector.fightState === "attack") {
+      handleAttack();
+    } else if (enemySelector.enemyForces !== 0) {
+      handleDefend();
     } else {
-      setDefeat(true);
+      handleFightEnd();
     }
   };
 
@@ -107,33 +123,20 @@ export default function FightPannel() {
       <h3>
         {townSelector.fightState === "attack"
           ? "Attack Phase"
-          : townSelector.fightState === "defense"
+          : enemySelector.enemyForces !== 0
           ? "Defense Phase"
           : "Fight Recap"}
       </h3>
       <div className="fight__art">
         <p> actual fight frfr</p>
       </div>
-      <Button
-        label={
-          townSelector.fightState === "attack"
-            ? "Attack"
-            : townSelector.fightState === "defense"
-            ? "Defend"
-            : "Fight Recap"
-        }
-        onClick={
-          townSelector.fightState === "attack"
-            ? () => attack()
-            : townSelector.fightState === "defense"
-            ? () => defend()
-            : () => console.log("recap")
-        }
-      />
-      <Button
-        label="Cancel"
-        onClick={() => dispatch(updateState("preparation"))}
-      />
+      <Button label={currentPhase()} onClick={handleButtonClick} />
+      {townSelector.fightState === "attack" && (
+        <Button
+          label="Cancel"
+          onClick={() => dispatch(updateState("preparation"))}
+        />
+      )}
     </div>
   );
 }
