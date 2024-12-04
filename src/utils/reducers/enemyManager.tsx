@@ -21,7 +21,7 @@ export const enemyManagerSlice = createSlice({
         destroyEnemy:(state, action) => {
             console.log(state.enemyForces + "-" + action.payload + " enemies performed")
             var enemyForces= state.enemyForces - action.payload
-
+            enemyForces = enemyForces < 0 ? 0 : enemyForces
             return{
                 ...state,
                 enemyForces

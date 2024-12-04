@@ -5,6 +5,14 @@ enum RESOURCES {
   SCAVENGED = "scavenged",
   SOULS = "souls",
 }
+enum CURRENT_STATE {
+  PREPARATION = "preparation",
+  FIGHT = "fight",
+}
+enum FIGHT_STATE {
+  ATTACK = "attack",
+  DEFENSE = "defense",
+}
 
 type TownState = {
   resources: {
@@ -13,6 +21,8 @@ type TownState = {
   previousFightResources: {
     [key: string]: number;
   };
+  state: CURRENT_STATE;
+  fightState: FIGHT_STATE;
   week: number;
   humans: number;
   humansPerWeek: number;
@@ -25,6 +35,8 @@ const initialState: TownState = {
     [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
+  state: CURRENT_STATE.PREPARATION,
+  fightState: FIGHT_STATE.ATTACK,
   week: 1,
   humans: 10,
   humansPerWeek: 10,
@@ -70,6 +82,19 @@ export const townManagerSlice = createSlice({
         previousFightResources,
       };
     },
+
+    updateState: (state, action) => {
+      return {
+        ...state,
+        state: action.payload,
+      };
+    },
+    updateFightState: (state, action) => {
+      return {
+        ...state,
+        fightState: action.payload,
+      };
+    },
   },
 });
 
@@ -78,6 +103,8 @@ export const {
   generateWeeklyHumans,
   removeHumans,
   generateResources,
+  updateState,
+  updateFightState,
 } = townManagerSlice.actions;
 
 export default townManagerSlice.reducer;

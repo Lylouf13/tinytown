@@ -11,6 +11,11 @@
     z-index: 10;
     width: 1000px;
     height: 65%;
+
+    &-hidden{
+        display: none;
+    }
+    
     &__overview{
         display: flex;
         flex-direction: row;
@@ -19,7 +24,8 @@
         gap: 40px;
     }
     &__art{
-        background-color: color.adjust(variables.$primary-color, $lightness: -30%);
-        width: 1000px;
+        background-color: color.adjust(variables.$primary-color, $blackness: +25%);
+        width: 100%;
+        height: 65%;
     }
 }

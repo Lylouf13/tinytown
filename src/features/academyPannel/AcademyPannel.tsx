@@ -20,7 +20,7 @@ export default function AcademyPannel() {
       {/*   ICONS GENERATION  */}
       <div className="academy__iconContainer">
         {Object.keys(unitDatabase).map((unit) => (
-            <UnitIcon unit={unit} />
+            <UnitIcon key={`${unit}-unitIcon`} unit={unit} />
         ))}
       </div>
 
