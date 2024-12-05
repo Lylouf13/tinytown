@@ -22,6 +22,14 @@
         align-items: center;
         justify-content: center;
         gap: 40px;
+        &__text{
+            &-red{
+                color: #db802b;
+            }
+            &-blue{
+                color: #5cacee
+            }
+        }
     }
     &__art{
         background-color: color.adjust(variables.$primary-color, $blackness: +25%);

@@ -9,9 +9,11 @@ import { destroyUnits } from "utils/reducers/armyManager";
 import {
   updateFightState,
   generateResources,
-  updateState,
+  updateGameState,
 } from "utils/reducers/townManager";
 import { setNextWeek, generateWeeklyHumans } from "utils/reducers/townManager";
+
+import { FIGHT_STATE, GAME_STATE } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
 import "./fightPannel.scss";
@@ -48,7 +50,7 @@ export default function FightPannel() {
     try {
       salvaPassive();
       dispatch(destroyEnemy(armySelector.totalStrength));
-      dispatch(updateFightState("defense"))
+      dispatch(updateFightState(FIGHT_STATE.DEFENSE));
 
       if (getState().enemy.enemyForces === 0) {
         generateFightResources(
@@ -62,8 +64,6 @@ export default function FightPannel() {
     }
   };
 
-  const handleAttack = () => dispatch(attack());
-
   const defend = (): AppThunk => async (dispatch, getState) => {
     try {
       if (armySelector.totalDefense >= enemySelector.enemyForces) {
@@ -75,66 +75,61 @@ export default function FightPannel() {
           0
         );
       } else {
-        dispatch(updateState("defeat"));
+        dispatch(updateGameState(GAME_STATE.DEFEAT));
       }
     } catch (error) {
       console.error("Fight sequence error:", error);
     }
   };
-  const handleDefend = () => dispatch(defend());
-  const handleFightEnd = () => {
-    dispatch(updateState("preparation"));
-    dispatch(updateFightState("attack"));
-    nextWeek();
-  };
 
-  const currentPhase = (): string => {
-    switch (townSelector.fightState) {
-      case "attack":
-        return "Attack";
-      case "defense":
-        return enemySelector.enemyForces !== 0 ? "Defend" : "Back to Town";
-      default:
-        return "Back to Town";
-    }
-  };
+  var currentPhase = "";
+  var displayPhase = "";
+  var handleButtonClick = () => {};
 
-  const handleButtonClick = () => {
-    if (townSelector.fightState === "attack") {
-      handleAttack();
-    } else if (enemySelector.enemyForces !== 0) {
-      handleDefend();
-    } else {
-      handleFightEnd();
-    }
-  };
+  if (townSelector.fightState === FIGHT_STATE.ATTACK) {
+    currentPhase = "Attack";
+    displayPhase = "Attack Phase";
+    handleButtonClick = () => dispatch(attack());
+  } else if (
+    townSelector.fightState === FIGHT_STATE.DEFENSE &&
+    enemySelector.enemyForces !== 0
+  ) {
+    currentPhase = "Defend";
+    displayPhase = "Defense Phase";
+    handleButtonClick = () => dispatch(defend());
+  } else {
+    currentPhase = "Back to Town";
+    displayPhase = "Fight Recap";
+    handleButtonClick = () => {
+      dispatch(updateGameState(GAME_STATE.PREPARATION));
+      dispatch(updateFightState(FIGHT_STATE.ATTACK));
+      nextWeek();
+    };
+  }
 
   return (
     <div
       className={`fight ${
-        townSelector.state === "preparation" ? "fight-hidden" : ""
+        townSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""
       }`}
     >
       <h2>Fight</h2>
       <div className="fight__overview">
-        <p>{armySelector.totalStrength}</p>
+        {townSelector.fightState === FIGHT_STATE.ATTACK&& <p className="fight__overview__text-red">{armySelector.totalStrength}</p>}
+        {townSelector.fightState === FIGHT_STATE.DEFENSE&& <p className="fight__overview__text-blue">{armySelector.totalDefense}</p>}
         <p>{enemySelector.enemyForces}</p>
       </div>
       <h3>
-        {townSelector.fightState === "attack"
-          ? "Attack Phase"
-          : enemySelector.enemyForces !== 0
-          ? "Defense Phase"
-          : "Fight Recap"}
+        {displayPhase}
       </h3>
       <div className="fight__art">
         <p> actual fight frfr</p>
       </div>
-      <Button label={currentPhase()} onClick={handleButtonClick} />
-      {townSelector.fightState === "attack" && (
+      <Button label={currentPhase} onClick={() => handleButtonClick()} />
+      {townSelector.fightState === FIGHT_STATE.ATTACK && (
         <Button
           label="Cancel"
-          onClick={() => dispatch(updateState("preparation"))}
+          onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
         />
       )}
     </div>

@@ -120,7 +120,7 @@ export const armyManagerSlice = createSlice({
           );
           action.payload -= unitDatabase[unitDestroyed].defense;
         }
-        if (action.payload  === 0) {
+        if (action.payload  <= 0) {
           totalStrength = modifyTotalStrength(units);
           totalDefense = modifyTotalDefense(units);
           break;

@@ -36,7 +36,7 @@ export class Guardian extends Unit{
             name: "Guardian", 
             strength: 1, 
             defense: 5,
-            cost: 3 , 
+            cost: 3, 
             ranged: true, 
             passives: ['protector', 'pillager'],
             description: `A strong and expensive unit, protects the others from the ennemies assault, adding

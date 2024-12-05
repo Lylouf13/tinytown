@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 
 import Button from "components/button/Button";
 import "./enemyPannel.scss";
-import { updateState } from "utils/reducers/townManager";
+import { updateGameState, GAME_STATE } from "utils/reducers/townManager";
 
 export default function EnemyPannel() {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ export default function EnemyPannel() {
       <p className="enemy__text">They are <span className="enemy__text--red"> {enemySelector.enemyForces}</span> waiting to attack us</p>
       <Button
         label="fight"
-        onClick={() => dispatch(updateState("fight"))}
+        onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
 
       {/* FIGHT RECAP */}
