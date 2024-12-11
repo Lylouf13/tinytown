@@ -1,17 +1,17 @@
 // import { useAppDispatch, useAppSelector } from 'app/hooks';
-
+import { UNIT_UPGRADES } from "models/Units";
+import TalentNode from "features/talents/talentNode/TalentNode";
 import './economyPannel.scss'
 
 export default function EconomyPannel() {
-
-    // const dispatch = useAppDispatch();
-    // const armySelector = useAppSelector((state) => state.army);
-    // const townSelector = useAppSelector((state) => state.town);
 
     
   return (
     <div className='economy'>
         <h2 className='economy__title'>Economy</h2>
+
+        <TalentNode talent={UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS} />
+        <TalentNode talent={UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS_2} />
     </div>
   )
 }

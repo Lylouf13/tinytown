@@ -1,0 +1,18 @@
+@use 'sass:color';
+@use 'utils/style/variables.scss';
+@use 'utils/style/mixins.scss';
+
+
+.talentNode{
+    box-sizing: border-box;
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    border: 2px solid variables.$secondary-color;
+    width: 128px;
+    height: 128px;
+    padding: 20px;
+    &:hover{
+        cursor: pointer;
+        background-color: color.adjust(variables.$primary-color , $lightness: 10%);
+    }
+}

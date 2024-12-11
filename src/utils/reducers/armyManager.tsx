@@ -68,6 +68,16 @@ export const armyManagerSlice = createSlice({
   name: "armyManager",
   initialState,
   reducers: {
+    updateStats: (state) => {
+      const totalDefense = modifyTotalDefense(state.units);
+      const totalStrength = modifyTotalStrength(state.units);
+
+      return {
+        ...state,
+        totalDefense,
+        totalStrength,
+      }
+    },
     addUnit: (state, action) => {
       var units: { [key: string]: number } = {
         ...state.units,
@@ -139,6 +149,6 @@ export const armyManagerSlice = createSlice({
   },
 });
 
-export const { addUnit, destroyUnits } = armyManagerSlice.actions;
+export const { updateStats, addUnit, destroyUnits } = armyManagerSlice.actions;
 
 export default armyManagerSlice.reducer;

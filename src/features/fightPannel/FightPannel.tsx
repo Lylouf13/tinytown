@@ -8,12 +8,15 @@ import {
 import { destroyUnits } from "utils/reducers/armyManager";
 import {
   updateFightState,
-  generateResources,
+  setNextWeek,
   updateGameState,
+  FIGHT_STATE,
+  GAME_STATE,
+} from "utils/reducers/gameManager";
+import {
+  generateResources,
+  generateWeeklyHumans,
 } from "utils/reducers/townManager";
-import { setNextWeek, generateWeeklyHumans } from "utils/reducers/townManager";
-
-import { FIGHT_STATE, GAME_STATE } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
 import "./fightPannel.scss";
@@ -22,12 +25,12 @@ export default function FightPannel() {
   const dispatch = useAppDispatch();
   const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
-  const townSelector = useAppSelector((state) => state.town);
+  const gameSelector = useAppSelector((state) => state.game);
 
   const nextWeek = () => {
     dispatch(setNextWeek());
     dispatch(generateWeeklyHumans());
-    dispatch(generateEnemy(townSelector.week));
+    dispatch(generateEnemy(gameSelector.week));
   };
 
   const salvaPassive = () =>
@@ -86,12 +89,12 @@ export default function FightPannel() {
   var displayPhase = "";
   var handleButtonClick = () => {};
 
-  if (townSelector.fightState === FIGHT_STATE.ATTACK) {
+  if (gameSelector.fightState === FIGHT_STATE.ATTACK) {
     currentPhase = "Attack";
     displayPhase = "Attack Phase";
     handleButtonClick = () => dispatch(attack());
   } else if (
-    townSelector.fightState === FIGHT_STATE.DEFENSE &&
+    gameSelector.fightState === FIGHT_STATE.DEFENSE &&
     enemySelector.enemyForces !== 0
   ) {
     currentPhase = "Defend";
@@ -110,23 +113,29 @@ export default function FightPannel() {
   return (
     <div
       className={`fight ${
-        townSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""
+        gameSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""
       }`}
     >
       <h2>Fight</h2>
       <div className="fight__overview">
-        {townSelector.fightState === FIGHT_STATE.ATTACK&& <p className="fight__overview__text-red">{armySelector.totalStrength}</p>}
-        {townSelector.fightState === FIGHT_STATE.DEFENSE&& <p className="fight__overview__text-blue">{armySelector.totalDefense}</p>}
+        {gameSelector.fightState === FIGHT_STATE.ATTACK && (
+          <p className="fight__overview__text-red">
+            {armySelector.totalStrength}
+          </p>
+        )}
+        {gameSelector.fightState === FIGHT_STATE.DEFENSE && (
+          <p className="fight__overview__text-blue">
+            {armySelector.totalDefense}
+          </p>
+        )}
         <p>{enemySelector.enemyForces}</p>
       </div>
-      <h3>
-        {displayPhase}
-      </h3>
+      <h3>{displayPhase}</h3>
       <div className="fight__art">
         <p> actual fight frfr</p>
       </div>
       <Button label={currentPhase} onClick={() => handleButtonClick()} />
-      {townSelector.fightState === FIGHT_STATE.ATTACK && (
+      {gameSelector.fightState === FIGHT_STATE.ATTACK && (
         <Button
           label="Cancel"
           onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}

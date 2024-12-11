@@ -10,10 +10,11 @@ import "./town.scss";
 
 export default function Town() {
   const townSelector = useAppSelector((state) => state.town);
+  const gameSelector = useAppSelector((state) => state.game);
 
   return (
     <div className="town">
-      <h2>Week {townSelector.week}</h2>
+      <h2>Week {gameSelector.week}</h2>
       <img src="assets/TownTest.png" alt="villeTest" />
       <ResourcesPannel />
       <div className="flex-row">

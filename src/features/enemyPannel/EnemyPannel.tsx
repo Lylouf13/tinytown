@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 
 import Button from "components/button/Button";
 import "./enemyPannel.scss";
-import { updateGameState, GAME_STATE } from "utils/reducers/townManager";
+import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
 
 export default function EnemyPannel() {
   const dispatch = useAppDispatch();

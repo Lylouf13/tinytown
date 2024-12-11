@@ -1,18 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UNIT_UPGRADES,unitUpgradesDatabase } from "models/Units";
 
 enum RESOURCES {
   GOLD = "gold",
   SCAVENGED = "scavenged",
   SOULS = "souls",
-}
-export enum GAME_STATE {
-  PREPARATION = "preparation",
-  FIGHT = "fight",
-  DEFEAT = "defeat",
-}
-export enum FIGHT_STATE {
-  ATTACK = "attack",
-  DEFENSE = "defense",
 }
 
 type TownState = {
@@ -22,11 +14,10 @@ type TownState = {
   previousFightResources: {
     [key: string]: number;
   };
-  state: GAME_STATE;
-  fightState: FIGHT_STATE;
-  week: number;
+
   humans: number;
   humansPerWeek: number;
+  unlockedUnitUpgrades : UNIT_UPGRADES[];
 };
 
 const initialState: TownState = {
@@ -36,23 +27,16 @@ const initialState: TownState = {
     [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
-  state: GAME_STATE.PREPARATION,
-  fightState: FIGHT_STATE.ATTACK,
-  week: 1,
+
   humans: 10,
   humansPerWeek: 10,
+  unlockedUnitUpgrades: []
 };
 
 export const townManagerSlice = createSlice({
   name: "townManager",
   initialState,
   reducers: {
-    setNextWeek: (state) => {
-      return {
-        ...state,
-        week: state.week + 1,
-      };
-    },
     generateWeeklyHumans: (state) => {
       var humans = state.humans + state.humansPerWeek;
 
@@ -83,29 +67,21 @@ export const townManagerSlice = createSlice({
         previousFightResources,
       };
     },
-
-    updateGameState: (state, action) => {
-      return {
-        ...state,
-        state: action.payload,
-      };
-    },
-    updateFightState: (state, action) => {
-      return {
-        ...state,
-        fightState: action.payload,
-      };
-    },
+    unlockUnitUpgrade: (state, action: { payload: UNIT_UPGRADES }) => {
+      if (!state.unlockedUnitUpgrades.includes(action.payload)) {
+        state.unlockedUnitUpgrades.push(action.payload);
+        unitUpgradesDatabase[action.payload].unlocked = true;
+        unitUpgradesDatabase[action.payload].effect();
+      }
+    }
   },
 });
 
 export const {
-  setNextWeek,
   generateWeeklyHumans,
   removeHumans,
   generateResources,
-  updateGameState,
-  updateFightState,
+  unlockUnitUpgrade,
 } = townManagerSlice.actions;
 
 export default townManagerSlice.reducer;
