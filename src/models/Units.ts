@@ -11,7 +11,11 @@ export class Berserk extends Unit {
       passives: ["pillager"],
       description: `A cheap unit that uses anything he can find as a weapon to protect the town.
             Can find resources to salvage during fights`,
-      upgrades: ["Rage of the Ancients", "Rage of the Ancients 2"],
+      upgrades: [
+        "Rage of the Ancients",
+        "Rage of the Ancients 2",
+        "Not a test upgrade",
+      ],
     });
   }
 }
@@ -73,13 +77,13 @@ export enum UNIT_PASSIVES {
 export enum UNIT_UPGRADES {
   RAGE_OF_THE_ANCIENTS = "Rage of the Ancients",
   RAGE_OF_THE_ANCIENTS_2 = "Rage of the Ancients 2",
+  NOT_A_TEST_UPGRADE = "Not a test upgrade",
 }
-
 
 interface Upgrade {
   name: string;
   description: string;
-  requires: UNIT_UPGRADES[];
+  requirements: UNIT_UPGRADES[];
   unlocked: boolean;
   effect: () => void;
 }
@@ -88,7 +92,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   [UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS]: {
     name: "Rage of the Ancients",
     description: "increases strength by 1",
-    requires: [],
+    requirements: [],
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1),
   },
@@ -96,8 +100,19 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   [UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS_2]: {
     name: "Rage of the Ancients 2",
     description: "increases strength by 2",
-    requires: [UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS],
+    requirements: [UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS],
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 2),
+  },
+
+  [UNIT_UPGRADES.NOT_A_TEST_UPGRADE]: {
+    name: "Not a test upgrade",
+    description: "increases strength by 1000",
+    requirements: [
+      UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS,
+      UNIT_UPGRADES.RAGE_OF_THE_ANCIENTS_2,
+    ],
+    unlocked: false,
+    effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1000),
   },
 };
