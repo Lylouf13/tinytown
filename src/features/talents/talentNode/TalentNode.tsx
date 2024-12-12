@@ -17,7 +17,6 @@ export default function TalentNode({ talent }: TalentNodeProps) {
       return true;
     } else{
       for (const requirement of unitUpgradesDatabase[talent].requirements) {
-        console.log(unitUpgradesDatabase[requirement]);
         if (!unitUpgradesDatabase[requirement].unlocked) {
           return false;
         }
@@ -30,8 +29,7 @@ export default function TalentNode({ talent }: TalentNodeProps) {
     if (checkRequirements()) {
       dispatch(unlockUnitUpgrade(talent));
       dispatch(updateStats());
-      console.log(`${talent} unlocked`);
-    } else console.log(`${talent} not unlocked, requirement missing`);
+    } 
   };
   return (
     <button onClick={handleClick} className="talentNode">

@@ -13,7 +13,6 @@ export const enemyManagerSlice = createSlice({
     reducers:{
         generateEnemy: (state, action) => {
             var enemyForces = state.enemyForces + (state.weeklyForces * (action.payload+1)) + randomInt(0, action.payload*2)
-            console.log(enemyForces)
             return{
                 ...state,
                 enemyForces
@@ -21,7 +20,6 @@ export const enemyManagerSlice = createSlice({
         },
         // Destroys a set amount of forces
         destroyEnemy:(state, action) => {
-            console.log(state.enemyForces + "-" + action.payload + " enemies performed")
             var enemyForces= state.enemyForces - action.payload
             enemyForces = enemyForces < 0 ? 0 : enemyForces
             return{
