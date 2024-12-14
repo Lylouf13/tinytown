@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UNIT_UPGRADES,unitUpgradesDatabase } from "models/Units";
+import { UNIT_TALENTS,unitTalentsDatabase } from "models/UnitTalents";
 
 enum RESOURCES {
   GOLD = "gold",
@@ -17,7 +17,7 @@ type TownState = {
 
   humans: number;
   humansPerWeek: number;
-  unlockedUnitUpgrades : UNIT_UPGRADES[];
+  unlockedUnitTalents : UNIT_TALENTS[];
 };
 
 const initialState: TownState = {
@@ -30,7 +30,7 @@ const initialState: TownState = {
 
   humans: 10,
   humansPerWeek: 10,
-  unlockedUnitUpgrades: []
+  unlockedUnitTalents: []
 };
 
 export const townManagerSlice = createSlice({
@@ -67,11 +67,11 @@ export const townManagerSlice = createSlice({
         previousFightResources,
       };
     },
-    unlockUnitUpgrade: (state, action: { payload: UNIT_UPGRADES }) => {
-      if (!state.unlockedUnitUpgrades.includes(action.payload)) {
-        state.unlockedUnitUpgrades.push(action.payload);
-        unitUpgradesDatabase[action.payload].unlocked = true;
-        unitUpgradesDatabase[action.payload].effect();
+    unlockUnitUpgrade: (state, action: { payload: UNIT_TALENTS }) => {
+      if (!state.unlockedUnitTalents.includes(action.payload)) {
+        state.unlockedUnitTalents.push(action.payload);
+        unitTalentsDatabase[action.payload].unlocked = true;
+        unitTalentsDatabase[action.payload].effect();
       }
     }
   },

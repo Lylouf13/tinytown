@@ -9,7 +9,6 @@ interface UnitProps {
   ranged: boolean;
   passives: PassiveType;
   description: string;
-  upgrades: string[];
 }
 
 export class Unit implements UnitProps {
@@ -20,7 +19,6 @@ export class Unit implements UnitProps {
   ranged: boolean;
   passives: PassiveType;
   description: string;
-  upgrades: string[];
 
   constructor({
     name,
@@ -30,7 +28,6 @@ export class Unit implements UnitProps {
     ranged,
     passives,
     description,
-    upgrades,
   }: UnitProps) {
     this.name = name;
     this.strength = strength;
@@ -39,7 +36,6 @@ export class Unit implements UnitProps {
     this.ranged = ranged;
     this.passives = passives;
     this.description = description;
-    this.upgrades = upgrades;
   }
 
   // Method to add a passive to the unit
