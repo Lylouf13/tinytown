@@ -1,11 +1,12 @@
 .tooltip{
+    margin-left: 30px;
     padding: 15px 25px;
     max-width: 350px;
     background-color: #1b1f21 ;
     color: #f7eed6 ;
     border: #f7eed6 2px solid ;
     z-index: 2;
-    box-shadow:  9px 13px 4px 0 #04040459;
+    box-shadow:  9px 13px 4px  #04040459;
 
 
     &__title{
@@ -21,6 +22,10 @@
         flex-direction: row;
         justify-content: center;
         gap: 15px;
+        &-col{
+            flex-direction: column;
+            padding-left: 35px;
+        }
     }
     &__text{
         font-size: 14px;
@@ -38,6 +43,9 @@
             padding: 0 25px;
             background-color: #5f5573;
             border: #f7eed6 2px solid ;
+        }
+        &-required{
+            color: #d13216;
         }
     }
 }

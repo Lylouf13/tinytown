@@ -11,13 +11,12 @@
     width: 128px;
     height: 128px;
     padding: 20px;
-    &:hover{
+    &:hover:not(&-locked){
         cursor: pointer;
         background-color: color.adjust(variables.$primary-color , $lightness: 10%);
     }
 
     &-locked{
-        cursor: not-allowed;
         background-color: color.adjust(variables.$primary-color , $lightness: -5%);
         color: color.adjust(variables.$secondary-color, $lightness: -10%);
         border: 2px solid color.adjust(variables.$secondary-color, $lightness: -20%);

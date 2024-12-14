@@ -1,6 +1,5 @@
 type PassiveType = ("pillager" | "salva" | "diviner" | "protector")[];
 
-
 interface UnitProps {
   name: string;
   strength: number;

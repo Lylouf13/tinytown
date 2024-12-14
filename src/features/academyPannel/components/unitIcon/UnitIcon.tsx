@@ -25,7 +25,6 @@ export default function UnitIcon({ unit, row }: UnitIconProps) {
         alt={`${unit}-icon`}
         
         data-tooltip-id={`tooltip-${unit}`}
-        data-tooltip-offset={30}
       />
       <UnitTooltip
         key={`${unit}-tooltip`}

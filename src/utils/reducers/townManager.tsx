@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UNIT_TALENTS,unitTalentsDatabase } from "models/UnitTalents";
-
-enum RESOURCES {
-  GOLD = "gold",
-  SCAVENGED = "scavenged",
-  SOULS = "souls",
-}
+import { RESOURCES } from "models/Enums";
 
 type TownState = {
   resources: {

@@ -20,27 +20,21 @@ export default function UnitTooltip({
 }: UnitTooltipProps) {
   return (
     <Tooltip
+      disableStyleInjection
       className="tooltip"
       id={`tooltip-${title}`}
       place="right"
-      disableStyleInjection
     >
       <h3 className="tooltip__title">{title.toUpperCase()}</h3>
       <p className="tooltip__text">{description}</p>
       <div className="tooltip__data">
-        {strength && (
-          <p className="tooltip__text tooltip__text-strength">
-            Strength: {strength}
-          </p>
-        )}
-        {defense && (
-          <p className="tooltip__text tooltip__text-defense">
-            Defense: {defense}
-          </p>
-        )}
-        {cost && (
-          <p className="tooltip__text tooltip__text-cost">Cost: {cost}</p>
-        )}
+        <p className="tooltip__text tooltip__text-strength">
+          Strength: {strength}
+        </p>
+        <p className="tooltip__text tooltip__text-defense">
+          Defense: {defense}
+        </p>
+        <p className="tooltip__text tooltip__text-cost">Cost: {cost}</p>
       </div>
       <h3 className="tooltip__title">Passives</h3>
       <div className="tooltip__data">
