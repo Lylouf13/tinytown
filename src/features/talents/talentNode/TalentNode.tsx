@@ -61,6 +61,7 @@ export default function TalentNode({ talent }: TalentNodeProps) {
         {!checkRequirements() && <img className="talentNode__lock" src="/assets/icons/misc/locked.png" alt="lock" />}
       </button>
       <TalentTooltip
+        key={`tooltip-${talent}`}
         title={talentData.name}
         description={talentData.description}
         cost={talentData.cost}

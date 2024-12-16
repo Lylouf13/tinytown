@@ -14,27 +14,20 @@
   border: 2px solid variables.$secondary-color;
   width: 64px;
   height: 64px;
-  margin: 20px;
+  margin: 0px;
 
   filter: grayscale(100%);
   transition: filter 0.5s;
-
-  &:hover:not(&-locked, &-unlocked) {
-    cursor: pointer;
-    background-color: color.adjust(variables.$primary-color, $lightness: 10%);
-  }
 
   &-locked {
     background-color: color.adjust(variables.$primary-color, $lightness: -5%);
     color: color.adjust(variables.$secondary-color, $lightness: -10%);
     border: 2px solid color.adjust(variables.$secondary-color, $lightness: -20%);
-
   }
 
   &-unlocked {
     background-color: color.adjust(variables.$primary-color, $lightness: 20%);
     filter: grayscale(0%);
-
   }
 
   &__lock {
@@ -45,5 +38,9 @@
   &__icon {
     width: 64px;
     height: 64px;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(140%);
+    }
   }
 }
