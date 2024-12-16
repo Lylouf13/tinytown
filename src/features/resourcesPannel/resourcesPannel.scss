@@ -1,34 +1,33 @@
-.resources{
-    display: flex;
-    position: sticky;
-    top: 20px;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-    
-    z-index: 1;
-    background-color: #1b1f21;
-    color: #f7eed6;
-    border: 2px solid #f7eed6;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 700;
+.resources {
+  display: flex;
+  position: sticky;
+  top: 20px;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
 
-    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 50%);
+  z-index: 1;
+  background-color: #1b1f21;
+  color: #f7eed6;
+  border: 2px solid #f7eed6;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
 
-    &__text{
+  box-shadow: 9px 13px 4px 0 rgb(4 4 4 / 50%);
 
-        font-size: 18px;
+  &__text {
+    font-size: 18px;
 
-        &--gold{
-            color: gold;
-        }
-        &--scavenged{
-            color: rgb(186, 199, 198);
-        }
-        &--souls{
-            color: #77aaa2;
-        }
+    &--gold {
+      color: gold;
     }
+    &--scavenged {
+      color: rgb(186, 199, 198);
+    }
+    &--souls {
+      color: #77aaa2;
+    }
+  }
 }

@@ -1,12 +1,8 @@
-import { UNIT_TYPES, unitDatabase } from "./Units";
-import { RESOURCES } from "./Enums";
-
-export enum UNIT_TALENTS {
-  // Berserk
-  RAGE_OF_THE_ANCIENTS = "Rage of the Ancients",
-  RAGE_OF_THE_ANCIENTS_2 = "Rage of the Ancients 2",
-  NOT_A_TEST_UPGRADE = "Not a test upgrade",
-}
+import { UNIT_TYPES } from "enums/UnitTypes";
+import { RESOURCES } from "../enums/Resources";
+import { UNIT_TALENTS } from "../enums/UnitTalents";
+import { UNIT_PASSIVES } from "enums/UnitPassives";
+import { unitDatabase } from "./Units";
 
 interface Talent {
   name: string;
@@ -58,5 +54,18 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     },
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1000),
+  },
+
+  [UNIT_TALENTS.KING_OF_THE_HILL]: {
+    name: "King Of The Hill",
+    description: "Each pack of 3 berserk scavenges 1 more resource",
+    requirements: [],
+    cost: {
+      [RESOURCES.GOLD]: 0,
+      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SOULS]: 0,
+    },
+    unlocked: false,
+    effect: () => (unitDatabase[UNIT_TYPES.BERSERK].addPassive(UNIT_PASSIVES.SALVA)),
   },
 };

@@ -1,5 +1,5 @@
 import { Tooltip } from "react-tooltip";
-import { RESOURCES } from "models/Enums";
+import { RESOURCES } from "enums/Resources";
 import { UNIT_TALENTS, unitTalentsDatabase } from "models/UnitTalents";
 
 import "../customTooltip.scss";

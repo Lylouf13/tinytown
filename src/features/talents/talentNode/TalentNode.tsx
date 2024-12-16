@@ -1,13 +1,14 @@
 import "./talentNode.scss";
 
-import { UNIT_TALENTS, unitTalentsDatabase } from "models/UnitTalents";
+import { UNIT_TALENTS } from "enums/UnitTalents";
+import { unitTalentsDatabase } from "models/UnitTalents";
 import { unlockUnitUpgrade } from "utils/reducers/townManager";
 import { updateStats } from "utils/reducers/armyManager";
 import { useAppDispatch } from "app/hooks";
 
 import TalentTooltip from "components/tooltip/talentTooltip/TalentTooltip";
 
-type TalentNodeProps = {
+interface TalentNodeProps {
   talent: UNIT_TALENTS;
 };
 
@@ -52,13 +53,18 @@ export default function TalentNode({ talent }: TalentNodeProps) {
         className={stateHandler()}
         data-tooltip-id={`tooltip-${talent}`}
       >
-        {talent}
+        <img
+          className="talentNode__icon"
+          src={`/assets/icons/talents/${talent}_icon.png`}
+          alt={`${talent}-icon`}
+        />
+        {!checkRequirements() && <img className="talentNode__lock" src="/assets/icons/misc/locked.png" alt="lock" />}
       </button>
       <TalentTooltip
         title={talentData.name}
         description={talentData.description}
         cost={talentData.cost}
-        required={talentData.requirements}
+        required={!checkRequirements() ? talentData.requirements : []}
       />
     </>
   );

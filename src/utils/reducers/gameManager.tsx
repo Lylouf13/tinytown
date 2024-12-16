@@ -11,7 +11,7 @@ export enum GAME_STATE {
     DEFENSE = "defense",
   }
 
-type GameState = {
+interface GameState {
     state: GAME_STATE;
     fightState: FIGHT_STATE;
     week: number;

@@ -6,6 +6,7 @@ import { addUnit } from "utils/reducers/armyManager";
 import { removeHumans } from "utils/reducers/townManager";
 import { unitDatabase } from "models/Units";
 
+
 import "./unitTrainingRow.scss";
 
 interface UnitTrainingRowProps {

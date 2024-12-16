@@ -1,28 +1,49 @@
-@use 'sass:color';
-@use 'utils/style/variables.scss';
-@use 'utils/style/mixins.scss';
+@use "sass:color";
+@use "utils/style/variables.scss";
+@use "utils/style/mixins.scss";
 
+.talentNode {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  background-color: variables.$primary-color;
+  color: variables.$secondary-color;
+  border: 2px solid variables.$secondary-color;
+  width: 64px;
+  height: 64px;
+  margin: 20px;
 
-.talentNode{
-    box-sizing: border-box;
-    background-color: variables.$primary-color;
-    color: variables.$secondary-color;
-    border: 2px solid variables.$secondary-color;
-    width: 128px;
-    height: 128px;
-    padding: 20px;
-    &:hover:not(&-locked){
-        cursor: pointer;
-        background-color: color.adjust(variables.$primary-color , $lightness: 10%);
-    }
+  filter: grayscale(100%);
+  transition: filter 0.5s;
 
-    &-locked{
-        background-color: color.adjust(variables.$primary-color , $lightness: -5%);
-        color: color.adjust(variables.$secondary-color, $lightness: -10%);
-        border: 2px solid color.adjust(variables.$secondary-color, $lightness: -20%);
-    }
+  &:hover:not(&-locked, &-unlocked) {
+    cursor: pointer;
+    background-color: color.adjust(variables.$primary-color, $lightness: 10%);
+  }
 
-    &-unlocked{
-        background-color: color.adjust(variables.$primary-color, $lightness: 20%);
-    }
+  &-locked {
+    background-color: color.adjust(variables.$primary-color, $lightness: -5%);
+    color: color.adjust(variables.$secondary-color, $lightness: -10%);
+    border: 2px solid color.adjust(variables.$secondary-color, $lightness: -20%);
+
+  }
+
+  &-unlocked {
+    background-color: color.adjust(variables.$primary-color, $lightness: 20%);
+    filter: grayscale(0%);
+
+  }
+
+  &__lock {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+  }
+  &__icon {
+    width: 64px;
+    height: 64px;
+  }
 }

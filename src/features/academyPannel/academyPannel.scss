@@ -1,57 +1,56 @@
-.academy{
-    box-sizing: border-box;
-    background-color: #1b1f21;
-    color: #f7eed6;
-    border: 2px solid #f7eed6;
-    border-radius: 20px;
-    padding: 30px 0;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 700;
+.academy {
+  box-sizing: border-box;
+  background-color: #1b1f21;
+  color: #f7eed6;
+  border: 2px solid #f7eed6;
+  border-radius: 20px;
+  padding: 30px 0;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
 
-    box-shadow:  9px 13px 4px 0 rgb(4 4 4 / 50%);
-    margin-bottom: 75px;;
-    
-    &__title{
-        margin: 0;
-        padding: 0;
-        background-color: #24282b;
-        font-size: 26px;
-    }
-    &__statContainer{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        margin-bottom: 20px;
-        border-bottom: #24282b 2px solid;
+  box-shadow: 9px 13px 4px 0 rgb(4 4 4 / 50%);
+  margin-bottom: 75px;
 
-        &__stat{
-            margin: 0;
-            padding: 0;
-            font-size: 23px;
-            &-red{
-                color: #db802b;
-                display: inline;
-                padding-left: 2px;
-                font-size: 23px;
-            }
-            &-blue{
-                color: #5cacee;
-                display: inline;
-                padding-left: 2px;
-                font-size: 23px;
-            }
-        }
-    }
-    &__iconContainer{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        gap: 5px;
-    }
+  &__title {
+    margin: 0;
+    padding: 0;
+    background-color: #24282b;
+    font-size: 26px;
+  }
+  &__statContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: #24282b 2px solid;
 
+    &__stat {
+      margin: 0;
+      padding: 0;
+      font-size: 23px;
+      &-red {
+        color: #db802b;
+        display: inline;
+        padding-left: 2px;
+        font-size: 23px;
+      }
+      &-blue {
+        color: #5cacee;
+        display: inline;
+        padding-left: 2px;
+        font-size: 23px;
+      }
+    }
+  }
+  &__iconContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 5px;
+  }
 }

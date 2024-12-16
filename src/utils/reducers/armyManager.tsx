@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UNIT_TYPES, UNIT_PASSIVES, unitDatabase } from "models/Units";
+import { UNIT_PASSIVES } from "enums/UnitPassives";
+import { UNIT_TYPES } from "enums/UnitTypes";
+import { unitDatabase } from "models/Units";
 
-type ArmyState = {
+interface ArmyState {
   units: {
     [key: string]: number;
   };

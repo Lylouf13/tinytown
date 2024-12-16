@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UNIT_TALENTS,unitTalentsDatabase } from "models/UnitTalents";
-import { RESOURCES } from "models/Enums";
+import { RESOURCES } from "enums/Resources";
 
-type TownState = {
+interface TownState {
   resources: {
     [key: string]: number;
   };
