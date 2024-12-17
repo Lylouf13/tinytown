@@ -5,47 +5,23 @@ import TalentLink from "../talentLink/TalentLink";
 import './talentTree.scss'
 
 interface TalentTreeProps {
-  talents: UNIT_TALENTS[];
-  talentPerRow: number[];
+  talents: { [key: string]: UNIT_TALENTS[] };
 }
 
-export default function TalentTree({ talents, talentPerRow }: TalentTreeProps) {
-  var rows: { [key: string]: UNIT_TALENTS[] } = {};
-  var linkers : string[] = []
+export default function TalentTree({ talents }: TalentTreeProps) {
 
-  let talentIndex = 0;
-
-  for (let currentRow = 0; currentRow < talentPerRow.length; currentRow++) {
-    const rowKey = `${currentRow}`;
-    
-
-    if (!rows[rowKey]) {
-      rows[rowKey] = [];
-      
-    }
-
-    for (let i = 0; i < talentPerRow[currentRow]; i++) {
-      if (talentIndex < talents.length) { 
-        rows[rowKey].push(talents[talentIndex]);
-        talentIndex++;
-      } else {
-        break;
-      }
-    }
+  const linkers: string[] = [];
+  for (var i =0; i < Object.keys(talents).length-1; i++) {
+    console.log(talents[i].length)
+    linkers.push(`${talents[i].length.toString()}for${talents[i+1].length.toString()}`)
   }
 
-  for (let i = 0; i < talentPerRow.length; i++) {
-    if(talentPerRow[i+1]) 
-    linkers.push(`${talentPerRow[i]}for${talentPerRow[i+1]}`);
-  }
-
-  console.log(linkers)
   return (
     <div className="talentTree">
-      {Object.keys(rows).map((row: string) => (
+      {Object.keys(talents).map((row: string) => (
         <div className="talentTree__container" key = {`talentRow-${row}`}>
           <div className="talentTree__row" key={`talentRow-${row}`}>
-            {rows[row].map((talent) => (
+            {talents[row].map((talent) => (
               <TalentNode key={`talentTree-${talent}`} talent={talent} />
             ))}
           </div>

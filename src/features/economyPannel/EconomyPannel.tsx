@@ -8,25 +8,34 @@ export default function EconomyPannel() {
       <h2 className="economy__title">Economy</h2>
 
       <TalentTree
-        talents={[
-          UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
-          UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
-          UNIT_TALENTS.NOT_A_TEST_UPGRADE,
-          UNIT_TALENTS.KING_OF_THE_HILL,
-        ]}
-        talentPerRow={[1,2,1]}
+        talents={{
+          "0": [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS],
+          "1": [
+            UNIT_TALENTS.KING_OF_THE_HILL,
+            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
+          ],
+          "2": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
+        }}
       />
-            <TalentTree
-        talents={[
-          UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
-          UNIT_TALENTS.KING_OF_THE_HILL,
-          UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
-          UNIT_TALENTS.KING_OF_THE_HILL,
-          UNIT_TALENTS.NOT_A_TEST_UPGRADE,
-          UNIT_TALENTS.KING_OF_THE_HILL,
-        ]}
-        talentPerRow={[1,2,2,1]}
-        />
+
+      <TalentTree
+        talents={{
+          "0": [
+            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
+            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
+          ],
+          "1": [
+            UNIT_TALENTS.KING_OF_THE_HILL,
+            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
+          ],
+          "2": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
+          "3": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
+          "4": [
+            UNIT_TALENTS.NOT_A_TEST_UPGRADE,
+            UNIT_TALENTS.NOT_A_TEST_UPGRADE,
+          ],
+        }}
+      />
     </div>
   );
 }
