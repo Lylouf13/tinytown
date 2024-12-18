@@ -10,9 +10,9 @@ interface TalentTreeProps {
 
 export default function TalentTree({ talents }: TalentTreeProps) {
 
+  // stores necessary linkers between rows of talents to generate lines automatically
   const linkers: string[] = [];
   for (var i =0; i < Object.keys(talents).length-1; i++) {
-    console.log(talents[i].length)
     linkers.push(`${talents[i].length.toString()}for${talents[i+1].length.toString()}`)
   }
 

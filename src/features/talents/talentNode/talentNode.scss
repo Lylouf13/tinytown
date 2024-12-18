@@ -28,6 +28,7 @@
   &-unlocked {
     background-color: color.adjust(variables.$primary-color, $lightness: 20%);
     filter: grayscale(0%);
+    border: 2px solid red;
   }
 
   &__lock {

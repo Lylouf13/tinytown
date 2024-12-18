@@ -1,41 +1,21 @@
-import { UNIT_TALENTS } from "enums/UnitTalents";
-import TalentTree from "features/talents/talentTree/TalentTree";
+import { useState } from "react";
+import TalentPannel from "./subPannels/talentPannel/TalentPannel";
+import Button from "components/button/Button";
 import "./economyPannel.scss";
 
 export default function EconomyPannel() {
+
+  const [currentPannel, setCurrentPannel] = useState("Talents");
   return (
     <div className="economy">
       <h2 className="economy__title">Economy</h2>
-
-      <TalentTree
-        talents={{
-          "0": [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS],
-          "1": [
-            UNIT_TALENTS.KING_OF_THE_HILL,
-            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
-          ],
-          "2": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
-        }}
-      />
-
-      <TalentTree
-        talents={{
-          "0": [
-            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
-            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
-          ],
-          "1": [
-            UNIT_TALENTS.KING_OF_THE_HILL,
-            UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
-          ],
-          "2": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
-          "3": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
-          "4": [
-            UNIT_TALENTS.NOT_A_TEST_UPGRADE,
-            UNIT_TALENTS.NOT_A_TEST_UPGRADE,
-          ],
-        }}
-      />
+      <div className="economy__buttons">
+        <Button label="Town" onClick={() => setCurrentPannel("Town")} />
+        <Button label="Talents" onClick={() => setCurrentPannel("Talents")} />
+      </div>
+      <h3 className="economy__subtitle">{currentPannel}</h3>
+      {currentPannel === "Town" && <p> Town pannels gg</p>}
+      {currentPannel === "Talents" && <TalentPannel />}
     </div>
   );
 }
