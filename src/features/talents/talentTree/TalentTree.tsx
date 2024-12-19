@@ -1,6 +1,6 @@
 import { UNIT_TALENTS } from "enums/UnitTalents";
-import TalentNode from "../talentNode/TalentNode";
-import TalentLink from "../talentLink/TalentLink";
+import TalentNode from "features/talents/talentNode/TalentNode";
+import TalentLink from "features/talents/talentLink/TalentLink";
 
 import './talentTree.scss'
 

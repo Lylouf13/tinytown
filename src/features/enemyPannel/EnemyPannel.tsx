@@ -15,14 +15,19 @@ export default function EnemyPannel() {
 
   return (
     <div className="enemy">
-      <h2 className="enemy__title">Barbarian Camp</h2>
-      <p className="enemy__text">They are <span className="enemy__text--red"> {enemySelector.enemyForces}</span> waiting to attack us</p>
+      <p className="enemy__text--red">Enemies - {enemySelector.enemyForces}</p>
       <Button
         label="fight"
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
-
-      {/* FIGHT RECAP */}
+      {/* 
+      ---------
+      ---------
+      ---------
+      OLD FIGHT RECAP, MIGHT BE USED AGAIN LATER IN FIGHT PANNEL
+      ---------
+      ---------
+      ---------
       <div className="enemy__recap">
         <h2 className="enemy__recap__title">Fight Recap</h2>
         {Object.keys(townSelector.previousFightResources).length > 0 && (
@@ -51,7 +56,7 @@ export default function EnemyPannel() {
               >{`${armySelector.lostUnits[unit]} ${unit} lost`}</p>
             ))
           : null}
-      </div>
+      </div> */}
     </div>
   );
 }

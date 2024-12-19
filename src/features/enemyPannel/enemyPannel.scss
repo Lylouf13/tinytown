@@ -1,39 +1,40 @@
 @use "utils/style/mixins";
 
-.enemy{
-    @include mixins.pannel;
-    min-width: 400px;
-    
-    &__title{
-        margin: 0;
-        padding: 0;
-        background-color: #24282b;
-        font-size: 25px;
-    }
+.enemy {
+  @include mixins.topPannel;
+  width: 29%;
+  gap: 20px;
 
-    &__text{
-        &--red{
-            color: red;
-            font-size: 20px;
-        }
-    }
+  &__title {
+    margin: 0;
+    padding: 0;
+    background-color: #24282b;
+    font-size: 20px;
+  }
 
-    &__recap{
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        width: 100%;
-        background-color: #24282b;
-
-        &__title{
-            padding-top: 20px;
-            padding-left:20px;
-            font-size: 20px;
-        }
-        &__text{
-            padding-left:50px;
-            margin: 0;
-            color: hsl(44, 67%, 65%)
-        }
+  &__text {
+    &--red {
+      color: red;
+      font-size: 20px;
     }
+  }
+
+  &__recap {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    background-color: #24282b;
+
+    &__title {
+      padding-top: 20px;
+      padding-left: 20px;
+      font-size: 20px;
+    }
+    &__text {
+      padding-left: 50px;
+      margin: 0;
+      color: hsl(44, 67%, 65%);
+    }
+  }
 }

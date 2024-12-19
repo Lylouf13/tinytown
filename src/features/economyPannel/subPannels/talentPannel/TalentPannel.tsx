@@ -6,7 +6,7 @@ import { UNIT_TYPES } from "enums/UnitTypes";
 import "./talentPannel.scss";
 
 export default function TalentPannel() {
-  const [currentUnit, setCurrentUnit] = useState(UNIT_TYPES.BERSERK);
+  const [currentUnit, setCurrentUnit] = useState(UNIT_TYPES.BOWER);
   return (
     <div className="talentPannel">
       <div className="talentPannel__buttonContainer">

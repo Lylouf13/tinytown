@@ -14,17 +14,18 @@ export default function Town() {
 
   return (
     <div className="town">
-      <h2>Week {gameSelector.week}</h2>
-      <img src="assets/TownTest.png" alt="villeTest" />
-      <ResourcesPannel />
+      <div className="town__top">
+        <h2 className="town__top__weeks">Week {gameSelector.week}</h2>
+        <ResourcesPannel />
+        <EnemyPannel />
+      </div>
       <div className="flex-row">
         <p>{townSelector.humans} left to guide</p>
       </div>
-        <FightPannel />
+      <FightPannel />
       <div className="flex-row">
         <EconomyPannel />
         <AcademyPannel />
-        <EnemyPannel />
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function ResourcesPannel() {
         <p 
             className={`resources__text resources__text--${resource[0]}`} 
             key={resource[0]}>
-            | {resource[0]}: {resource[1]} |
+            {resource[0]}: {resource[1]}
         </p>)}
     </div>
   )
