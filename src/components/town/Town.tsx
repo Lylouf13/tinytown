@@ -5,11 +5,11 @@ import AcademyPannel from "features/academyPannel/AcademyPannel";
 import FightPannel from "features/fightPannel/FightPannel";
 import ResourcesPannel from "features/resourcesPannel/ResourcesPannel";
 import EnemyPannel from "features/enemyPannel/EnemyPannel";
+import Timeline from "features/timeline/Timeline";
 
 import "./town.scss";
 
 export default function Town() {
-  const townSelector = useAppSelector((state) => state.town);
   const gameSelector = useAppSelector((state) => state.game);
 
   return (
@@ -19,11 +19,9 @@ export default function Town() {
         <ResourcesPannel />
         <EnemyPannel />
       </div>
-      <div className="flex-row">
-        <p>{townSelector.humans} left to guide</p>
-      </div>
+      <Timeline/>
       <FightPannel />
-      <div className="flex-row">
+      <div className="town__main">
         <EconomyPannel />
         <AcademyPannel />
       </div>

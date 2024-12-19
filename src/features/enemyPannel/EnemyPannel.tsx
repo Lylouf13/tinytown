@@ -7,9 +7,9 @@ import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
 
 export default function EnemyPannel() {
   const dispatch = useAppDispatch();
-  const armySelector = useAppSelector((state) => state.army);
+  //const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
-  const townSelector = useAppSelector((state) => state.town);
+  //const townSelector = useAppSelector((state) => state.town);
 
   
 

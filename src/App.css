@@ -17,14 +17,6 @@
   color: #f7eed6;
 }
 
-.flex-row{
-  display: flex;
-  margin-top: 25px;
-  gap: 75px;
-  justify-content: center;
-  width: 100%;
-}
-
 .flex-column{
   display: flex;
   flex-direction: column;

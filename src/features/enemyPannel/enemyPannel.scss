@@ -2,7 +2,6 @@
 
 .enemy {
   @include mixins.topPannel;
-  width: 29%;
   gap: 20px;
 
   &__title {

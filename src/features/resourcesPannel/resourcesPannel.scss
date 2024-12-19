@@ -2,9 +2,8 @@
 
 .resources {
   @include mixins.topPannel;
-  width: 48%;
   font-size: 18px;
-
+  justify-content: space-around;
   gap: 20px;
   &__text {
     font-size: 15px;
@@ -17,6 +16,12 @@
     }
     &--souls {
       color: #77aaa2;
+    }
+    &--humans{
+      padding:10px;
+      border-radius: 50px;
+      background-color: #744417;
+      color: white;
     }
   }
 }

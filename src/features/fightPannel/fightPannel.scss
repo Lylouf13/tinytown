@@ -23,7 +23,10 @@
     justify-content: center;
     gap: 40px;
     &__text {
-      &-red {
+      &-red{
+        color: red;
+      }
+      &-brown {
         color: #db802b;
       }
       &-blue {

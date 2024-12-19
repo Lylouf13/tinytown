@@ -119,16 +119,22 @@ export default function FightPannel() {
       <h2>Fight</h2>
       <div className="fight__overview">
         {gameSelector.fightState === FIGHT_STATE.ATTACK && (
-          <p className="fight__overview__text-red">
-            {armySelector.totalStrength}
-          </p>
+          <>
+            <p className="fight__overview__text-brown">
+              {armySelector.totalStrength}
+            </p>
+            <p>vs</p>
+          </>
         )}
         {gameSelector.fightState === FIGHT_STATE.DEFENSE && (
-          <p className="fight__overview__text-blue">
-            {armySelector.totalDefense}
-          </p>
+          <>
+            <p className="fight__overview__text-blue">
+              {armySelector.totalDefense}
+            </p>
+            <p>vs</p>
+          </>
         )}
-        <p>{enemySelector.enemyForces}</p>
+        <p className="fight__overview__text-red">{enemySelector.enemyForces}</p>
       </div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
