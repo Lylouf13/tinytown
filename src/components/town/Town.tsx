@@ -19,11 +19,17 @@ export default function Town() {
         <ResourcesPannel />
         <EnemyPannel />
       </div>
-      <Timeline/>
+      <Timeline />
       <FightPannel />
       <div className="town__main">
-        <EconomyPannel />
-        <AcademyPannel />
+        <div className="town__mainPannel">
+          <img className="town__banner" src="assets/banners/EconomyBanner.png" alt="banner" />
+          <EconomyPannel />
+        </div>
+        <div className="town__mainPannel">
+          <img className="town__banner" src="assets/banners/EconomyBannerALED.png" alt="banner" />
+          <AcademyPannel />
+        </div>
       </div>
     </div>
   );

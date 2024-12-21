@@ -16,6 +16,7 @@
         border: none;
         cursor: pointer;
         transition: all 0.3s;
+        image-rendering: pixelated;
         filter: grayscale(100%);
         &:hover:not(&-active){
             transform: scale(1.1);

@@ -1,17 +1,8 @@
-.academy {
-  box-sizing: border-box;
-  background-color: #1b1f21;
-  color: #f7eed6;
-  border: 2px solid #f7eed6;
-  border-radius: 20px;
-  padding: 30px 0;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 700;
+@use "utils/style/mixins.scss";
 
-  box-shadow: 9px 13px 4px 0 rgb(4 4 4 / 50%);
-  margin-bottom: 75px;
+
+.academy {
+  @include mixins.pannel;
 
   &__title {
     margin: 0;

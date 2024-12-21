@@ -24,4 +24,16 @@
     gap: 50px;
 
   }
+  &__mainPannel{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+  }
+  &__banner{
+    image-rendering: pixelated;
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
 }

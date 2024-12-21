@@ -25,10 +25,9 @@ export default function TalentPannel() {
           </button>
         ))}
       </div>
-      {currentUnit === UNIT_TYPES.BERSERK && (
-        <>
-          <h3> Berserk </h3>
           <TalentTree
+            title="Berserk"
+            active={currentUnit === UNIT_TYPES.BERSERK}
             talents={{
               "0": [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS],
               "1": [
@@ -38,12 +37,10 @@ export default function TalentPannel() {
               "2": [UNIT_TALENTS.NOT_A_TEST_UPGRADE],
             }}
           />
-        </>
-      )}
-      {currentUnit === UNIT_TYPES.BOWER && (
-        <>
-          <h3> Bower </h3>
+
           <TalentTree
+            title="Bower"
+            active={currentUnit === UNIT_TYPES.BOWER}
             talents={{
               "0": [UNIT_TALENTS.BOWER_1],
               "1": [UNIT_TALENTS.BOWER_2, UNIT_TALENTS.BOWER_3],
@@ -51,12 +48,10 @@ export default function TalentPannel() {
               "3": [UNIT_TALENTS.BOWER_5],
             }}
           />
-        </>
-      )}
-      {currentUnit === UNIT_TYPES.GUARDIAN && (
-        <>
-          <h3> Guardian </h3>
+
           <TalentTree
+            title="Guardian"
+            active={currentUnit === UNIT_TYPES.GUARDIAN}
             talents={{
               "0": [UNIT_TALENTS.GUARDIAN_1],
               "1": [UNIT_TALENTS.GUARDIAN_2],
@@ -64,8 +59,7 @@ export default function TalentPannel() {
               "3": [UNIT_TALENTS.GUARDIAN_5],
             }}
           />
-        </>
-      )}
+
     </div>
   );
 }

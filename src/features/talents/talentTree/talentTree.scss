@@ -1,5 +1,8 @@
 .talentTree{
     margin: 20px;
+    &-hidden{
+        display: none;
+    }
     &__container{
         display: flex;
         flex-direction: column;
