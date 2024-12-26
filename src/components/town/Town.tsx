@@ -19,15 +19,16 @@ export default function Town() {
         <ResourcesPannel />
         <EnemyPannel />
       </div>
-      <Timeline />
+      {/* <Timeline /> - TBI */}
       <FightPannel />
       <div className="town__main">
         <div className="town__mainPannel">
           <img className="town__banner" src="assets/banners/EconomyBanner.png" alt="banner" />
           <EconomyPannel />
+          <img className="town__banner" src="assets/banners/banner_bottom.png" alt="banner" />
         </div>
         <div className="town__mainPannel">
-          <img className="town__banner" src="assets/banners/EconomyBannerALED.png" alt="banner" />
+          <img className="town__banner" src="assets/banners/AcademyBanner.png" alt="banner" />
           <AcademyPannel />
         </div>
       </div>

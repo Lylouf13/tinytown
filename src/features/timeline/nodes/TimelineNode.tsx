@@ -1,9 +1,9 @@
 
 
 type TimelineNodeProps = {
-    type: string
+    type?: string
 }
-export default function TimelineNode({type}: TimelineNodeProps) {
+export default function TimelineNode({type="default"}: TimelineNodeProps) {
   return (
     <>
     {(type === "default") &&
@@ -17,8 +17,4 @@ export default function TimelineNode({type}: TimelineNodeProps) {
     }
     </>
   )
-}
-
-TimelineNode.defaultProps = {
-  type: "default"
 }

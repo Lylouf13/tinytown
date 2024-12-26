@@ -32,8 +32,9 @@
   }
   &__banner{
     image-rendering: pixelated;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
+    object-position: bottom;
     width: 100%;
   }
 }

@@ -21,7 +21,7 @@ export default function TalentPannel() {
               setCurrentUnit(UNIT_TYPES[unit as keyof typeof UNIT_TYPES])
             }
           >
-            <img src={`/assets/icons/units/${unit}_icon.png`} alt={`${unit}_icon`}/>
+            <img src={`/assets/icons/units/${unit.toLowerCase()}_icon.png`} alt={`${unit}_icon`}/>
           </button>
         ))}
       </div>
