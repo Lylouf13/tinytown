@@ -4,7 +4,7 @@ import { UNIT_TALENTS } from "enums/UnitTalents";
 import { unitTalentsDatabase } from "models/UnitTalents";
 import { unlockUnitUpgrade } from "utils/reducers/townManager";
 import { updateStats } from "utils/reducers/armyManager";
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 
 import TalentTooltip from "components/tooltip/talentTooltip/TalentTooltip";
 
@@ -15,13 +15,14 @@ interface TalentNodeProps {
 export default function TalentNode({ talent }: TalentNodeProps) {
   const dispatch = useAppDispatch();
   const talentData = unitTalentsDatabase[talent];
+  const townSelector = useAppSelector((state) => state.town);
 
   const checkRequirements = () => {
     if (talentData.requirements.length === 0) {
       return true;
     } else {
       for (const requirement of talentData.requirements) {
-        if (!unitTalentsDatabase[requirement].unlocked) {
+        if (!townSelector.unlockedUnitTalents.includes(requirement)) {
           return false;
         }
       }
