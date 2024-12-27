@@ -2,8 +2,11 @@
 
 
 .academy {
-  @include mixins.pannel;
-
+  display: flex;
+  flex-direction: column;
+  &__pannel{
+    @include mixins.pannel;
+  }
   &__title {
     margin: 0;
     padding: 0;

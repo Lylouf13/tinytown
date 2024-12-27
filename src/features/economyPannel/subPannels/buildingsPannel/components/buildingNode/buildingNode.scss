@@ -1,0 +1,6 @@
+@use "utils/style/variables.scss";
+@use "utils/style/mixins.scss";
+
+.buildingNode{
+  @include mixins.iconButton;
+}

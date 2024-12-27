@@ -5,7 +5,7 @@ import AcademyPannel from "features/academyPannel/AcademyPannel";
 import FightPannel from "features/fightPannel/FightPannel";
 import ResourcesPannel from "features/resourcesPannel/ResourcesPannel";
 import EnemyPannel from "features/enemyPannel/EnemyPannel";
-import Timeline from "features/timeline/Timeline";
+//import Timeline from "features/timeline/Timeline";
 
 import "./town.scss";
 
@@ -22,15 +22,8 @@ export default function Town() {
       {/* <Timeline /> - TBI */}
       <FightPannel />
       <div className="town__main">
-        <div className="town__mainPannel">
-          <img className="town__banner" src="assets/banners/EconomyBanner.png" alt="banner" />
-          <EconomyPannel />
-          <img className="town__banner" src="assets/banners/banner_bottom.png" alt="banner" />
-        </div>
-        <div className="town__mainPannel">
-          <img className="town__banner" src="assets/banners/AcademyBanner.png" alt="banner" />
-          <AcademyPannel />
-        </div>
+        <EconomyPannel />
+        <AcademyPannel />
       </div>
     </div>
   );

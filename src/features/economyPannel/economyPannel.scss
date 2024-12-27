@@ -1,17 +1,22 @@
 @use "utils/style/mixins.scss";
+@use "utils/style/variables.scss";
 
 .economy {
-  @include mixins.pannel;
+  display: flex;
+  flex-direction: column;
+  &__pannel{
+    @include mixins.pannel;
+  }
   &__title {
     margin: 0;
     padding: 0;
-    background-color: #24282b;
+    background-color: variables.$primary-color-light;
     font-size: 25px;
   }
   &__subtitle{
     margin-top: 10px;
     font-size: 22px;
-    background-color: #24282b;
+    background-color: variables.$primary-color-light;
   }
   &__text {
     &--red {

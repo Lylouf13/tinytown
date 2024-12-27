@@ -3,18 +3,7 @@
 @use "utils/style/mixins.scss";
 
 .talentNode {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  box-sizing: border-box;
-  background-color: variables.$primary-color;
-  color: variables.$secondary-color;
-  border: 2px solid variables.$secondary-color;
-  width: 64px;
-  height: 64px;
-  margin: 0px;
+  @include mixins.iconButton;
 
   filter: grayscale(100%);
   transition: filter 0.5s;
@@ -36,12 +25,5 @@
     width: 64px;
     height: 64px;
   }
-  &__icon {
-    width: 64px;
-    height: 64px;
-    &:hover {
-      cursor: pointer;
-      filter: brightness(140%);
-    }
-  }
+
 }
