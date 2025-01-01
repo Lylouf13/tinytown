@@ -1,48 +1,53 @@
 import { Tooltip } from "react-tooltip";
 import { RESOURCES } from "enums/Resources";
 import { UNIT_TALENTS } from "enums/UnitTalents";
+import { Talent } from "models/UnitTalents";
 import { unitTalentsDatabase } from "models/UnitTalents";
 
 import "../customTooltip.scss";
 
 interface TalentTooltipProps {
-  title: string;
-  description: string;
-  cost:{ [key in RESOURCES]: number };
-  required?: UNIT_TALENTS[]
+  talentData: Talent
 }
 
 export default function TalentTooltip({
-  title,
-  description,
-  cost,
-  required
+  talentData
 }: TalentTooltipProps) {
   return (
     <Tooltip
       disableStyleInjection
       className="tooltip"
-      id={`tooltip-${title}`}
+      id={`tooltip-${talentData.name}`}
       place="right"
       opacity={0.99}
     >
-      <h3 className="tooltip__title">{title.toUpperCase()}</h3>
-      <p className="tooltip__text">{description}</p>
+      <h3 className="tooltip__title">{talentData.name.toUpperCase()}</h3>
+      <p className="tooltip__text">{talentData.description}</p>
       <h3 className="tooltip__title">Cost</h3>
       <ul className="tooltip__data-col">
-        {Object.values(RESOURCES).map((resource: RESOURCES) => (
-          cost[resource] > 0 &&
-          <li className="tooltip__text tooltip__text-cost" key={resource}>
-            {resource}: {cost[resource]}
-          </li>
-        ))}
+        {Object.values(RESOURCES).map(
+          (resource: RESOURCES) =>
+            talentData.cost[resource] > 0 && (
+              <li className="tooltip__text tooltip__text-cost" key={resource}>
+                {resource}: {talentData.cost[resource]}
+              </li>
+            )
+        )}
       </ul>
-      {required && required.length > 0 && (
+      {talentData.requirements && talentData.requirements.length > 0 && (
         <>
-          <h3 className="tooltip__title">Required talent{ required.length > 1 && "s"}</h3>
+          <h3 className="tooltip__title">
+            Required talent{talentData.requirements.length > 1 && "s"}
+          </h3>
           <ul className="tooltip__data-col">
-            {required.map((talent: UNIT_TALENTS) => (
-              <li className={`tooltip__text ${!unitTalentsDatabase[talent].unlocked && "tooltip__text-required"}`} key={talent}>
+            {talentData.requirements.map((talent: UNIT_TALENTS) => (
+              <li
+                className={`tooltip__text ${
+                  !unitTalentsDatabase[talent].unlocked &&
+                  "tooltip__text-required"
+                }`}
+                key={talent}
+              >
                 {talent}
               </li>
             ))}
