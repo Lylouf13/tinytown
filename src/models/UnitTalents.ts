@@ -4,7 +4,7 @@ import { UNIT_TALENTS } from "../enums/UnitTalents";
 import { UNIT_PASSIVES } from "enums/UnitPassives";
 import { unitDatabase } from "./Units";
 
-interface Talent {
+export interface Talent {
   name: string;
   description: string;
   requirements: UNIT_TALENTS[];

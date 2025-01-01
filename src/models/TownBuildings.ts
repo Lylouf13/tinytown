@@ -4,7 +4,7 @@ import { TOWN_BUILDINGS } from "enums/TownBuildings";
 interface building {
   name: string;
   description: string;
-  requirements: building[];
+  requirements: TOWN_BUILDINGS[];
   cost: { [key in RESOURCES]: number };
   count: number;
   maxCount: number;

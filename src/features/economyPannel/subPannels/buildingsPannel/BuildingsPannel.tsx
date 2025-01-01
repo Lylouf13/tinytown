@@ -1,4 +1,4 @@
-import "./buildingsPannel.scss"
+import "./buildingsPannel.scss";
 
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import BuildingNode from "./components/buildingNode/BuildingNode";
