@@ -3,6 +3,8 @@
 .town {
     width: 80%;
   &__top {
+    top: 10px;
+    position: sticky;
     display: grid;
     grid-template-columns: 0.2fr 0.7fr 0.3fr;
     grid-template-rows: 100px;

@@ -2,9 +2,11 @@
 
 .resources {
   @include mixins.topPannel;
-  font-size: 18px;
   justify-content: space-around;
   gap: 20px;
+  &__title{
+    font-size: 18px;
+  }
   &__text {
     font-size: 15px;
 
@@ -19,9 +21,8 @@
     }
     &--humans{
       padding:10px;
-      border-radius: 50px;
-      background-color: #744417;
-      color: white;
+      border: 2px solid #c42431;
+      color: #c42431;
     }
   }
 }

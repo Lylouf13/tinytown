@@ -10,8 +10,7 @@ export default function ResourcesPannel() {
 
   return (
     <div className='resources'>
-        <h2>Resources |</h2>
-        <p className='resources__text resources__text--humans'>Humans :{townSelector.humans}</p>
+        <h2 className='resources__title'>Resources |</h2>
         {Object.entries(resources).map((resource) => 
         <p 
             className={`resources__text resources__text--${resource[0]}`} 

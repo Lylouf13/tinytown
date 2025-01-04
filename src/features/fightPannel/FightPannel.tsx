@@ -15,7 +15,6 @@ import {
 } from "utils/reducers/gameManager";
 import {
   generateResources,
-  generateWeeklyHumans,
 } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
@@ -26,10 +25,11 @@ export default function FightPannel() {
   const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
   const gameSelector = useAppSelector((state) => state.game);
+  const townSelector = useAppSelector((state) => state.town);
 
   const nextWeek = () => {
     dispatch(setNextWeek());
-    dispatch(generateWeeklyHumans());
+    dispatch(generateResources(townSelector.weeklyIncome));
     dispatch(generateEnemy(gameSelector.week));
   };
 

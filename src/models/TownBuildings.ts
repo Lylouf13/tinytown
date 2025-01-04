@@ -1,10 +1,9 @@
 import { RESOURCES } from "../enums/Resources";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 
-interface building {
+export interface Building {
   name: string;
   description: string;
-  requirements: TOWN_BUILDINGS[];
   cost: { [key in RESOURCES]: number };
   count: number;
   maxCount: number;
@@ -12,12 +11,12 @@ interface building {
   effect: () => void;
 }
 
-export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: building } = {
+export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
   [TOWN_BUILDINGS.FARM]: {
     name: "Farm",
-    description: "increases food by 1",
-    requirements: [],
+    description: "Generates an additionnal human per week",
     cost: {
+      [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -31,8 +30,8 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: building } = {
   [TOWN_BUILDINGS.FORGE]: {
     name: "Forge",
     description: "Unlocks Talents System",
-    requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -46,8 +45,8 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: building } = {
   [TOWN_BUILDINGS.MILL]: {
     name: "Mill",
     description: "Buffs farms",
-    requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -61,14 +60,14 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: building } = {
   [TOWN_BUILDINGS.MINE]: {
     name: "Mine",
     description: "Gives regular gold income",
-    requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
-    maxCount: 1,
+    maxCount: 100000000,
     unlocked: false,
     effect: () => {},
   },
@@ -76,8 +75,8 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: building } = {
   [TOWN_BUILDINGS.TOWER]: {
     name: "Tower",
     description: "Adds permanent defense",
-    requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0, 

@@ -19,9 +19,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "increases strength by 1",
     requirements: [],
     cost: {
-      [RESOURCES.GOLD]: 0,
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 20,
       [RESOURCES.SCAVENGED]: 30,
-      [RESOURCES.SOULS]: 0,
+      [RESOURCES.SOULS]: 25,
     },
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1),
@@ -32,9 +33,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "increases strength by 2",
     requirements: [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS],
     cost: {
-      [RESOURCES.GOLD]: 10,
-      [RESOURCES.SCAVENGED]: 0,
-      [RESOURCES.SOULS]: 20,
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 0,
+      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SOULS]: 0,
     },
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 2),
@@ -48,8 +50,9 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
       UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
     ],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 0,
+      [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
     },
     unlocked: false,
@@ -61,6 +64,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "Each pack of 3 berserk scavenges 1 more resource",
     requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -73,6 +77,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more strength !!!",
     requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -85,6 +90,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more strength !!!",
     requirements: [UNIT_TALENTS.BOWER_1],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -97,6 +103,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more strength !!!",
     requirements: [UNIT_TALENTS.BOWER_1],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -109,6 +116,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more strength !!!",
     requirements: [UNIT_TALENTS.BOWER_2, UNIT_TALENTS.BOWER_3],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -121,6 +129,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more strength !!!",
     requirements: [UNIT_TALENTS.BOWER_4],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -133,6 +142,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more DEF !!!",
     requirements: [],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -145,6 +155,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more DEF !!!",
     requirements: [UNIT_TALENTS.GUARDIAN_1],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -157,6 +168,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more DEF !!!",
     requirements: [UNIT_TALENTS.GUARDIAN_2],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -169,6 +181,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more DEF !!!",
     requirements: [UNIT_TALENTS.GUARDIAN_2],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,
@@ -181,6 +194,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     description: "1 more DEF !!!",
     requirements: [UNIT_TALENTS.GUARDIAN_3,UNIT_TALENTS.GUARDIAN_4],
     cost: {
+      [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
       [RESOURCES.SOULS]: 0,

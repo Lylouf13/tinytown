@@ -3,8 +3,10 @@ import Button from "components/button/Button";
 
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addUnit } from "utils/reducers/armyManager";
-import { removeHumans } from "utils/reducers/townManager";
+import { spendResources } from "utils/reducers/townManager";
+import { checkResources } from "utils/checkResources";
 import { unitDatabase } from "models/Units";
+import { RESOURCES } from "enums/Resources";
 
 
 import "./unitTrainingRow.scss";
@@ -20,10 +22,18 @@ export default function UnitTrainingRow({ unit }: UnitTrainingRowProps) {
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  function multiplyCost(cost: {[keys in RESOURCES]: number}, quantity: number) {
+    var newCost = {...cost}
+    Object.keys(cost).forEach((key) => {
+      newCost[key as keyof typeof newCost] = cost[key as keyof typeof cost] * quantity
+    })
+    return newCost
+  }
   const trainUnit = (quantity: number, unit: string) => {
-    const cost = unitDatabase[unit].cost;
-    if (townSelector.humans >= quantity * cost) {
-      dispatch(removeHumans(quantity * cost));
+    const cost = multiplyCost(unitDatabase[unit].cost, quantity)
+    if (checkResources(townSelector.resources, cost)) {
+      dispatch(spendResources(cost));
       dispatch(addUnit({ unit, quantity }));
     }
   };
@@ -34,22 +44,19 @@ export default function UnitTrainingRow({ unit }: UnitTrainingRowProps) {
         <h3 key={`${unit}-title`}>
           {capitalizeFirstLetter(unit)} <br />
         </h3>
-        <p className="unit__cost" key={`${unit}-cost`}>
-          ({unitDatabase[unit].cost} human
-          {unitDatabase[unit].cost > 1 && "s"})
-        </p>
+
         <UnitIcon unit={unit} row />
       </div>
       <div className="unit__buttons">
         <Button
           key={`${unit}-btn1`}
-          active={unitDatabase[unit].cost <= townSelector.humans}
+          active={checkResources(townSelector.resources, unitDatabase[unit].cost)}
           label={`Train 1`}
           onClick={() => trainUnit(1, unit)}
         />
         <Button
           key={`${unit}-btn5`}
-          active={unitDatabase[unit].cost * 5 <= townSelector.humans}
+          active={checkResources(townSelector.resources, multiplyCost(unitDatabase[unit].cost, 5))}
           label={`Train 5`}
           onClick={() => trainUnit(5, unit)}
         />

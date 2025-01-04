@@ -45,6 +45,7 @@ export default function AcademyPannel() {
           <UnitTrainingRow key={`${unit}-trainingRow`} unit={unit} />
         ))}
       </div>
+      <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />
     </div>
   );
 }

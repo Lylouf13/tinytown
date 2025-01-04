@@ -24,16 +24,10 @@ export default function UnitIcon({ unit, row }: UnitIconProps) {
         src={`/assets/icons/units/${unit}_icon.png`}
         alt={`${unit}-icon`}
         
-        data-tooltip-id={`tooltip-${unit}`}
+        data-tooltip-id={`tooltip-${unitDatabase[unit].name}`}
       />
       <UnitTooltip
-        key={`${unit}-tooltip`}
-        title={unit}
-        description={unitDatabase[unit].description}
-        strength={unitDatabase[unit].strength}
-        defense={unitDatabase[unit].defense}
-        cost={unitDatabase[unit].cost}
-        passives={unitDatabase[unit].passives}
+        unitData={unitDatabase[unit]}
       />
     </div>
   );

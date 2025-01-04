@@ -23,10 +23,10 @@ export default function BuildingsPannel({
         <BuildingNode building={TOWN_BUILDINGS.FORGE} />
         <BuildingNode building={TOWN_BUILDINGS.TOWER} />
       </div>
-      <h3 className="buildingsPannel__subtitle">Research Quarter</h3>
-      <div className="buildingsPannel__section">research buildings</div>
+      <h3 className="buildingsPannel__subtitle">The Market</h3>
+      <div className="buildingsPannel__section">[NYI]</div>
       <h3 className="buildingsPannel__subtitle">Mage Quarter</h3>
-      <div className="buildingsPannel__section">mage buildings</div>
+      <div className="buildingsPannel__section">[NYI]</div>
     </div>
   );
 }

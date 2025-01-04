@@ -1,11 +1,12 @@
 import { UNIT_PASSIVES } from "enums/UnitPassives.ts";
 import { UNIT_TYPES } from "enums/UnitTypes";
+import { RESOURCES } from "enums/Resources";
 
 interface UnitProps {
   name: string;
   strength: number;
   defense: number;
-  cost: number;
+  cost: { [key in RESOURCES]: number };
   ranged: boolean;
   passives: UNIT_PASSIVES[];
   description: string;
@@ -15,7 +16,7 @@ export class Unit implements UnitProps {
   name: string;
   strength: number;
   defense: number;
-  cost: number;
+  cost: { [key in RESOURCES]: number };
   ranged: boolean;
   passives: UNIT_PASSIVES[];
   description: string;
@@ -52,7 +53,12 @@ export class Berserk extends Unit {
       name: "Berserk",
       strength: 1,
       defense: 1,
-      cost: 1,
+      cost: {
+        [RESOURCES.HUMANS]: 1,
+        [RESOURCES.GOLD]: 0,
+        [RESOURCES.SCAVENGED]: 0,
+        [RESOURCES.SOULS]: 0,
+      },
       ranged: false,
       passives: [UNIT_PASSIVES.PILLAGER],
       description: `A cheap unit that uses anything he can find as a weapon to protect the town.
@@ -67,7 +73,12 @@ export class Bower extends Unit {
       name: "Bower",
       strength: 2,
       defense: 1,
-      cost: 2,
+      cost: {
+        [RESOURCES.HUMANS]: 1,
+        [RESOURCES.GOLD]: 2,
+        [RESOURCES.SCAVENGED]: 0,
+        [RESOURCES.SOULS]: 0,
+      },
       ranged: true,
       passives: [UNIT_PASSIVES.SALVA],
       description: `A potent but fragile unit, uses a bow to pick down enemies before they can attack.
@@ -82,7 +93,12 @@ export class Guardian extends Unit {
       name: "Guardian",
       strength: 1,
       defense: 5,
-      cost: 3,
+      cost: {
+        [RESOURCES.HUMANS]: 1,
+        [RESOURCES.GOLD]: 2,
+        [RESOURCES.SCAVENGED]: 5,
+        [RESOURCES.SOULS]: 0,
+      },
       ranged: true,
       passives: [UNIT_PASSIVES.PILLAGER, UNIT_PASSIVES.PROTECTOR],
       description: `A strong and expensive unit, protects the others from the ennemies assault, adding

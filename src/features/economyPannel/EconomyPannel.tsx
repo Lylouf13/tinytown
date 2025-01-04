@@ -11,16 +11,17 @@ export default function EconomyPannel() {
     <div className="economy">
       <img className="town__banner" src="assets/banners/EconomyBanner.png" alt="banner" />
       <div className="economy__pannel">
-      <h2 className="economy__title">Economy</h2>
+      <h1 className="economy__title">Economy</h1>
       <div className="economy__buttons">
         <Button label="Town" onClick={() => setCurrentPannel("Town")} />
         <Button label="Talents" onClick={() => setCurrentPannel("Talents")} />
       </div>
-      <h3 className="economy__subtitle">{currentPannel}</h3>
+      <h2 className="economy__subtitle">{currentPannel}</h2>
 
       <BuildingsPannel active={currentPannel === "Town"}/>
       <TalentPannel active={currentPannel === "Talents"}/>
       </div>
+      <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />
     </div>
   );
 }

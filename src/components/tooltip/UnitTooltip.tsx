@@ -1,46 +1,48 @@
 import { Tooltip } from "react-tooltip";
+import { Unit } from "models/Units";
+import { RESOURCES } from "enums/Resources";
 import "./customTooltip.scss";
 
 interface UnitTooltipProps {
-  title: string;
-  description: string;
-  strength?: number;
-  defense?: number;
-  cost?: number;
-  passives: string[];
+  unitData: Unit;
 }
 
-export default function UnitTooltip({
-  title,
-  description,
-  strength,
-  defense,
-  cost,
-  passives,
-}: UnitTooltipProps) {
+export default function UnitTooltip({ unitData }: UnitTooltipProps) {
   return (
     <Tooltip
       disableStyleInjection
       className="tooltip"
-      id={`tooltip-${title}`}
+      id={`tooltip-${unitData.name}`}
       place="right"
     >
-      <h3 className="tooltip__title">{title.toUpperCase()}</h3>
-      <p className="tooltip__text">{description}</p>
+      <h3 className="tooltip__title">{unitData.name.toUpperCase()}</h3>
+      <p className="tooltip__text">{unitData.description}</p>
       <div className="tooltip__data">
         <p className="tooltip__text tooltip__text-strength">
-          Strength: {strength}
+          Strength: {unitData.strength}
         </p>
         <p className="tooltip__text tooltip__text-defense">
-          Defense: {defense}
+          Defense: {unitData.defense}
         </p>
-        <p className="tooltip__text tooltip__text-cost">Cost: {cost}</p>
+      </div>
+      <h3 className="tooltip__title">Cost</h3>
+      <div className="tooltip__data">
+        <ul className="tooltip__data-col">
+          {Object.values(RESOURCES).map(
+            (resource: RESOURCES) =>
+              unitData.cost[resource] > 0 && (
+                <li className="tooltip__text tooltip__text-cost" key={resource}>
+                  {resource}: {unitData.cost[resource]}
+                </li>
+              )
+          )}
+        </ul>
       </div>
       <h3 className="tooltip__title">Passives</h3>
       <div className="tooltip__data">
-        {passives.map((passive: string) => (
+        {unitData.passives.map((passive: string) => (
           <p
-            key={`${title}-tooltip-passive-${passive}`}
+            key={`${unitData.name}-tooltip-passive-${passive}`}
             className="tooltip__text tooltip__text-passive"
           >
             {passive}
