@@ -7,8 +7,6 @@ export interface Building {
   cost: { [key in RESOURCES]: number };
   count: number;
   maxCount: number;
-  unlocked: boolean;
-  effect: () => void;
 }
 
 export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
@@ -18,13 +16,11 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SCAVENGED]: 25,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
     maxCount: 100000000000,
-    unlocked: false,
-    effect: () => {},
   },
 
   [TOWN_BUILDINGS.FORGE]: {
@@ -32,14 +28,12 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     description: "Unlocks Talents System",
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.GOLD]: 500,
+      [RESOURCES.SCAVENGED]: 150,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
     maxCount: 1,
-    unlocked: false,
-    effect: () => {},
   },
 
   [TOWN_BUILDINGS.MILL]: {
@@ -47,29 +41,25 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     description: "Buffs farms",
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.GOLD]: 300,
+      [RESOURCES.SCAVENGED]: 300,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
     maxCount: 1,
-    unlocked: false,
-    effect: () => {},
   },
 
   [TOWN_BUILDINGS.MINE]: {
     name: "Mine",
     description: "Gives regular gold income",
     cost: {
-      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.HUMANS]: 1,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SCAVENGED]: 15,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
     maxCount: 100000000,
-    unlocked: false,
-    effect: () => {},
   },
 
   [TOWN_BUILDINGS.TOWER]: {
@@ -83,7 +73,5 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     },
     count: 0,
     maxCount: 25,
-    unlocked: false,
-    effect: () => {},
   },
 };

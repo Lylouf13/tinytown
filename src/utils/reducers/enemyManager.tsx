@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     enemyForces: 8,
-    weeklyForces: 10
+    weeklyForces: 12
 }
 
 const randomInt = (min: number, max: number): number => 

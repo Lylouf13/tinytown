@@ -25,11 +25,10 @@ const initialState: TownState = {
   resources: {
     [RESOURCES.HUMANS]: 10,
     [RESOURCES.GOLD]: 0,
-    [RESOURCES.SCAVENGED]: 1000,
+    [RESOURCES.SCAVENGED]: 0,
     [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
-
   weeklyIncome: {
     [RESOURCES.HUMANS]: 10,
     [RESOURCES.GOLD]: 0,
@@ -37,23 +36,33 @@ const initialState: TownState = {
     [RESOURCES.SOULS]: 0,
   },
   unlockedUnitTalents: [],
-  buildings: {},
+  buildings: {
+    [TOWN_BUILDINGS.FARM]: 0,
+    [TOWN_BUILDINGS.MILL]: 0,
+    [TOWN_BUILDINGS.MINE]: 0,
+    [TOWN_BUILDINGS.FORGE]: 0,
+    [TOWN_BUILDINGS.TOWER]: 0,
+  },
 };
 
 export const townManagerSlice = createSlice({
   name: "townManager",
   initialState,
   reducers: {
-    updateWeeklyIncome: (state, action) => {
-      var resources = { ...state.weeklyIncome };
+    updateWeeklyIncome: (state) => {
 
-      Object.keys(action.payload).forEach((key) => {
-        resources[key as keyof typeof resources] =
-          resources[key as keyof typeof resources] + action.payload[key];
-      })
+      var weeklyIncome = {
+        ...state.weeklyIncome,
+        [RESOURCES.HUMANS]: 10 + (state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1)),
+        [RESOURCES.GOLD]: 0 + state.buildings[TOWN_BUILDINGS.MINE],
+        [RESOURCES.SCAVENGED]: 0,
+        [RESOURCES.SOULS]: 0,
+      }
+      console.log(weeklyIncome);
+      // console.log(state.buildings[TOWN_BUILDINGS.FARM])
       return {
         ...state,
-        weeklyIncome: action.payload,
+        weeklyIncome
       };
       
     },
@@ -101,6 +110,7 @@ export const townManagerSlice = createSlice({
 
 export const {
   generateResources,
+  updateWeeklyIncome,
   unlockUnitUpgrade,
   createBuilding,
   spendResources,
