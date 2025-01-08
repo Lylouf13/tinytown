@@ -16,7 +16,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 25,
+      [RESOURCES.SCAVENGED]: 10,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
@@ -55,7 +55,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 1,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 15,
+      [RESOURCES.SCAVENGED]: 10,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,
