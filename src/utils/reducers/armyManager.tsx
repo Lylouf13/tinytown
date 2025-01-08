@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UNIT_PASSIVES } from "enums/UnitPassives";
 import { UNIT_TYPES } from "enums/UnitTypes";
 import { unitDatabase } from "models/Units";
+import { TOWN_BUILDINGS } from "enums/TownBuildings";
 
 interface ArmyState {
   units: {
@@ -13,6 +14,9 @@ interface ArmyState {
   passives: {
     [key: string]: number;
   };
+  fortifications:{
+    [key: string]: number
+  }
   totalStrength: number;
   totalDefense: number;
 };
@@ -29,6 +33,9 @@ const initialState: ArmyState = {
     [UNIT_PASSIVES.SALVA]: 0,
     [UNIT_PASSIVES.DIVINER]: 0,
     [UNIT_PASSIVES.PROTECTOR]: 0
+  },
+  fortifications: {
+    [TOWN_BUILDINGS.TOWER]: 0
   },
   totalStrength: 0,
   totalDefense: 0,
@@ -120,6 +127,8 @@ export const armyManagerSlice = createSlice({
         UNIT_TYPES.BOWER,
       ];
 
+      action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 10;
+      
       // Removes units, decrementing passives as necessary
       for (const unitDestroyed of destructionOrder) {
         while (action.payload > 0 && units[unitDestroyed] > 0) {

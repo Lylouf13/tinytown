@@ -1,30 +1,22 @@
-.button{
-    background-color: #1b1f21;
-    color: #f7eed6;
-    border: 2px solid #f7eed6;
-    border-radius: 20px;
-    padding: 5px 30px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 700;
-    min-width: 150px;
+@use "utils/style/mixins.scss";
+@use "utils/style/variables.scss";
 
-    transition : 0.5s;
+.button{
+    @include mixins.cta;
 
     &:hover:not(&-disabled){
-        background-color: #f7eed6;
-        color: #1b1f21;
+        background-color: variables.$primary-color;
+        color: variables.$secondary-color;
         cursor: pointer;
         transition : 0.5s;
-    }
+      }
     
-    &-disabled{
-        background-color: #1b1f21;
-        color: #615e56;
-        border: 2px solid #615e56;
-
-
-        transition : 0.5s;
-    }
+      &-disabled{
+          background-color: variables.$primary-color;
+          color: variables.$secondary-color-dark;
+          border: 2px solid variables.$secondary-color-dark;
+    
+    
+          transition : 0.5s;
+      }
 }

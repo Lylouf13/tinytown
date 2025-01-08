@@ -2,6 +2,7 @@ import { useState } from "react";
 import TalentPannel from "./subPannels/talentPannel/TalentPannel";
 import BuildingsPannel from "./subPannels/buildingsPannel/BuildingsPannel";
 import Button from "components/button/Button";
+import ToggleButton from "components/toggleButton/ToggleButton";
 import "./economyPannel.scss";
 
 export default function EconomyPannel() {
@@ -13,8 +14,8 @@ export default function EconomyPannel() {
       <div className="economy__pannel">
       <h1 className="economy__title">Economy</h1>
       <div className="economy__buttons">
-        <Button label="Town" onClick={() => setCurrentPannel("Town")} />
-        <Button label="Talents" onClick={() => setCurrentPannel("Talents")} />
+        <ToggleButton selected={currentPannel === "Town"} label="Town" onClick={() => setCurrentPannel("Town")} />
+        <ToggleButton selected={currentPannel === "Talents"} label="Talents" onClick={() => setCurrentPannel("Talents")} />
       </div>
       <h2 className="economy__subtitle">{currentPannel}</h2>
 

@@ -1,0 +1,26 @@
+@use "utils/style/mixins.scss";
+@use "utils/style/variables.scss";
+
+.toggleButton{
+    @include mixins.cta;
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    min-width: 100px;
+
+    &:not(&-disabled){
+        cursor: pointer;
+    }
+}
+
+.toggleButton-disabled{
+    @include mixins.cta;
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color-dark;
+    border-color: variables.$secondary-color-dark;
+}
+
+.toggleButton-selected{
+    @include mixins.cta;
+    color: variables.$primary-color;
+    min-width: 200px;
+}

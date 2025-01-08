@@ -1,42 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    enemyForces: 8,
-    weeklyForces: 12
-}
+  enemyForces: 8,
+  weeklyForces: 12,
+};
 
-const randomInt = (min: number, max: number): number => 
-    Math.floor(Math.random() * (max - min + 1)) + min;
+const randomInt = (min: number, max: number): number =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 export const enemyManagerSlice = createSlice({
-    name: 'enemyManager',
-    initialState,
-    reducers:{
-        generateEnemy: (state, action) => {
-            var enemyForces = state.enemyForces + (state.weeklyForces * (action.payload+1)) + randomInt(0, action.payload*2)
-            return{
-                ...state,
-                enemyForces
-            }
-        },
-        // Destroys a set amount of forces
-        destroyEnemy:(state, action) => {
-            var enemyForces= state.enemyForces - action.payload
-            enemyForces = enemyForces < 0 ? 0 : enemyForces
-            return{
-                ...state,
-                enemyForces
-            }
-        },
-        // Destroys all forces
-        clearEnemy: (state) => {
-            return{
-                ...state,
-                enemyForces: 0
-            }
-        }
-    }
-})
+  name: "enemyManager",
+  initialState,
+  reducers: {
+    generateEnemy: (state, action) => {
+      var enemyForces =
+        state.enemyForces +
+        state.weeklyForces * (action.payload + 1) +
+        randomInt(0, action.payload * 2);
+      return {
+        ...state,
+        enemyForces,
+      };
+    },
+    // Destroys a set amount of forces
+    destroyEnemy: (state, action) => {
+      var enemyForces = state.enemyForces - action.payload;
+      enemyForces = enemyForces < 0 ? 0 : enemyForces;
+      return {
+        ...state,
+        enemyForces,
+      };
+    },
+    // Destroys all forces
+    clearEnemy: (state) => {
+      return {
+        ...state,
+        enemyForces: 0,
+      };
+    },
+  },
+});
 
-export const { generateEnemy, clearEnemy, destroyEnemy } = enemyManagerSlice.actions
+export const { generateEnemy, clearEnemy, destroyEnemy } =
+  enemyManagerSlice.actions;
 
-export default enemyManagerSlice.reducer
+export default enemyManagerSlice.reducer;

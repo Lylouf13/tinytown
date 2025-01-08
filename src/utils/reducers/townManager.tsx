@@ -41,7 +41,6 @@ const initialState: TownState = {
     [TOWN_BUILDINGS.MILL]: 0,
     [TOWN_BUILDINGS.MINE]: 0,
     [TOWN_BUILDINGS.FORGE]: 0,
-    [TOWN_BUILDINGS.TOWER]: 0,
   },
 };
 

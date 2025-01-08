@@ -13,9 +13,7 @@ import {
   FIGHT_STATE,
   GAME_STATE,
 } from "utils/reducers/gameManager";
-import {
-  generateResources,
-} from "utils/reducers/townManager";
+import { generateResources } from "utils/reducers/townManager";
 
 import Button from "components/button/Button";
 import "./fightPannel.scss";
@@ -140,13 +138,13 @@ export default function FightPannel() {
       <div className="fight__art">
         <p> actual fight frfr</p>
       </div>
-      <Button label={currentPhase} onClick={() => handleButtonClick()} />
       {gameSelector.fightState === FIGHT_STATE.ATTACK && (
         <Button
           label="Cancel"
           onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
         />
       )}
+      <Button label={currentPhase} onClick={() => handleButtonClick()} />
     </div>
   );
 }

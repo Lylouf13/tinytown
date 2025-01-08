@@ -4,7 +4,11 @@ import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { Building, townBuildingDatabase } from "models/TownBuildings";
 import BuildingTooltip from "components/tooltip/buildingTooltip/BuildingTooltip";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { createBuilding, spendResources, updateWeeklyIncome } from "utils/reducers/townManager";
+import {
+  createBuilding,
+  spendResources,
+  updateWeeklyIncome,
+} from "utils/reducers/townManager";
 import { checkResources } from "utils/checkResources";
 
 interface BuildingNodeProps {
@@ -24,7 +28,7 @@ export default function BuildingNode({ building }: BuildingNodeProps) {
     ) {
       dispatch(createBuilding(building));
       dispatch(spendResources(buildingData.cost));
-      dispatch(updateWeeklyIncome())
+      dispatch(updateWeeklyIncome());
     }
   };
   return (
