@@ -33,11 +33,11 @@ export default function BuildingNode({ building }: BuildingNodeProps) {
   };
   return (
     <>
-      <p>{`${
+      {townBuildingDatabase[building].maxCount > 1 && <p>{`${
         townSelector.buildings[building] > 0
           ? `${townSelector.buildings[building]}`
           : "0"
-      }  `}</p>
+      }  `}</p>}
       <button
         className="buildingNode"
         data-tooltip-id={`tooltip-${building}`}

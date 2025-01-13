@@ -74,4 +74,41 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     count: 0,
     maxCount: 25,
   },
+  [TOWN_BUILDINGS.MARKET]: {
+    name: "Market",
+    description: "Buy and sell resources at the market",
+    cost: {
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 0,
+      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SOULS]: 0,
+    },
+    count: 0,
+    maxCount: 1,
+  },
+  [TOWN_BUILDINGS.MAGE_TOWER]: {
+    name: "Mage Tower",
+    description: "Send powerful spells to buff your army for the next fight",
+    cost: {
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 0,
+      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SOULS]: 0,
+    },
+    count: 0,
+    maxCount: 1,
+  },
+  [TOWN_BUILDINGS.QUESTIONABLE_CONCLAVE]: {
+    name: "Questionable Conclave",
+    description:
+      "Gives access to the Conclave, a group of rogue sorcerers with dubious but powerfull effects",
+    cost: {
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 300,
+      [RESOURCES.SCAVENGED]: 300,
+      [RESOURCES.SOULS]: 0,
+    },
+    count: 0,
+    maxCount: 1,
+  },
 };

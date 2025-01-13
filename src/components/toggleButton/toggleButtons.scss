@@ -17,6 +17,7 @@
     background-color: variables.$primary-color;
     color: variables.$secondary-color-dark;
     border-color: variables.$secondary-color-dark;
+    min-width: 100px;
 }
 
 .toggleButton-selected{

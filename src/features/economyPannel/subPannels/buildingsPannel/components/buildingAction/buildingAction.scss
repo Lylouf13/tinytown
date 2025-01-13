@@ -1,0 +1,17 @@
+@use "utils/style/variables.scss";
+@use "utils/style/mixins.scss";
+
+.buildingAction {
+  @include mixins.iconButton;
+  border: 2px solid variables.$secondary-color;
+  border-radius: 50px;
+  overflow: clip;
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+    &-active {
+      background-color: variables.$secondary-color;
+    }
+  }
+}

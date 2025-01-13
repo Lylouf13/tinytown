@@ -40,7 +40,10 @@ const initialState: TownState = {
     [TOWN_BUILDINGS.FARM]: 0,
     [TOWN_BUILDINGS.MILL]: 0,
     [TOWN_BUILDINGS.MINE]: 0,
-    [TOWN_BUILDINGS.FORGE]: 0,
+    [TOWN_BUILDINGS.FORGE]: 1,
+    [TOWN_BUILDINGS.MARKET]: 0,
+    [TOWN_BUILDINGS.MAGE_TOWER]: 0,
+    [TOWN_BUILDINGS.QUESTIONABLE_CONCLAVE]: 0,
   },
 };
 
@@ -57,8 +60,6 @@ export const townManagerSlice = createSlice({
         [RESOURCES.SCAVENGED]: 0,
         [RESOURCES.SOULS]: 0,
       }
-      console.log(weeklyIncome);
-      // console.log(state.buildings[TOWN_BUILDINGS.FARM])
       return {
         ...state,
         weeklyIncome
