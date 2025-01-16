@@ -7,8 +7,9 @@
     color: variables.$secondary-color;
     min-width: 100px;
 
-    &:not(&-disabled){
+    &:not(&-disabled):hover{
         cursor: pointer;
+        background-color: variables.$secondary-color-dark;
     }
 }
 
