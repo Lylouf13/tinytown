@@ -7,16 +7,13 @@ import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
 
 export default function EnemyPannel() {
   const dispatch = useAppDispatch();
-  //const armySelector = useAppSelector((state) => state.army);
   const enemySelector = useAppSelector((state) => state.enemy);
-  //const townSelector = useAppSelector((state) => state.town);
 
   
 
   return (
     <div className="enemy">
-      <p className="enemy__title">Enemies</p>
-      <p className="enemy__title">{enemySelector.enemyForces}</p>
+      <p className="enemy__title">Enemies {enemySelector.enemyForces}</p>
       <Button
         label="fight"
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}

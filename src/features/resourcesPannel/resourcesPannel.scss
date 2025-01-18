@@ -1,4 +1,5 @@
 @use "utils/style/mixins";
+@use "utils/style/variables";
 
 .resources {
   @include mixins.topPannel;
@@ -7,8 +8,20 @@
   &__title{
     font-size: 18px;
   }
+  &__container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+  }
+  &__icon{
+    width: 30px;
+    height: 30px;
+    image-rendering: pixelated;
+  }
   &__text {
-    font-size: 15px;
+    font-size: 18px;
 
     &--gold {
       color: gold;
@@ -20,9 +33,7 @@
       color: #77aaa2;
     }
     &--humans{
-      padding:10px;
-      border: 2px solid #c42431;
-      color: #c42431;
+      color: variables.$red;
     }
   }
 }

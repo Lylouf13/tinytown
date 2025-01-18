@@ -49,16 +49,29 @@ export default function FightPannel() {
 
   const attack = (): AppThunk => async (dispatch, getState) => {
     try {
+      var destroyedEnemies: number = 0;
       salvaPassive();
       dispatch(destroyEnemy(armySelector.totalStrength));
+      destroyedEnemies += armySelector.passives.salva;
+      destroyedEnemies += armySelector.totalStrength;
+
       dispatch(updateFightState(FIGHT_STATE.DEFENSE));
 
+      // Generates resources when skipping defense phase
       if (getState().enemy.enemyForces === 0) {
         generateFightResources(
           enemySelector.enemyForces,
           armySelector.passives.pillager,
           0
         );
+      }
+      // Generates gold or other resources from defeated enemies when the player doesn't skip defense phase
+      else{
+        generateFightResources(
+          destroyedEnemies,
+          0,
+          0
+        )
       }
     } catch (error) {
       console.error("Fight sequence error:", error);
@@ -138,13 +151,15 @@ export default function FightPannel() {
       <div className="fight__art">
         <p> actual fight frfr</p>
       </div>
+      <div className="fight__buttons">
       {gameSelector.fightState === FIGHT_STATE.ATTACK && (
         <Button
-          label="Cancel"
-          onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
+        label="Cancel"
+        onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
         />
       )}
       <Button label={currentPhase} onClick={() => handleButtonClick()} />
+      </div>
     </div>
   );
 }

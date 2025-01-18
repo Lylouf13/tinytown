@@ -1,0 +1,13 @@
+
+.timelineNode{
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover{
+        transition: all 0.5s;
+        transform: translateY(-10px);  
+    }
+}

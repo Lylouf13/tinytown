@@ -1,45 +1,21 @@
+import "./timelineNode.scss";
+
 type TimelineNodeProps = {
   type?: string;
+  state?: number;
+  id:number
 };
-export default function TimelineNode({ type = "default" }: TimelineNodeProps) {
+export default function TimelineNode({ type = "default", state=0, id=1}: TimelineNodeProps) {
   return (
     <>
       {type === "default" && (
-        // <span className={`timeline__node timeline__node--${type}`}></span>
-        <img src="assets/icons/timeline/nodeWeek.png" alt="timelineNode" />
+        <img className="timelineNode" src={`assets/icons/timeline/nodeWeek${id<state ? "-completed" : ""}${id===state?"-active":""}.png`} alt="timelineNode" />
       )}
       {type === "event" && (
-        <>
-          <div className="timeline__nodeContainer">
-            <img src="assets/icons/timeline/nodeEvent.png" alt="timelineNode" />
-          </div>
-          <div className="timeline__nodeContainer">
-            <img
-              src="assets/icons/timeline/nodeEvent-completed.png"
-              alt="timelineNode"
-            />
-          </div>
-          <div className="timeline__nodeContainer">
-            <img
-              src="assets/icons/timeline/nodeWeek-completed.png"
-              alt="timelineNode"
-            />
-          </div>
-          <div className="timeline__nodeContainer">
-            <img src="assets/icons/timeline/nodeBoss.png" alt="timelineNode" />
-          </div>{" "}
-          <div className="timeline__nodeContainer">
-            <img src="assets/icons/timeline/nodeBoss-completed.png" alt="timelineNode" />
-          </div>
-        </>
+        <img className="timelineNode" src={`assets/icons/timeline/nodeEvent${id<state ? "-completed" : ""}${id===state?"-active":""}.png`} alt="event-timelineNode" />
       )}
       {type === "boss" && (
-        <div className="timeline__nodeContainer">
-          <img src="assets/icons/timeline/nodeBoss.png" alt="timelineNode" />
-
-          {/* <span className={`timeline__node timeline__node-event`}></span>
-        <span className={`timeline__node timeline__node-eventBottom`}></span> */}
-        </div>
+        <img className="timelineNode" src={`assets/icons/timeline/nodeBoss${id<state ? "-completed" : ""}${id===state?"-active":""}.png`} alt="boss-timelineNode" />
       )}
     </>
   );

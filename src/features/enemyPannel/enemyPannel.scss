@@ -1,13 +1,15 @@
 @use "utils/style/mixins";
+@use "utils/style/variables";
 
 .enemy {
   @include mixins.topPannel;
   gap: 20px;
-
+  border-color: variables.$red;
+  justify-content: space-around;
   &__title {
     margin: 0;
     padding: 0;
-    color: red;
+    color: variables.$red;
 
   }
 

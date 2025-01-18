@@ -32,7 +32,12 @@ export default function UnitTooltip({ unitData }: UnitTooltipProps) {
             (resource: RESOURCES) =>
               unitData.cost[resource] > 0 && (
                 <li className="tooltip__text tooltip__text-cost" key={resource}>
-                  {resource}: {unitData.cost[resource]}
+                  <img
+                    className="tooltip__icon"
+                    src={`assets/icons/resources/${resource}.png`}
+                    alt={`icon-${resource}`}
+                  />{" "}
+                  {unitData.cost[resource]}
                 </li>
               )
           )}
