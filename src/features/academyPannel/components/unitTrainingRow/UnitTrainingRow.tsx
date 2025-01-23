@@ -4,7 +4,7 @@ import Button from "components/button/Button";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addUnit } from "utils/reducers/armyManager";
 import { spendResources } from "utils/reducers/townManager";
-import { checkResources } from "utils/checkResources";
+import { checkResources } from "utils/resources/checkResources";
 import { unitDatabase } from "models/Units";
 import { RESOURCES } from "enums/Resources";
 

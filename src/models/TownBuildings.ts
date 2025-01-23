@@ -80,7 +80,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SCAVENGED]: 0,
       [RESOURCES.SOULS]: 0,
     },
     count: 0,

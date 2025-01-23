@@ -9,18 +9,16 @@ interface BuildingActionProps {
 export default function BuildingAction({
   name,
   active = false,
-  handleClick
+  handleClick,
 }: BuildingActionProps) {
   return (
-    <>
-      <button className="buildingAction">
-        <img
-          onClick={handleClick}
-          className="buildingAction__icon"
-          src={`assets/icons/actions/${name}${active ? "-active" : ""}.png`}
-          alt={`buildingAction-${name}`}
-        />
-      </button>
-    </>
+    <button className="buildingAction">
+      <img
+        onClick={handleClick}
+        className="buildingAction__icon"
+        src={`assets/icons/actions/${name}${active ? "-active" : ""}.png`}
+        alt={`buildingAction-${name}`}
+      />
+    </button>
   );
 }

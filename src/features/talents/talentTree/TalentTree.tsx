@@ -3,6 +3,7 @@ import TalentNode from "features/talents/talentNode/TalentNode";
 import TalentLink from "features/talents/talentLink/TalentLink";
 
 import "./talentTree.scss";
+import TBI from "components/dev/TBI";
 
 interface TalentTreeProps {
   talents: { [key: string]: UNIT_TALENTS[] };
@@ -26,6 +27,7 @@ export default function TalentTree({
   return (
     <div className={`talentTree talentTree${active ? "" : "-hidden"}`}>
       <h3>{title}</h3>
+      <TBI />
       {Object.keys(talents).map((row: string) => (
         <div className="talentTree__container" key={`talentRow-${row}`}>
           <div className="talentTree__row" key={`talentRow-${row}`}>

@@ -24,8 +24,8 @@ interface TownState {
 const initialState: TownState = {
   resources: {
     [RESOURCES.HUMANS]: 10,
-    [RESOURCES.GOLD]: 0,
-    [RESOURCES.SCAVENGED]: 0,
+    [RESOURCES.GOLD]: 10,
+    [RESOURCES.SCAVENGED]: 10,
     [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
@@ -83,6 +83,7 @@ export const townManagerSlice = createSlice({
       };
     },
     spendResources: (state, action) => {
+      console.log(action.payload)
       var resources = { ...state.resources };
       Object.keys(action.payload).forEach((key) => {
         resources[key as keyof typeof resources] =

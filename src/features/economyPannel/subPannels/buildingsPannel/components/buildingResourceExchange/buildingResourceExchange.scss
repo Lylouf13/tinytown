@@ -1,10 +1,6 @@
 @use "utils/style/variables.scss";
 @use "utils/style/mixins.scss";
 
-.buildingNode{
+.buildingResourceExchange{
   @include mixins.iconButton;
-  border: 0px;
-  &__icon{
-    border: none;
-  }
 }

@@ -8,7 +8,7 @@ import "./economyPannel.scss";
 
 export default function EconomyPannel() {
   const townSelector = useAppSelector((state) => state.town);
-  const [currentPannel, setCurrentPannel] = useState("Talents");
+  const [currentPannel, setCurrentPannel] = useState("Town");
   return (
     <div className="economy">
       <img

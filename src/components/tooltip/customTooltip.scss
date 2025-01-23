@@ -1,5 +1,5 @@
 .tooltip{
-    margin-left: 30px;
+    margin-left: 15px;
     padding: 15px 25px;
     max-width: 350px;
     background-color: #1b1f21 ;
@@ -21,6 +21,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         gap: 15px;
         &-col{
             flex-direction: column;

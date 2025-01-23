@@ -9,7 +9,7 @@ import {
   spendResources,
   updateWeeklyIncome,
 } from "utils/reducers/townManager";
-import { checkResources } from "utils/checkResources";
+import { checkResources } from "utils/resources/checkResources";
 
 interface BuildingNodeProps {
   building: TOWN_BUILDINGS;

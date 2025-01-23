@@ -17,5 +17,23 @@
         padding: 20px;
         border-bottom: 2px solid variables.$primary-color-light;
         background-color: variables.$primary-color-light;
+        &-market{
+            gap:0;
+
+        }
+    }
+    &__marketPannel{
+        width: 50%;
+        border: 2px solid #5c5c5c;
+
+        &__title{
+            border-bottom: 2px solid #5c5c5c;
+        }
+        &__buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 20px;
+        }
     }
 }

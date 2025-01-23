@@ -22,16 +22,21 @@ export default function BuildingTooltip({
       <h3 className="tooltip__title">{buildingData.name.toUpperCase()}</h3>
       <p className="tooltip__text">{buildingData.description}</p>
       <h3 className="tooltip__title">Cost</h3>
-      <ul className="tooltip__data-col">
+      <div className="tooltip__data">
         {Object.values(RESOURCES).map(
           (resource: RESOURCES) =>
             buildingData.cost[resource] > 0 && (
-              <li className="tooltip__text tooltip__text-cost" key={resource}>
-                {resource}: {buildingData.cost[resource]}
-              </li>
+              <p className="tooltip__text tooltip__text-cost" key={resource}>
+                  <img
+                    className="tooltip__icon"
+                    src={`assets/icons/resources/${resource}.png`}
+                    alt={`icon-${resource}`}
+                  />{" "}
+                  {buildingData.cost[resource]}
+                </p>
             )
         )}
-      </ul>
+      </div>
       {/* {buildingData.requirements && buildingData.requirements.length > 0 && (
         <>
           <h3 className="tooltip__title">

@@ -27,21 +27,19 @@ export default function UnitTooltip({ unitData }: UnitTooltipProps) {
       </div>
       <h3 className="tooltip__title">Cost</h3>
       <div className="tooltip__data">
-        <ul className="tooltip__data-col">
-          {Object.values(RESOURCES).map(
-            (resource: RESOURCES) =>
-              unitData.cost[resource] > 0 && (
-                <li className="tooltip__text tooltip__text-cost" key={resource}>
-                  <img
-                    className="tooltip__icon"
-                    src={`assets/icons/resources/${resource}.png`}
-                    alt={`icon-${resource}`}
-                  />{" "}
-                  {unitData.cost[resource]}
-                </li>
-              )
-          )}
-        </ul>
+        {Object.values(RESOURCES).map(
+          (resource: RESOURCES) =>
+            unitData.cost[resource] > 0 && (
+              <p className="tooltip__text tooltip__text-cost" key={resource}>
+                <img
+                  className="tooltip__icon"
+                  src={`assets/icons/resources/${resource}.png`}
+                  alt={`icon-${resource}`}
+                />{" "}
+                {unitData.cost[resource]}
+              </p>
+            )
+        )}
       </div>
       <h3 className="tooltip__title">Passives</h3>
       <div className="tooltip__data">
