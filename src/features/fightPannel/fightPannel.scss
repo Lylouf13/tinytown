@@ -37,9 +37,34 @@
     }
   }
   &__art {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top:40px;
+    gap: 40px;
     background-color: color.adjust(variables.$primary-color, $blackness: +25%);
     width: 100%;
     height: 350px;
+    &__frame{
+      width: 50%;
+      border: 2px solid variables.$secondary-color;	
+
+      &-enemy{
+        color: variables.$enemy-color;
+        border-color: variables.$enemy-color;
+      }
+      &-army{
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+      }
+
+      &-section{
+        border: 2px solid variables.$secondary-color;	
+        display: flex;
+        flex-direction: row;
+      }
+    }
   }
   &__buttons{
     display: flex;

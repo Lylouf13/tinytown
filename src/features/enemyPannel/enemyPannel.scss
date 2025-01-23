@@ -4,12 +4,12 @@
 .enemy {
   @include mixins.topPannel;
   gap: 20px;
-  border-color: variables.$red;
+  border-color: variables.$enemy-color;
   justify-content: space-around;
   &__title {
     margin: 0;
     padding: 0;
-    color: variables.$red;
+    color: variables.$enemy-color;
 
   }
 

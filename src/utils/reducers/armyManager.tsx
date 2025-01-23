@@ -19,6 +19,8 @@ interface ArmyState {
   }
   totalStrength: number;
   totalDefense: number;
+  meleeStrength: number;
+  rangedStrength: number;
 };
 
 const initialState: ArmyState = {
@@ -39,6 +41,8 @@ const initialState: ArmyState = {
   },
   totalStrength: 0,
   totalDefense: 0,
+  meleeStrength: 0,
+  rangedStrength: 0
 };
 
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
@@ -73,6 +77,21 @@ const modifyTotalDefense = (units: { [key: string]: number }) => {
   );
 };
 
+const modifyMeleeStrength = (units: { [key: string]: number }) => {
+  return Object.keys(units).reduce(
+    (total: number, value) =>
+      total + units[value] * (unitDatabase[value].ranged? 0 : unitDatabase[value].strength),
+    0
+  );
+};
+const modifyRangedStrength = (units: { [key: string]: number }) => {
+  return Object.keys(units).reduce(
+    (total: number, value) =>
+      total + units[value] * (unitDatabase[value].ranged ? unitDatabase[value].strength : 0),
+    0
+  );
+};
+
 export const armyManagerSlice = createSlice({
   name: "armyManager",
   initialState,
@@ -80,11 +99,16 @@ export const armyManagerSlice = createSlice({
     updateStats: (state) => {
       const totalDefense = modifyTotalDefense(state.units);
       const totalStrength = modifyTotalStrength(state.units);
+      const meleeStrength = modifyMeleeStrength(state.units);
+      const rangedStrength = modifyRangedStrength(state.units);
+
 
       return {
         ...state,
         totalDefense,
         totalStrength,
+        meleeStrength,
+        rangedStrength,
       }
     },
     addUnit: (state, action) => {
@@ -103,12 +127,17 @@ export const armyManagerSlice = createSlice({
 
       var totalStrength = modifyTotalStrength(units);
       var totalDefense = modifyTotalDefense(units);
+      var meleeStrength = modifyMeleeStrength(units);
+      var rangedStrength = modifyRangedStrength(units);
+
 
       return {
         ...state,
         units,
         totalStrength,
         totalDefense,
+        meleeStrength,
+        rangedStrength,
         passives,
       };
     },
@@ -119,6 +148,8 @@ export const armyManagerSlice = createSlice({
       var passives: { [key: string]: number } = state.passives;
       var totalStrength = state.totalStrength;
       var totalDefense = state.totalDefense;
+      var meleeStrength = state.meleeStrength;
+      var rangedStrength = state.rangedStrength;
 
       // Sets priority order for destruction, might move it outside of the function at some point to allow for modification
       const destructionOrder: UNIT_TYPES[] = [
@@ -144,6 +175,9 @@ export const armyManagerSlice = createSlice({
         if (action.payload  <= 0) {
           totalStrength = modifyTotalStrength(units);
           totalDefense = modifyTotalDefense(units);
+          meleeStrength = modifyMeleeStrength(units);
+          rangedStrength = modifyRangedStrength(units);
+
           break;
         }
       }
@@ -154,6 +188,8 @@ export const armyManagerSlice = createSlice({
         lostUnits,
         totalStrength,
         totalDefense,
+        meleeStrength,
+        rangedStrength,
         passives,
       };
     }

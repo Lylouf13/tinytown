@@ -6,8 +6,11 @@ export enum GAME_STATE {
   DEFEAT = "defeat",
 }
 export enum FIGHT_STATE {
-  ATTACK = "attack",
-  DEFENSE = "defense",
+  BEFORE = "before",
+  PRE_FIGHT = "pre-fight",
+  ATTACK_MELEE = "attack_melee",
+  ATTACK_RANGED = "attack_ranged",
+  POST_FIGHT = "post-fight",
 }
 
 interface GameState {
@@ -20,7 +23,7 @@ interface GameState {
 
 const initialState: GameState = {
   state: GAME_STATE.PREPARATION,
-  fightState: FIGHT_STATE.ATTACK,
+  fightState: FIGHT_STATE.BEFORE,
   week: 1,
   timelineState:1,
   timelineDuration: 12,

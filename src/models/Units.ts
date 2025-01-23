@@ -92,14 +92,14 @@ export class Guardian extends Unit {
     super({
       name: "Guardian",
       strength: 1,
-      defense: 5,
+      defense: 8,
       cost: {
         [RESOURCES.HUMANS]: 1,
         [RESOURCES.GOLD]: 2,
         [RESOURCES.SCAVENGED]: 5,
         [RESOURCES.SOULS]: 0,
       },
-      ranged: true,
+      ranged: false,
       passives: [UNIT_PASSIVES.PILLAGER, UNIT_PASSIVES.PROTECTOR],
       description: `A strong and expensive unit, protects the others from the ennemies assault, adding
             durability to your army`,

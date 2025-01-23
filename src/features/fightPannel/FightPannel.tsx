@@ -1,10 +1,8 @@
+import "./fightPannel.scss";
+
 import { AppThunk } from "app/store";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import {
-  clearEnemy,
-  destroyEnemy,
-  generateEnemy,
-} from "utils/reducers/enemyManager";
+import { destroyEnemy, generateEnemy } from "utils/reducers/enemyManager";
 import { destroyUnits } from "utils/reducers/armyManager";
 import {
   updateFightState,
@@ -14,9 +12,10 @@ import {
   GAME_STATE,
 } from "utils/reducers/gameManager";
 import { generateResources } from "utils/reducers/townManager";
+import { sleep } from "utils/sleep";
 
 import Button from "components/button/Button";
-import "./fightPannel.scss";
+import UnitIcon from "features/academyPannel/components/unitIcon/UnitIcon";
 
 export default function FightPannel() {
   const dispatch = useAppDispatch();
@@ -48,77 +47,99 @@ export default function FightPannel() {
     );
 
   const attack = (): AppThunk => async (dispatch, getState) => {
+    console.log(
+      "Attack thunk started, current fight state:",
+      getState().game.fightState
+    );
+
     try {
-      var destroyedEnemies: number = 0;
-      salvaPassive();
-      dispatch(destroyEnemy(armySelector.totalStrength));
-      destroyedEnemies += armySelector.passives.salva;
-      destroyedEnemies += armySelector.totalStrength;
+      let destroyedEnemies: number = 0;
 
-      dispatch(updateFightState(FIGHT_STATE.DEFENSE));
+      while (true) {
+        const state = getState();
+        const { game, army, enemy } = state;
 
-      // Generates resources when skipping defense phase
-      if (getState().enemy.enemyForces === 0) {
-        generateFightResources(
-          enemySelector.enemyForces,
-          armySelector.passives.pillager,
-          0
-        );
-      }
-      // Generates gold or other resources from defeated enemies when the player doesn't skip defense phase
-      else{
-        generateFightResources(
-          destroyedEnemies,
-          0,
-          0
-        )
+        switch (game.fightState) {
+          case FIGHT_STATE.BEFORE:
+            console.log(game.fightState);
+            dispatch(updateFightState(FIGHT_STATE.PRE_FIGHT));
+            console.log(game.fightState);
+            console.log(gameSelector.fightState);
+
+            break;
+          case FIGHT_STATE.PRE_FIGHT:
+            console.log("Pre-fight state reached");
+            await sleep(2000);
+            await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            break;
+          case FIGHT_STATE.ATTACK_MELEE:
+            await sleep(2000);
+            destroyedEnemies += army.meleeStrength;
+            dispatch(destroyEnemy(army.meleeStrength));
+            dispatch(destroyUnits(army.meleeStrength));
+
+            if (enemy.enemyForces === 0) {
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            } else if (army.rangedStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else if (army.meleeStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            else dispatch(updateGameState(GAME_STATE.DEFEAT));
+            break;
+          case FIGHT_STATE.ATTACK_RANGED:
+            await sleep(2000);
+            destroyedEnemies += army.rangedStrength;
+            dispatch(destroyEnemy(army.rangedStrength));
+            if (enemy.enemyForces === 0) {
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            } else if (army.meleeStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            else if (army.rangedStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else dispatch(updateGameState(GAME_STATE.DEFEAT));
+            break;
+          case FIGHT_STATE.POST_FIGHT:
+            break;
+
+          default:
+            return;
+        }
+
+        await sleep(100);
       }
     } catch (error) {
       console.error("Fight sequence error:", error);
     }
   };
-
-  const defend = (): AppThunk => async (dispatch, getState) => {
-    try {
-      if (armySelector.totalDefense >= enemySelector.enemyForces) {
-        dispatch(destroyUnits(enemySelector.enemyForces));
-        dispatch(clearEnemy());
-        generateFightResources(
-          enemySelector.enemyForces,
-          armySelector.passives.pillager,
-          0
-        );
-      } else {
-        dispatch(updateGameState(GAME_STATE.DEFEAT));
-      }
-    } catch (error) {
-      console.error("Fight sequence error:", error);
-    }
-  };
-
   var currentPhase = "";
   var displayPhase = "";
-  var handleButtonClick = () => {};
+  const handleButtonClick = () => {
+    dispatch(attack());
+  };
 
-  if (gameSelector.fightState === FIGHT_STATE.ATTACK) {
-    currentPhase = "Attack";
-    displayPhase = "Attack Phase";
-    handleButtonClick = () => dispatch(attack());
+  if (gameSelector.fightState === FIGHT_STATE.BEFORE) {
+    currentPhase = "Start battle";
+    displayPhase = "Prepare for battle";
   } else if (
-    gameSelector.fightState === FIGHT_STATE.DEFENSE &&
+    gameSelector.fightState === FIGHT_STATE.PRE_FIGHT) 
+  {
+    currentPhase = "Pre-fight";
+    displayPhase = "Pre-fight";
+  } else if (
+    gameSelector.fightState === FIGHT_STATE.ATTACK_MELEE &&
     enemySelector.enemyForces !== 0
   ) {
-    currentPhase = "Defend";
-    displayPhase = "Defense Phase";
-    handleButtonClick = () => dispatch(defend());
+    currentPhase = "Melee Attack";
+    displayPhase = "Melee Attacks !";
+  } else if (
+    gameSelector.fightState === FIGHT_STATE.ATTACK_RANGED &&
+    enemySelector.enemyForces !== 0
+  ) {
+    currentPhase = "Range Attack";
+    displayPhase = "Ranged Attack !";
   } else {
     currentPhase = "Back to Town";
     displayPhase = "Fight Recap";
-    handleButtonClick = () => {
-      dispatch(updateGameState(GAME_STATE.PREPARATION));
-      dispatch(updateFightState(FIGHT_STATE.ATTACK));
-      nextWeek();
-    };
   }
 
   return (
@@ -128,37 +149,32 @@ export default function FightPannel() {
       }`}
     >
       <h2>Fight</h2>
-      <div className="fight__overview">
-        {gameSelector.fightState === FIGHT_STATE.ATTACK && (
-          <>
-            <p className="fight__overview__text-brown">
-              {armySelector.totalStrength}
-            </p>
-            <p>vs</p>
-          </>
-        )}
-        {gameSelector.fightState === FIGHT_STATE.DEFENSE && (
-          <>
-            <p className="fight__overview__text-blue">
-              {armySelector.totalDefense}
-            </p>
-            <p>vs</p>
-          </>
-        )}
-        <p className="fight__overview__text-red">{enemySelector.enemyForces}</p>
-      </div>
+      <div className="fight__overview"></div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
-        <p> actual fight frfr</p>
+        <h4 className="fight__art__frame fight__art__frame-enemy">
+          {" "}
+          Enemy forces - {enemySelector.enemyForces}
+        </h4>
+        <div className="fight__art__frame-army">
+          <div className="fight__art__frame-section fight__art__frame-section-melee">
+            <UnitIcon unit="berserk" tooltip={false} />
+            <UnitIcon unit="guardian" tooltip={false} />
+          </div>
+
+          <div className="fight__art__frame-section fight__art__frame-section-ranged">
+            <UnitIcon unit="bower" tooltip={false} />
+          </div>
+        </div>
       </div>
       <div className="fight__buttons">
-      {gameSelector.fightState === FIGHT_STATE.ATTACK && (
-        <Button
-        label="Cancel"
-        onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
-        />
-      )}
-      <Button label={currentPhase} onClick={() => handleButtonClick()} />
+        {gameSelector.fightState === FIGHT_STATE.BEFORE && (
+          <Button
+            label="Cancel"
+            onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
+          />
+        )}
+        <Button label={currentPhase} onClick={() => handleButtonClick()} />
       </div>
     </div>
   );
