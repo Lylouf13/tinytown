@@ -3,6 +3,8 @@
   margin: 0;
   padding: 0;
   width: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .App {

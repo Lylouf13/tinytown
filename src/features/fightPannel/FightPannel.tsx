@@ -7,6 +7,7 @@ import { destroyUnits, getMeleeCount } from "utils/reducers/armyManager";
 import { updateFightState, setNextWeek, updateGameState, FIGHT_STATE, GAME_STATE } from "utils/reducers/gameManager";
 import { generateResources } from "utils/reducers/townManager";
 import { sleep } from "utils/sleep";
+import { RESOURCES } from "enums/Resources";
 
 import Button from "components/button/Button";
 import UnitIcon from "features/academyPannel/components/unitIcon/UnitIcon";
@@ -29,12 +30,12 @@ export default function FightPannel() {
 
   const fightResources = (gold: number, scavenged: number, souls: number) => {
     return {
-      gold: gold,
-      scavenged: scavenged,
-      souls: souls,
+      [RESOURCES.GOLD]: gold,
+      [RESOURCES.SCAVENGED]: scavenged,
+      [RESOURCES.SOULS]: souls,
     };
   };
-  
+
   const attack = (): AppThunk => async (dispatch, getState) => {
     var fight = true;
 
@@ -47,26 +48,26 @@ export default function FightPannel() {
 
         switch (game.fightState) {
           case FIGHT_STATE.BEFORE:
-            await dispatch(updateFightState(FIGHT_STATE.PRE_FIGHT));
+            dispatch(updateFightState(FIGHT_STATE.PRE_FIGHT));
             break;
 
           case FIGHT_STATE.PRE_FIGHT:
             await sleep(1000);
-            await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
             break;
 
           case FIGHT_STATE.ATTACK_MELEE:
             await sleep(1000);
             if (enemy.enemyForces <= 0) {
-              await dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
               break;
             }
 
             destroyedEnemies = Math.min(army.meleeStrength, enemy.enemyForces);
 
-            await dispatch(destroyEnemy(destroyedEnemies));
-            await dispatch(destroyUnits(getMeleeCount(army.units) < enemy.enemyForces ? getMeleeCount(army.units) : enemy.enemyForces));
-            await dispatch(generateResources(fightResources(destroyedEnemies, army.passives.pillager, 0)));
+            dispatch(destroyEnemy(destroyedEnemies));
+            dispatch(destroyUnits(getMeleeCount(army.units) < enemy.enemyForces ? getMeleeCount(army.units) : enemy.enemyForces));
+            dispatch(generateResources(fightResources(destroyedEnemies, army.passives.pillager, 0)));
 
             if (army.rangedStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
             else if (army.meleeStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
@@ -75,15 +76,15 @@ export default function FightPannel() {
 
           case FIGHT_STATE.ATTACK_RANGED:
             await sleep(1000);
-            destroyedEnemies = Math.min(army.meleeStrength, enemy.enemyForces);
-            await dispatch(destroyEnemy(army.rangedStrength));
-            await dispatch(generateResources(fightResources(destroyedEnemies, 0, 0)));
+            destroyedEnemies = Math.min(army.rangedStrength, enemy.enemyForces);
+            dispatch(destroyEnemy(army.rangedStrength));
+            dispatch(generateResources(fightResources(destroyedEnemies, 0, 0)));
 
             if (enemy.enemyForces <= 0) {
-              await dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
             } else if (army.meleeStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
             else if (army.rangedStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-            else await dispatch(updateGameState(GAME_STATE.DEFEAT));
+            else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 
           case FIGHT_STATE.POST_FIGHT:
