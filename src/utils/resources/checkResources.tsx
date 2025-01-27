@@ -1,7 +1,11 @@
 import { RESOURCES } from "enums/Resources";
 
-export const checkResources = (resources: { [key in RESOURCES]: number }, cost: { [key in RESOURCES]: number }) => {
-    return Object.keys(resources).every((key) => {
-        return resources[key as keyof typeof resources] >= cost[key as keyof typeof cost];
-    });
+export const checkResources = (resources: { [key: string]: number }, cost: { [key: string]: number }) => {
+  const resourcesKeys: string[] = Object.keys(RESOURCES);
+  for (const key in cost) {
+    if (resources[key] === undefined || !resourcesKeys.includes(key) || resources[key] < cost[key]) {
+      return false;
+    }
+  }
+  return true;
 };

@@ -3,7 +3,6 @@ import "./buildingResourceExchange.scss";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { spendResources, generateResources } from "utils/reducers/townManager";
 import { checkResources } from "utils/resources/checkResources";
-import { normalizeResources } from "utils/resources/normalizeResources";
 
 import ExchangeTooltip from "components/tooltip/exchangeTooltip/ExchangeTooltip";
 
@@ -23,7 +22,7 @@ export default function BuildingResourceExchange({
 
   const exchange = () => {
     if (
-      checkResources(townSelector.resources, normalizeResources(resourceSpent))
+      checkResources(townSelector.resources, resourceSpent)
     ) {
       dispatch(spendResources(resourceSpent));
       dispatch(generateResources(resourceGained));

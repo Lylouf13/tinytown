@@ -45,6 +45,7 @@ const initialState: ArmyState = {
   rangedStrength: 0
 };
 
+
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
 const modifyPassives = (
   currentPassives: { [key: string]: number },
@@ -88,6 +89,14 @@ const modifyRangedStrength = (units: { [key: string]: number }) => {
   return Object.keys(units).reduce(
     (total: number, value) =>
       total + units[value] * (unitDatabase[value].ranged ? unitDatabase[value].strength : 0),
+    0
+  );
+};
+
+export const getMeleeCount = (units: { [key: string]: number }) => {
+  return Object.keys(units).reduce(
+    (total: number, value) =>
+      total + units[value] * (unitDatabase[value].ranged? 0 : 1),
     0
   );
 };

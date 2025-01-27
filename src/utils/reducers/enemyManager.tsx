@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  enemyForces: 8,
-  weeklyForces: 12,
+  enemyForces: 7,
+  weeklyForces: 5,
 };
 
 const randomInt = (min: number, max: number): number =>
@@ -15,7 +15,7 @@ export const enemyManagerSlice = createSlice({
       var enemyForces =
         state.enemyForces +
         state.weeklyForces * (action.payload + 1) +
-        randomInt(0, action.payload * 2);
+        randomInt(0, action.payload);
       return {
         ...state,
         enemyForces,
