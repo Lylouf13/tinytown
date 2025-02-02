@@ -33,7 +33,7 @@ export default function ResourcesTooltip({ resource }: ResourcesTooltipProps) {
       place="bottom"
       opacity={0.99}
     >
-      <h3 className="tooltip__title">{resource.toUpperCase()}</h3>
+      <h3 className="tooltip__title">{resource}</h3>
       <p className="tooltip__text">{resourceDescription}</p>
     </Tooltip>
   );

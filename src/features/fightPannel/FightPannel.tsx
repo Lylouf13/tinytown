@@ -41,6 +41,8 @@ export default function FightPannel() {
 
     try {
       let destroyedEnemies: number = 0;
+      let damageTaken: number = 0;
+      let generatedResources: { [key: string]: number } = {};
 
       while (fight) {
         const state = getState();
@@ -58,19 +60,18 @@ export default function FightPannel() {
 
           case FIGHT_STATE.ATTACK_MELEE:
             await sleep(1000);
-            if (enemy.enemyForces <= 0) {
-              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-              break;
-            }
 
             destroyedEnemies = Math.min(army.meleeStrength, enemy.enemyForces);
+            damageTaken = getMeleeCount(army.units) < enemy.enemyForces ? getMeleeCount(army.units) : enemy.enemyForces;
+            generatedResources = fightResources(destroyedEnemies, army.passives.pillager, 0);
 
             dispatch(destroyEnemy(destroyedEnemies));
-            dispatch(destroyUnits(getMeleeCount(army.units) < enemy.enemyForces ? getMeleeCount(army.units) : enemy.enemyForces));
-            dispatch(generateResources(fightResources(destroyedEnemies, army.passives.pillager, 0)));
+            dispatch(destroyUnits(damageTaken));
+            dispatch(generateResources(generatedResources));
 
-            if (army.rangedStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-            else if (army.meleeStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            if (enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else if (army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 
@@ -80,10 +81,9 @@ export default function FightPannel() {
             dispatch(destroyEnemy(army.rangedStrength));
             dispatch(generateResources(fightResources(destroyedEnemies, 0, 0)));
 
-            if (enemy.enemyForces <= 0) {
-              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-            } else if (army.meleeStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
-            else if (army.rangedStrength !== 0) await dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            if (enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            else if (army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 

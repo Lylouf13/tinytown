@@ -3,6 +3,7 @@ import "./buildingResourceExchange.scss";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { spendResources, generateResources } from "utils/reducers/townManager";
 import { checkResources } from "utils/resources/checkResources";
+import { RESOURCES } from "enums/Resources";
 
 import ExchangeTooltip from "components/tooltip/exchangeTooltip/ExchangeTooltip";
 
@@ -31,7 +32,7 @@ export default function BuildingResourceExchange({
 
   var action = "";
 
-  if (Object.keys(resourceSpent)[0] === "gold") {
+  if (Object.keys(resourceSpent)[0] === RESOURCES.GOLD) {
     action = "Buy";
   } else {
     action = "Sell";
@@ -60,7 +61,7 @@ export default function BuildingResourceExchange({
       <ExchangeTooltip
         spent={resourceSpent}
         gained={resourceGained}
-        action={Object.keys(resourceSpent)[0] === "gold" ? "Buy" : "Sell"}
+        action={Object.keys(resourceSpent)[0] === RESOURCES.GOLD ? "Buy" : "Sell"}
         tooltip={tooltipId}
       />
     </>
