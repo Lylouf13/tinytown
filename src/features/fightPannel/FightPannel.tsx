@@ -7,6 +7,8 @@ import { destroyUnits, getMeleeCount, getRangedCount } from "utils/reducers/army
 import { updateFightState, setNextWeek, updateGameState, FIGHT_STATE, GAME_STATE } from "utils/reducers/gameManager";
 import { generateResources } from "utils/reducers/townManager";
 import { sleep } from "utils/sleep";
+
+import { ENEMY_ARMIES } from "enums/EnemyArmies";
 import { RESOURCES } from "enums/Resources";
 
 import Button from "components/button/Button";
@@ -38,7 +40,8 @@ export default function FightPannel() {
 
   const attack = (): AppThunk => async (dispatch, getState) => {
     var fight = true;
-    var frontlane = false;
+    var isFrontlane = false;
+    var isAmbush = false;
 
     try {
       let destroyedEnemies: number = 0;
@@ -46,54 +49,58 @@ export default function FightPannel() {
       let generatedResources: { [key: string]: number } = {};
 
       while (fight) {
-        const state = getState();
-        const { game, army, enemy } = state;
-
-        switch (game.fightState) {
+        switch (getState().game.fightState) {
           case FIGHT_STATE.BEFORE:
             dispatch(updateFightState(FIGHT_STATE.PRE_FIGHT));
             break;
 
           case FIGHT_STATE.PRE_FIGHT:
             await sleep(1500);
-            if (army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
-            else if (army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-            else dispatch(updateGameState(GAME_STATE.DEFEAT));
+            if (getState().enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS || getState().army.meleeStrength === 0) {
+              console.log("AMBUSH !")
+              if (getState().army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+              else if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+              else dispatch(updateGameState(GAME_STATE.DEFEAT));
+            } else {
+              if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+              else dispatch(updateGameState(GAME_STATE.DEFEAT));
+            }
             break;
 
           case FIGHT_STATE.ATTACK_MELEE:
             await sleep(1500);
 
-            destroyedEnemies = Math.min(army.meleeStrength, enemy.enemyForces);
-            damageTaken = Math.min(getMeleeCount(army.units), enemy.enemyForces);
-            generatedResources = fightResources(destroyedEnemies, army.passives.pillager, 0);
-            frontlane = true;
+            destroyedEnemies = Math.min(getState().army.meleeStrength, getState().enemy.enemyForces);
+            damageTaken = Math.min(getMeleeCount(getState().army.units), getState().enemy.enemyForces);
+            generatedResources = fightResources(destroyedEnemies, getState().army.passives.pillager, 0);
+            isFrontlane = true;
 
             dispatch(destroyEnemy(destroyedEnemies));
             dispatch(destroyUnits(damageTaken));
             dispatch(generateResources(generatedResources));
 
-            if (enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-            else if (army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-            else if (army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            if (getState().enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (getState().army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 
           case FIGHT_STATE.ATTACK_RANGED:
             await sleep(1500);
 
-            destroyedEnemies = Math.min(army.rangedStrength, enemy.enemyForces);
-            damageTaken = frontlane ? 0 : Math.min(getRangedCount(army.units), enemy.enemyForces);
+            destroyedEnemies = Math.min(getState().army.rangedStrength, getState().enemy.enemyForces);
+            damageTaken = isFrontlane ? 0 : Math.min(getRangedCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, 0, 0);
-            frontlane = false;
 
-            dispatch(destroyEnemy(army.rangedStrength));
-            dispatch(destroyUnits(damageTaken));
+            dispatch(destroyEnemy(getState().army.rangedStrength));
+            dispatch(destroyUnits({ damageTaken: damageTaken, attackType: isFrontlane ? "" : "ambush" }));
             dispatch(generateResources(generatedResources));
 
-            if (enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-            else if (army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
-            else if (army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            isFrontlane = false;
+
+            if (getState().enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            else if (getState().army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 

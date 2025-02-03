@@ -67,7 +67,6 @@ export const townManagerSlice = createSlice({
       
     },
     generateResources: (state, action) => {
-      console.log(action.payload)
       var resources = { ...state.resources };
       var previousFightResources: { [key: string]: number } = {};
 
@@ -84,7 +83,6 @@ export const townManagerSlice = createSlice({
       };
     },
     spendResources: (state, action) => {
-      console.log(action.payload)
       var resources = { ...state.resources };
       Object.keys(action.payload).forEach((key) => {
         resources[key as keyof typeof resources] =

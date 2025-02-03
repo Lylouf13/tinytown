@@ -168,18 +168,22 @@ export const armyManagerSlice = createSlice({
       var meleeStrength = state.meleeStrength;
       var rangedStrength = state.rangedStrength;
 
-      // Sets priority order for destruction, might move it outside of the function at some point to allow for modification
-      const destructionOrder: UNIT_TYPES[] = [
+      var damageTaken = action.payload.damageTaken! || action.payload
+      var attackType = action.payload.attackType || null;
+
+      var destructionOrder: UNIT_TYPES[] = [
         UNIT_TYPES.GUARDIAN,
         UNIT_TYPES.BERSERK,
         UNIT_TYPES.BOWER,
       ];
+      destructionOrder = attackType === "ambush" ? destructionOrder.reverse() : destructionOrder;
 
-      action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 10;
+      //action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 5;
       
+
       // Removes units, decrementing passives as necessary
       for (const unitDestroyed of destructionOrder) {
-        while (action.payload > 0 && units[unitDestroyed] > 0) {
+        while (damageTaken > 0 && units[unitDestroyed] > 0) {
           units[unitDestroyed]--;
           lostUnits[unitDestroyed] = (lostUnits[unitDestroyed] || 0) + 1;
           passives = modifyPassives(
@@ -187,9 +191,9 @@ export const armyManagerSlice = createSlice({
             unitDatabase[unitDestroyed].passives,
             -1
           );
-          action.payload -= unitDatabase[unitDestroyed].defense;
+          damageTaken -= unitDatabase[unitDestroyed].defense;
         }
-        if (action.payload  <= 0) {
+        if (damageTaken  <= 0) {
           totalStrength = modifyTotalStrength(units);
           totalDefense = modifyTotalDefense(units);
           meleeStrength = modifyMeleeStrength(units);

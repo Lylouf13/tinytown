@@ -14,6 +14,7 @@ export default function EnemyPannel() {
   return (
     <div className="enemy">
       <p className="enemy__title">Enemies | {enemySelector.enemyForces}</p>
+      <p>{enemySelector.enemyType}</p>
       <Button
         label="fight"
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
