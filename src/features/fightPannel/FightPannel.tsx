@@ -65,7 +65,7 @@ export default function FightPannel() {
             await sleep(1500);
 
             destroyedEnemies = Math.min(army.meleeStrength, enemy.enemyForces);
-            damageTaken = getMeleeCount(army.units) < enemy.enemyForces ? getMeleeCount(army.units) : enemy.enemyForces;
+            damageTaken = Math.min(getMeleeCount(army.units), enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, army.passives.pillager, 0);
             frontlane = true;
 
