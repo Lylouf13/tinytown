@@ -101,6 +101,14 @@ export const getMeleeCount = (units: { [key: string]: number }) => {
   );
 };
 
+export const getRangedCount = (units: { [key: string]: number }) => {
+  return Object.keys(units).reduce(
+    (total: number, value) =>
+      total + units[value] * (unitDatabase[value].ranged ? 1 : 0),
+    0
+  );
+};
+
 export const armyManagerSlice = createSlice({
   name: "armyManager",
   initialState,

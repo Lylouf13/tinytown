@@ -51,7 +51,7 @@ export class Berserk extends Unit {
   constructor() {
     super({
       name: "Berserk",
-      strength: 2,
+      strength: 1,
       defense: 1,
       cost: {
         [RESOURCES.HUMANS]: 1,
@@ -71,7 +71,7 @@ export class Bower extends Unit {
   constructor() {
     super({
       name: "Bower",
-      strength: 2,
+      strength: 1,
       defense: 1,
       cost: {
         [RESOURCES.HUMANS]: 1,
