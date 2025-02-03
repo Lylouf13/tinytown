@@ -57,7 +57,6 @@ export default function FightPannel() {
           case FIGHT_STATE.PRE_FIGHT:
             await sleep(1500);
             if (getState().enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS || getState().army.meleeStrength === 0) {
-              console.log("AMBUSH !")
               if (getState().army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
               else if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
               else dispatch(updateGameState(GAME_STATE.DEFEAT));
