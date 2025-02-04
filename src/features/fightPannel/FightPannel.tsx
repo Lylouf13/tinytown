@@ -9,8 +9,10 @@ import { generateResources } from "utils/reducers/townManager";
 import { sleep } from "utils/sleep";
 
 import { ENEMY_ARMIES } from "enums/EnemyArmies";
+import { ATTACK_TYPES } from "enums/AttackTypes";
 import { RESOURCES } from "enums/Resources";
 
+import { enemyArmiesDatabase } from "models/EnemyArmies";
 import Button from "components/button/Button";
 import UnitIcon from "features/academyPannel/components/unitIcon/UnitIcon";
 
@@ -41,11 +43,11 @@ export default function FightPannel() {
   const attack = (): AppThunk => async (dispatch, getState) => {
     var fight = true;
     var isFrontlane = false;
-    var isAmbush = false;
 
     try {
       let destroyedEnemies: number = 0;
       let damageTaken: number = 0;
+      let attackType: ATTACK_TYPES = ATTACK_TYPES.NORMAL;
       let generatedResources: { [key: string]: number } = {};
 
       while (fight) {
@@ -73,9 +75,11 @@ export default function FightPannel() {
             damageTaken = Math.min(getMeleeCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, getState().army.passives.pillager, 0);
             isFrontlane = true;
+            getState().enemy.enemyType === ENEMY_ARMIES.HILL_GIANTS ? (attackType = ATTACK_TYPES.CRUSHING) : (attackType = ATTACK_TYPES.NORMAL);
+            
 
             dispatch(destroyEnemy(destroyedEnemies));
-            dispatch(destroyUnits(damageTaken));
+            dispatch(destroyUnits({damageTaken, attackType}));
             dispatch(generateResources(generatedResources));
 
             if (getState().enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
@@ -90,9 +94,11 @@ export default function FightPannel() {
             destroyedEnemies = Math.min(getState().army.rangedStrength, getState().enemy.enemyForces);
             damageTaken = isFrontlane ? 0 : Math.min(getRangedCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, 0, 0);
+            // CHECK IF RESULTS ARE CORRECT IN THE LONG RUN
+            attackType = enemyArmiesDatabase[getState().enemy.enemyType].attackType
 
             dispatch(destroyEnemy(getState().army.rangedStrength));
-            dispatch(destroyUnits({ damageTaken: damageTaken, attackType: isFrontlane ? "" : "ambush" }));
+            dispatch(destroyUnits({damageTaken, attackType}));
             dispatch(generateResources(generatedResources));
 
             isFrontlane = false;

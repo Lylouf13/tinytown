@@ -3,6 +3,7 @@ import { UNIT_PASSIVES } from "enums/UnitPassives";
 import { UNIT_TYPES } from "enums/UnitTypes";
 import { unitDatabase } from "models/Units";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
+import { ATTACK_TYPES } from "enums/AttackTypes";
 
 interface ArmyState {
   units: {
@@ -169,16 +170,17 @@ export const armyManagerSlice = createSlice({
       var rangedStrength = state.rangedStrength;
 
       var damageTaken = action.payload.damageTaken! || action.payload
-      var attackType = action.payload.attackType || null;
+      var attackType : string = action.payload.attackType || ATTACK_TYPES.NORMAL;
 
       var destructionOrder: UNIT_TYPES[] = [
         UNIT_TYPES.GUARDIAN,
         UNIT_TYPES.BERSERK,
         UNIT_TYPES.BOWER,
       ];
-      destructionOrder = attackType === "ambush" ? destructionOrder.reverse() : destructionOrder;
 
-      //action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 5;
+      destructionOrder = attackType === ATTACK_TYPES.TWISTED ? destructionOrder.reverse() : destructionOrder;
+
+      action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 5;
       
 
       // Removes units, decrementing passives as necessary
@@ -191,7 +193,11 @@ export const armyManagerSlice = createSlice({
             unitDatabase[unitDestroyed].passives,
             -1
           );
-          damageTaken -= unitDatabase[unitDestroyed].defense;
+          if (attackType === ATTACK_TYPES.CRUSHING){
+            console.log("CRUSHED")
+            damageTaken -= 1
+          }
+          else damageTaken -= unitDatabase[unitDestroyed].defense;
         }
         if (damageTaken  <= 0) {
           totalStrength = modifyTotalStrength(units);

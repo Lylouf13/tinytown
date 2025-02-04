@@ -1,18 +1,42 @@
 @use "utils/style/mixins";
 @use "utils/style/variables";
 
+
 .enemy {
   @include mixins.topPannel;
   gap: 20px;
-  border-color: variables.$enemy-color;
   justify-content: space-around;
+
+  &-highlanders{
+    border-color: variables.$enemy-color;
+  }
+  &-twisted_satyrs{
+    border-color: variables.$enemy-color-2;
+  }
+  &-hill_giants{
+    border-color: variables.$enemy-color-3;
+  }
+
   &__title {
     margin: 0;
     padding: 0;
-    color: variables.$enemy-color;
 
+    &-highlanders {
+      color: variables.$enemy-color;
+    }
+    &-twisted_satyrs{
+      color: variables.$enemy-color-2;
+    }
+    &-hill_giants{
+      color: variables.$enemy-color-3;
+    }
   }
 
+  &__icon{
+    width: 30px;
+    height: 30px;
+    image-rendering: pixelated;
+  }
   &__recap {
     display: flex;
     flex-direction: column;

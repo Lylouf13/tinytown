@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ENEMY_ARMIES } from "enums/EnemyArmies";
-import {ENEMY_ARMIES_DATABASE} from "models/EnemyArmies";
+import {enemyArmiesDatabase} from "models/EnemyArmies";
 
 
 const initialState = {
-  enemyType: ENEMY_ARMIES.TWISTED_SATYRS,
+  enemyType: ENEMY_ARMIES.HIGHLANDERS,
   enemyForces: 7,
   weeklyForces: 5,
 };
@@ -21,7 +21,7 @@ export const enemyManagerSlice = createSlice({
       var enemyType = ENEMY_ARMIES[currentType];
 
       var enemyForces = state.enemyForces + state.weeklyForces * (action.payload + 1) + randomInt(0, action.payload);
-      enemyForces = Math.floor(ENEMY_ARMIES_DATABASE[enemyType].forcesMultiplier * enemyForces);
+      enemyForces = Math.floor(enemyArmiesDatabase[enemyType].forcesMultiplier * enemyForces);
       return {
         ...state,
         enemyForces,

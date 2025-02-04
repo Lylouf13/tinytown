@@ -52,7 +52,7 @@ export class Berserk extends Unit {
     super({
       name: "Berserk",
       strength: 1,
-      defense: 1,
+      defense: 2,
       cost: {
         [RESOURCES.HUMANS]: 1,
         [RESOURCES.GOLD]: 0,
