@@ -1,3 +1,4 @@
+// Player buildings
 export enum TOWN_BUILDINGS {
   FARM = "Farm",
   MILL = "Mill",

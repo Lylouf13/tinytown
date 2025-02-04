@@ -6,6 +6,7 @@ import EnemyPannel from "features/enemyPannel/EnemyPannel";
 import Timeline from "features/timeline/Timeline";
 
 import "./town.scss";
+import EventPannel from "features/eventPannel/EventPannel";
 
 export default function Town() {
   return (
@@ -16,6 +17,7 @@ export default function Town() {
       </div>
       <Timeline />
       <FightPannel />
+      <EventPannel />
       <div className="town__main">
         <EconomyPannel />
         <AcademyPannel />

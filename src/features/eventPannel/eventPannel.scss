@@ -1,0 +1,57 @@
+@use '/src/utils/style/mixins.scss';
+@use '/src/utils/style/variables.scss';
+
+.eventPannel {
+    @include mixins.pannel;
+    animation-name: growPannel;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode:forwards;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    padding: 0;
+    height: fit-content;
+    overflow: clip;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        border-bottom: 2px solid variables.$secondary-color;
+        background-color: variables.$primary-color;
+
+        img{
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+    }
+
+    &-hidden{
+        opacity: 0;
+        height: 0px;
+        pointer-events: none;
+    }
+
+    @keyframes growPannel{
+        0%{
+            width: 0px;
+            height: 0px;
+            opacity: 1;
+        }
+        50%{
+            width: 350px;
+            height: 0px;
+        }
+        100%{
+            width: 350px;
+            height: 500px;
+            opacity: 1;
+        }
+    }
+}

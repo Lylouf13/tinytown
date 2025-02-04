@@ -1,3 +1,4 @@
+// Units talent list, effects defined in /models/UnitTalents.ts
 export enum UNIT_TALENTS {
     // Berserk
     RAGE_OF_THE_ANCIENTS = "Rage of the Ancients",
