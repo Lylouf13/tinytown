@@ -17,6 +17,7 @@ export default function EnemyPannel() {
       <img className="enemy__icon" src={`/assets/icons/enemies/EnemyIcon_${enemySelector.enemyType}.png`} alt="enemy type icon"/>
       <Button
         label="fight"
+        color={enemySelector.enemyType.toLowerCase()}
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
       {/* 

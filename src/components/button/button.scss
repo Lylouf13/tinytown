@@ -1,22 +1,32 @@
 @use "utils/style/mixins.scss";
 @use "utils/style/variables.scss";
 
-.button{
-    @include mixins.cta;
+.button {
+  @include mixins.cta;
 
-    &:hover:not(&-disabled){
-        background-color: variables.$primary-color;
-        color: variables.$secondary-color;
-        cursor: pointer;
-        transition : 0.5s;
-      }
-    
-      &-disabled{
-          background-color: variables.$primary-color;
-          color: variables.$secondary-color-dark;
-          border: 2px solid variables.$secondary-color-dark;
-    
-    
-          transition : 0.5s;
-      }
+  &:hover:not(&-disabled) {
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+
+  &-disabled {
+    background-color: variables.$primary-color;
+    border: 2px solid variables.$secondary-color-dark;
+
+    transition: 0.5s;
+  }
+  &-highlanders {
+    background-color: variables.$enemy-color;
+    border-color: variables.$enemy-color;
+  }
+  &-twisted_satyrs {
+    background-color: variables.$enemy-color-2;
+    border-color: variables.$enemy-color-2;
+  }
+  &-hill_giants {
+    background-color: variables.$enemy-color-3;
+    border-color: variables.$enemy-color-3;
+  }
 }

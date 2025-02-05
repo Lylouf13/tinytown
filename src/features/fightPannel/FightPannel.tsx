@@ -147,7 +147,7 @@ export default function FightPannel() {
       <div className="fight__overview"></div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
-        <h4 className="fight__art__frame fight__art__frame-enemy"> Enemy forces - {enemySelector.enemyForces}</h4>
+        <h4 className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}> Enemy forces - {enemySelector.enemyForces}</h4>
         <div className="fight__art__frame-army">
           <div
             className={`fight__art__frame-section fight__art__frame-section-melee ${

@@ -50,8 +50,18 @@
       border: 2px solid variables.$secondary-color;	
 
       &-enemy{
-        color: variables.$enemy-color;
-        border-color: variables.$enemy-color;
+        &-highlanders{
+          color : variables.$enemy-color;
+          border-color: variables.$enemy-color;
+        }
+        &-twisted_satyrs{
+          color : variables.$enemy-color-2;
+          border-color: variables.$enemy-color-2;
+        }
+        &-hill_giants{
+          color : variables.$enemy-color-3;
+          border-color: variables.$enemy-color-3;
+        }
       }
       &-army{
         display: flex;

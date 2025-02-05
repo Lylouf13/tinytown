@@ -3,7 +3,7 @@ import "./eventPannel.scss";
 
 import { useState } from "react";
 export default function EventPannel() {
-  const [isVisible, setisVisible] = useState(true);
+  const [isVisible, setisVisible] = useState(false);
 
   return (
     <div className={`eventPannel${isVisible ? "" : "-hidden"}`}>
