@@ -21,6 +21,7 @@ export default function FightPannel() {
   const enemySelector = useAppSelector((state) => state.enemy);
   const gameSelector = useAppSelector((state) => state.game);
   const townSelector = useAppSelector((state) => state.town);
+  const armySelector = useAppSelector((state) => state.army);
 
   const nextWeek = () => {
     dispatch(updateFightState(FIGHT_STATE.BEFORE));
@@ -30,7 +31,7 @@ export default function FightPannel() {
     dispatch(generateEnemy(gameSelector.week));
   };
 
-  // const salvaPassive = () => dispatch(destroyEnemy(armySelector.passives.salva));
+  const salvaPassive = () => dispatch(destroyEnemy(armySelector.passives.salva));
 
   const fightResources = (gold: number, scavenged: number, souls: number) => {
     return {
@@ -58,6 +59,9 @@ export default function FightPannel() {
 
           case FIGHT_STATE.PRE_FIGHT:
             await sleep(1500);
+
+            if (getState().enemy.enemyType !== ENEMY_ARMIES.TWISTED_SATYRS) salvaPassive();
+
             if (getState().enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS || getState().army.meleeStrength === 0) {
               if (getState().army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
               else if (getState().army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
@@ -75,11 +79,12 @@ export default function FightPannel() {
             damageTaken = Math.min(getMeleeCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, getState().army.passives.pillager, 0);
             isFrontlane = true;
-            getState().enemy.enemyType === ENEMY_ARMIES.HILL_GIANTS ? (attackType = ATTACK_TYPES.CRUSHING) : (attackType = ATTACK_TYPES.NORMAL);
-            
+            getState().enemy.enemyType === ENEMY_ARMIES.HILL_GIANTS
+              ? (attackType = ATTACK_TYPES.CRUSHING)
+              : (attackType = ATTACK_TYPES.NORMAL);
 
             dispatch(destroyEnemy(destroyedEnemies));
-            dispatch(destroyUnits({damageTaken, attackType}));
+            dispatch(destroyUnits({ damageTaken, attackType }));
             dispatch(generateResources(generatedResources));
 
             if (getState().enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
@@ -95,10 +100,10 @@ export default function FightPannel() {
             damageTaken = isFrontlane ? 0 : Math.min(getRangedCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, 0, 0);
             // CHECK IF RESULTS ARE CORRECT IN THE LONG RUN
-            attackType = enemyArmiesDatabase[getState().enemy.enemyType].attackType
+            attackType = enemyArmiesDatabase[getState().enemy.enemyType].attackType;
 
             dispatch(destroyEnemy(getState().army.rangedStrength));
-            dispatch(destroyUnits({damageTaken, attackType}));
+            dispatch(destroyUnits({ damageTaken, attackType }));
             dispatch(generateResources(generatedResources));
 
             isFrontlane = false;
@@ -147,7 +152,11 @@ export default function FightPannel() {
       <div className="fight__overview"></div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
-        <h4 className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}> Enemy forces - {enemySelector.enemyForces}</h4>
+        <img className="fight__art__image" src={`/assets/banners/enemies/EnemyArt_${enemySelector.enemyType}.png`} alt="enemy art"/>
+        <h4 className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}>
+          {" "}
+          Enemy forces - {enemySelector.enemyForces}
+        </h4>
         <div className="fight__art__frame-army">
           <div
             className={`fight__art__frame-section fight__art__frame-section-melee ${

@@ -1,3 +1,5 @@
+@use "utils/style/variables";
+
 .tooltip{
     margin-left: 15px;
     padding: 15px 25px;
@@ -53,6 +55,15 @@
         }
         &-required{
             color: #d13216;
+        }
+        &-highlanders{
+            color: variables.$enemy-color;
+        }
+        &-twisted_satyrs{
+            color: variables.$enemy-color-2;
+        }
+        &-hill_giants{
+            color: variables.$enemy-color-3;
         }
     }
 }

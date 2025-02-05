@@ -96,7 +96,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
       [RESOURCES.SOULS]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.BOWER].strength += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.BOWER].addPassive(UNIT_PASSIVES.SALVA)),
   },
   [UNIT_TALENTS.BOWER_3]: {
     name: "Bower 3",

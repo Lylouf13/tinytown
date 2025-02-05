@@ -80,7 +80,7 @@ export class Bower extends Unit {
         [RESOURCES.SOULS]: 0,
       },
       ranged: true,
-      passives: [UNIT_PASSIVES.SALVA],
+      passives: [],
       description: `A potent but fragile unit, uses a bow to pick down enemies before they can attack.
             Works well with a frontlane protecting them`,
     });

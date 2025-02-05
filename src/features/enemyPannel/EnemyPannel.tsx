@@ -1,23 +1,27 @@
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import "./enemyPannel.scss";
 
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
 
 import Button from "components/button/Button";
-import "./enemyPannel.scss";
-import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
+import EnemyArmyTooltip from "components/tooltip/enemyArmyTooltip/EnemyArmyTooltip";
 
 export default function EnemyPannel() {
   const dispatch = useAppDispatch();
   const enemySelector = useAppSelector((state) => state.enemy);
-
-  
+  var currentEnemy = enemySelector.enemyType
 
   return (
-    <div className={`enemy enemy-${enemySelector.enemyType.toLowerCase()}`}>
-      <p className={`enemy__title enemy__title-${enemySelector.enemyType.toLowerCase()}`}>Enemies | {enemySelector.enemyForces}</p>
-      <img className="enemy__icon" src={`/assets/icons/enemies/EnemyIcon_${enemySelector.enemyType}.png`} alt="enemy type icon"/>
+    <div className={`enemy enemy-${currentEnemy.toLowerCase()}`}>
+      <p className={`enemy__title enemy__title-${currentEnemy.toLowerCase()}`}>Enemies | {enemySelector.enemyForces}</p>
+      <img className="enemy__icon" src={`/assets/icons/enemies/EnemyIcon_${currentEnemy}.png`} alt="enemy type icon"
+                data-tooltip-id={`tooltip-${currentEnemy.toLowerCase()}`}
+
+      />
+      <EnemyArmyTooltip army={currentEnemy} />
       <Button
         label="fight"
-        color={enemySelector.enemyType.toLowerCase()}
+        color={currentEnemy.toLowerCase()}
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
       {/* 
