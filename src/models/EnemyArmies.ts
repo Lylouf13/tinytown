@@ -16,7 +16,7 @@ export const enemyArmiesDatabase: { [key in ENEMY_ARMIES]: EnemyArmies } = {
     enemyType: ENEMY_ARMIES.HIGHLANDERS,
     attackType: ATTACK_TYPES.NORMAL,
     forcesMultiplier: 1,
-    description: "Highlanders are Barbarians, numerous, ferocious, with a taste for blood and not so much for strategy.",
+    description: "Numerous, ferocious, with a taste for blood. The drums of war and the shouts of battle fill the air.",
     effect: "No special effect",
   },
   [ENEMY_ARMIES.HILL_GIANTS]: {
@@ -24,7 +24,7 @@ export const enemyArmiesDatabase: { [key in ENEMY_ARMIES]: EnemyArmies } = {
     enemyType: ENEMY_ARMIES.HILL_GIANTS,
     attackType: ATTACK_TYPES.CRUSHING,
     forcesMultiplier: 0.4,
-    description: "Hill Giants are massive, and their size makes any defensive stance useless against them.",
+    description: "The ground shakes, as misty figures of stone and earth rise from the ground.",
     effect: "Ignores army defense",
   },
 
@@ -33,7 +33,7 @@ export const enemyArmiesDatabase: { [key in ENEMY_ARMIES]: EnemyArmies } = {
     enemyType: ENEMY_ARMIES.TWISTED_SATYRS,
     attackType: ATTACK_TYPES.TWISTED,
     forcesMultiplier: 0.7,
-    description: "The Twisted Satyrs is a devious clan, they are able to bypass our frontlane and ambush us from the back",
+    description: "The roots are moving, the swamp howls a wicked song, the satyrs are at our doors.",
     effect: "Ambushes ranged pack first"
   },
 };

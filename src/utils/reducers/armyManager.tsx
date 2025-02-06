@@ -194,7 +194,6 @@ export const armyManagerSlice = createSlice({
             -1
           );
           if (attackType === ATTACK_TYPES.CRUSHING){
-            console.log("CRUSHED")
             damageTaken -= 1
           }
           else damageTaken -= unitDatabase[unitDestroyed].defense;
