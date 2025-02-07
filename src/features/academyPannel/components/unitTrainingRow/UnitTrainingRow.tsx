@@ -33,8 +33,8 @@ export default function UnitTrainingRow({ unit }: UnitTrainingRowProps) {
   const trainUnit = (quantity: number, unit: string) => {
     const cost = multiplyCost(unitDatabase[unit].cost, quantity)
     if (checkResources(townSelector.resources, cost)) {
-      dispatch(spendResources(cost));
-      dispatch(addUnit({ unit, quantity }));
+        dispatch(spendResources(cost));
+        dispatch(addUnit({ unit, quantity }));
     }
   };
 

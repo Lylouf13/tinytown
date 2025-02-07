@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { updateGameState, GAME_STATE } from "utils/reducers/gameManager";
 
 import Button from "components/button/Button";
-import RerollButton from "./components/rerollButton";
+// import RerollButton from "./components/rerollButton";
 import EnemyArmyTooltip from "components/tooltip/enemyArmyTooltip/EnemyArmyTooltip";
 
 export default function EnemyPannel() {
@@ -25,7 +25,7 @@ export default function EnemyPannel() {
         color={currentEnemy.toLowerCase()}
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
-      <RerollButton />
+      {/* <RerollButton /> */}
       {/* 
       ---------
       ---------
