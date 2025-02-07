@@ -77,7 +77,7 @@ export default function BuildingsPannel({
       </div>
       <h3 className="buildingsPannel__subtitle">Mage Quarter</h3>
       <div className="buildingsPannel__section">
-        <BuildingNode building={TOWN_BUILDINGS.MAGE_TOWER} />
+        <BuildingNode building={TOWN_BUILDINGS.MAGE_ACADEMY} />
         <BuildingAction
           name={"fireHeart"}
           active={selectedMageSpell === "fireHeart"}

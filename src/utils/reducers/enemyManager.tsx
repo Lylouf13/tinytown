@@ -10,15 +10,18 @@ const initialState = {
 };
 
 const randomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;
-
+const enemyRoll = () => {
+  var enemyKeys: string[] = Object.keys(ENEMY_ARMIES);
+return(
+  enemyKeys[randomInt(0, enemyKeys.length - 1)] as ENEMY_ARMIES
+)
+};
 export const enemyManagerSlice = createSlice({
   name: "enemyManager",
   initialState,
   reducers: {
     generateEnemy: (state, action) => {
-      var enemyKeys: string[] = Object.keys(ENEMY_ARMIES);
-      const currentType: ENEMY_ARMIES = enemyKeys[randomInt(0, enemyKeys.length - 1)] as ENEMY_ARMIES;
-      var enemyType = ENEMY_ARMIES[currentType];
+      var enemyType = enemyRoll()
 
       var enemyForces = state.enemyForces + state.weeklyForces * (action.payload + 1) + randomInt(0, action.payload);
       enemyForces = Math.floor(enemyArmiesDatabase[enemyType].forcesMultiplier * enemyForces);
@@ -45,9 +48,19 @@ export const enemyManagerSlice = createSlice({
         enemyForces: 0,
       };
     },
+    rerollType: (state) => {
+      var enemyType = state.enemyType
+      while(enemyType === state.enemyType){
+        enemyType = enemyRoll()
+      }
+      return {
+        ...state,
+        enemyType,
+      };
+    },
   },
 });
 
-export const { generateEnemy, clearEnemy, destroyEnemy } = enemyManagerSlice.actions;
+export const { generateEnemy, clearEnemy, destroyEnemy, rerollType } = enemyManagerSlice.actions;
 
 export default enemyManagerSlice.reducer;

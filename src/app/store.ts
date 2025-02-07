@@ -4,11 +4,6 @@ import { armyManagerSlice } from 'utils/reducers/armyManager'
 import { enemyManagerSlice } from 'utils/reducers/enemyManager'
 import { gameManagerSlice } from 'utils/reducers/gameManager'
 
-
-    // const actionCreator = payload => dispatch =>
-    //     Promise.resolve(dispatch(action1(payload))).then(
-    //     () => dispatch(action2(payload)
-
 export const store = configureStore({
   reducer: {
      town: townManagerSlice.reducer,

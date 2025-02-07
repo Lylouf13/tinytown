@@ -86,8 +86,8 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     count: 0,
     maxCount: 1,
   },
-  [TOWN_BUILDINGS.MAGE_TOWER]: {
-    name: "Mage Tower",
+  [TOWN_BUILDINGS.MAGE_ACADEMY]: {
+    name: "Mage Academy",
     description: "Send powerful spells to buff your army for the next fight",
     cost: {
       [RESOURCES.HUMANS]: 0,

@@ -78,11 +78,11 @@ export default function FightPannel() {
             destroyedEnemies = Math.min(getState().army.meleeStrength, getState().enemy.enemyForces);
             damageTaken = Math.min(getMeleeCount(getState().army.units), getState().enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, getState().army.passives.pillager, 0);
+            attackType = enemyArmiesDatabase[getState().enemy.enemyType].attackType;
             isFrontlane = true;
-            getState().enemy.enemyType === ENEMY_ARMIES.HILL_GIANTS
-              ? (attackType = ATTACK_TYPES.CRUSHING)
-              : (attackType = ATTACK_TYPES.NORMAL);
 
+
+            /// TEST LES BATCHS
             dispatch(destroyEnemy(destroyedEnemies));
             dispatch(destroyUnits({ damageTaken, attackType }));
             dispatch(generateResources(generatedResources));

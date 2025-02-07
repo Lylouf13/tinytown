@@ -6,6 +6,6 @@ export enum TOWN_BUILDINGS {
   MINE = "Mine",
   TOWER = "Tower",
   MARKET = "Market",
-  MAGE_TOWER = "Mage Tower",
+  MAGE_ACADEMY = "Mage Academy",
   QUESTIONABLE_CONCLAVE = "Questionable Conclave",
 }
