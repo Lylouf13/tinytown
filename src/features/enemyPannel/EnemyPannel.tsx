@@ -26,6 +26,7 @@ export default function EnemyPannel() {
         onClick={() => dispatch(updateGameState(GAME_STATE.FIGHT))}
       />
       {/* <RerollButton /> */}
+      
       {/* 
       ---------
       ---------

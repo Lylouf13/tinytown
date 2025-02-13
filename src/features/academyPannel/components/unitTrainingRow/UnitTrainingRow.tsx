@@ -10,6 +10,7 @@ import { RESOURCES } from "enums/Resources";
 
 
 import "./unitTrainingRow.scss";
+import { batch } from "react-redux";
 
 interface UnitTrainingRowProps {
   unit: string;
@@ -33,8 +34,10 @@ export default function UnitTrainingRow({ unit }: UnitTrainingRowProps) {
   const trainUnit = (quantity: number, unit: string) => {
     const cost = multiplyCost(unitDatabase[unit].cost, quantity)
     if (checkResources(townSelector.resources, cost)) {
+      batch (() => {     
         dispatch(spendResources(cost));
         dispatch(addUnit({ unit, quantity }));
+      })
     }
   };
 

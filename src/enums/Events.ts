@@ -1,4 +1,5 @@
 export enum EVENTS {
+        NONE = "NONE",
     // ECONOMY EVENTS
         GOLD_BUYER = "GOLD_BUYER",
         HUMAN_BUYER = "HUMAN_BUYER",

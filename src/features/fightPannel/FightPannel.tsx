@@ -34,7 +34,14 @@ export default function FightPannel() {
     })
   };
 
-  const salvaPassive = () => dispatch(destroyEnemy(armySelector.passives.salva));
+  const salvaPassive = () => {
+    const salvaStrength = armySelector.passives.salva;
+    const generatedResources = fightResources(salvaStrength, 0, 0)
+    batch(()=>{
+      dispatch(destroyEnemy(salvaStrength));
+      dispatch(generateResources(generatedResources));
+    })
+  }
 
   const fightResources = (gold: number, scavenged: number, souls: number) => {
     return {
@@ -113,7 +120,6 @@ export default function FightPannel() {
             destroyedEnemies = Math.min(state.army.rangedStrength, state.enemy.enemyForces);
             damageTaken = isFrontlane ? 0 : Math.min(getRangedCount(state.army.units), state.enemy.enemyForces);
             generatedResources = fightResources(destroyedEnemies, 0, 0);
-            // CHECK IF RESULTS ARE CORRECT IN THE LONG RUN
             attackType = enemyArmiesDatabase[state.enemy.enemyType].attackType;
 
             playerAttack(destroyedEnemies, damageTaken, attackType, generatedResources);

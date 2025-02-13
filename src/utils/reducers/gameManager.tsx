@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { EVENTS } from "enums/Events";
 
 export enum GAME_STATE {
   PREPARATION = "preparation",
@@ -17,6 +18,7 @@ interface GameState {
   state: GAME_STATE;
   fightState: FIGHT_STATE;
   week: number;
+  eventWeek: EVENTS;
   timelineState: number;
   timelineDuration: number;
 }
@@ -25,6 +27,7 @@ const initialState: GameState = {
   state: GAME_STATE.PREPARATION,
   fightState: FIGHT_STATE.BEFORE,
   week: 1,
+  eventWeek: EVENTS.NONE,
   timelineState:1,
   timelineDuration: 12,
 };
@@ -34,9 +37,17 @@ export const gameManagerSlice = createSlice({
   initialState,
   reducers: { 
     setNextWeek: (state) => {
+      const week = state.week + 1
+      var eventWeek = state.eventWeek
+      
+      if (week === 2 ){
+        eventWeek = EVENTS.ENTHUSIASTIC_MASONRY
+      }
+      
       return {
         ...state,
-        week: state.week + 1,
+        week,
+        eventWeek,
         timelineState:state.timelineState< state.timelineDuration ? state.timelineState+1 : 1
       };
     },
