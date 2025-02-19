@@ -1,19 +1,22 @@
 import Button from "components/button/Button";
 import "./eventPannel.scss";
 import { EVENTS } from "enums/Events";
+import { WEEK_TYPES } from "enums/WeekTypes";
 
 import { useEffect, useState } from "react";
 import { useAppSelector } from "app/hooks";
 
 export default function EventPannel() {
   const gameSelector = useAppSelector((state) => state.game);
-  const [isOpened, setIsOpened] = useState(gameSelector.eventWeek !== EVENTS.NONE);
+  const [isOpened, setIsOpened] = useState(gameSelector.timeline[gameSelector.timelineState-1] === WEEK_TYPES.EVENT);
 
   useEffect(() => {
-    if (gameSelector.eventWeek !== EVENTS.NONE) {
+    if (gameSelector.timeline[gameSelector.timelineState-1] === WEEK_TYPES.EVENT) {
       setIsOpened(true);
+      console.log(gameSelector.timeline[gameSelector.timelineState-1])
+
     }
-  }, [gameSelector.eventWeek]);
+  }, [gameSelector.eventWeek, gameSelector.timeline, gameSelector.timelineState]);
 
   return (
     <div className={`eventPannel${gameSelector.eventWeek !== EVENTS.NONE && isOpened ? "" : "-hidden"}`}>
