@@ -16,17 +16,17 @@ export default function EventPannel() {
       console.log(gameSelector.timeline[gameSelector.timelineState-1])
 
     }
-  }, [gameSelector.eventWeek, gameSelector.timeline, gameSelector.timelineState]);
+  }, [gameSelector.timeline, gameSelector.timelineState]);
 
   return (
-    <div className={`eventPannel${gameSelector.eventWeek !== EVENTS.NONE && isOpened ? "" : "-hidden"}`}>
+    <div className={`eventPannel${gameSelector.timeline[gameSelector.timelineState-1] === WEEK_TYPES.EVENT && isOpened ? "" : "-hidden"}`}>
       <div className="eventPannel__header">
         <img src="assets/icons/timeline/nodeEvent-active.png" alt="banner" />
         <h2 className="eventPannel__title">An event in town</h2>
         <img src="assets/icons/timeline/nodeEvent-active.png" alt="banner" />
       </div>
       <div className="eventPannel__content">
-        <p> Things here frfr </p>
+        <p> {gameSelector.currentEvent} </p>
       </div>
       <Button
         label="So be it"

@@ -19,12 +19,13 @@ interface GameState {
   state: GAME_STATE;
   fightState: FIGHT_STATE;
   week: number;
-  eventWeek: EVENTS;
+  currentEvent: EVENTS;
   timeline: WEEK_TYPES[];
   timelineState: number;
   timelineDuration: number;
 }
 const randomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;
+
 const timelineRoll = () => {
   var weekTypes: string[] = Object.keys(WEEK_TYPES);
   var timeline: WEEK_TYPES[] = [];
@@ -49,11 +50,18 @@ const timelineRoll = () => {
   return timeline;
 };
 
+const eventRoll = () => {
+  var eventKeys: string[] = Object.keys(EVENTS);
+return(
+  eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS
+)
+};
+
 const initialState: GameState = {
   state: GAME_STATE.PREPARATION,
   fightState: FIGHT_STATE.BEFORE,
   week: 1,
-  eventWeek: EVENTS.NONE,
+  currentEvent: EVENTS.NONE,
   timeline: timelineRoll(),
   timelineState: 1,
   timelineDuration: 12,
@@ -65,16 +73,16 @@ export const gameManagerSlice = createSlice({
   reducers: {
     setNextWeek: (state) => {
       const week = state.week + 1;
-      var eventWeek = state.eventWeek;
+      var currentEvent = state.currentEvent;
 
-      if (week === 2) {
-        eventWeek = EVENTS.ENTHUSIASTIC_MASONRY;
+      if (state.timeline[state.timelineState-1] === WEEK_TYPES.EVENT) {
+        currentEvent = eventRoll();
       }
 
       return {
         ...state,
         week,
-        eventWeek,
+        currentEvent,
         timelineState: state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1,
       };
     },
@@ -90,9 +98,15 @@ export const gameManagerSlice = createSlice({
         fightState: action.payload,
       };
     },
+    generateNewTimeline: (state) => {
+      return {
+        ...state,
+        timeline: timelineRoll(),
+      };
+    }
   },
 });
 
-export const { setNextWeek, updateGameState, updateFightState } = gameManagerSlice.actions;
+export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline } = gameManagerSlice.actions;
 
 export default gameManagerSlice.reducer;
