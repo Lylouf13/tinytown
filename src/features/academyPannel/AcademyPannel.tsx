@@ -11,25 +11,15 @@ export default function AcademyPannel() {
 
   return (
     <div className="academy">
-      <img
-        className="town__banner"
-        src="assets/banners/AcademyBanner.png"
-        alt="banner"
-      />
+      <img className="town__banner" src="assets/banners/AcademyBanner.png" alt="banner" />
       <div className="academy__pannel">
         <h1 className="academy__title">Academy</h1>
         <div className="academy__statContainer">
           <h2 className="academy__statContainer__stat">
-            Total strength :{" "}
-            <span className="academy__statContainer__stat-red">
-              {armySelector.totalStrength}
-            </span>
+            Total strength : <span className="academy__statContainer__stat-red">{armySelector.totalStrength}</span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            Total defense :{" "}
-            <span className="academy__statContainer__stat-blue">
-              {armySelector.totalDefense}
-            </span>
+            Total defense : <span className="academy__statContainer__stat-blue">{armySelector.totalDefense}</span>
           </h2>
         </div>
 
@@ -40,6 +30,7 @@ export default function AcademyPannel() {
           ))}
         </div>
 
+        <h2 className="academy__subtitle">Training</h2>
         {/*   UNIT TRAINING PANNEL GENERATION  */}
         {Object.keys(unitDatabase).map((unit) => (
           <UnitTrainingRow key={`${unit}-trainingRow`} unit={unit} />

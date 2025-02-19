@@ -75,15 +75,18 @@ export const gameManagerSlice = createSlice({
       const week = state.week + 1;
       var currentEvent = state.currentEvent;
 
-      if (state.timeline[state.timelineState-1] === WEEK_TYPES.EVENT) {
+      var timelineState = state.timelineState;
+      timelineState = state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1;
+
+      if (state.timeline[timelineState-1] === WEEK_TYPES.EVENT) {
         currentEvent = eventRoll();
       }
 
       return {
         ...state,
         week,
+        timelineState,
         currentEvent,
-        timelineState: state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1,
       };
     },
     updateGameState: (state, action) => {

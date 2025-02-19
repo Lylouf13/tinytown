@@ -1,10 +1,12 @@
 import Button from "components/button/Button";
 import "./eventPannel.scss";
-import { EVENTS } from "enums/Events";
-import { WEEK_TYPES } from "enums/WeekTypes";
 
 import { useEffect, useState } from "react";
 import { useAppSelector } from "app/hooks";
+
+import { WEEK_TYPES } from "enums/WeekTypes";
+import { eventDatabase } from "models/Events";
+
 
 export default function EventPannel() {
   const gameSelector = useAppSelector((state) => state.game);
@@ -18,6 +20,7 @@ export default function EventPannel() {
     }
   }, [gameSelector.timeline, gameSelector.timelineState]);
 
+  const event = gameSelector.currentEvent
   return (
     <div className={`eventPannel${gameSelector.timeline[gameSelector.timelineState-1] === WEEK_TYPES.EVENT && isOpened ? "" : "-hidden"}`}>
       <div className="eventPannel__header">
@@ -26,7 +29,8 @@ export default function EventPannel() {
         <img src="assets/icons/timeline/nodeEvent-active.png" alt="banner" />
       </div>
       <div className="eventPannel__content">
-        <p> {gameSelector.currentEvent} </p>
+        <h3>{eventDatabase[event].name}</h3>
+        <p> {eventDatabase[event].description} </p>
       </div>
       <Button
         label="So be it"
