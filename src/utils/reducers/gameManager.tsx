@@ -20,6 +20,7 @@ interface GameState {
   fightState: FIGHT_STATE;
   week: number;
   currentEvent: EVENTS;
+  eventPannel: boolean;
   timeline: WEEK_TYPES[];
   timelineState: number;
   timelineDuration: number;
@@ -36,7 +37,7 @@ const timelineRoll = () => {
 
   for (var i = 0; i < 12; i++) {
     if (i <= 1 || (i < 11 && eventCooldown) || (i < 11 && totalEvents >= maxEvents)) {
-      timeline.push(WEEK_TYPES.NORMAL);
+      timeline.push(WEEK_TYPES.EVENT);
       eventCooldown = false;
     } else if (i < 11 && !eventCooldown && totalEvents < maxEvents) {
       roll = randomInt(0, weekTypes.length - 2);
@@ -52,9 +53,7 @@ const timelineRoll = () => {
 
 const eventRoll = () => {
   var eventKeys: string[] = Object.keys(EVENTS);
-return(
-  eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS
-)
+  return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
 };
 
 const initialState: GameState = {
@@ -62,6 +61,7 @@ const initialState: GameState = {
   fightState: FIGHT_STATE.BEFORE,
   week: 1,
   currentEvent: EVENTS.NONE,
+  eventPannel: false,
   timeline: timelineRoll(),
   timelineState: 1,
   timelineDuration: 12,
@@ -78,7 +78,7 @@ export const gameManagerSlice = createSlice({
       var timelineState = state.timelineState;
       timelineState = state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1;
 
-      if (state.timeline[timelineState-1] === WEEK_TYPES.EVENT) {
+      if (state.timeline[timelineState - 1] === WEEK_TYPES.EVENT) {
         currentEvent = eventRoll();
       }
 
@@ -106,10 +106,16 @@ export const gameManagerSlice = createSlice({
         ...state,
         timeline: timelineRoll(),
       };
-    }
+    },
+    toggleEventPannel: (state) => {
+      return {
+        ...state,
+        eventPannel: !state.eventPannel,
+      };
+    },
   },
 });
 
-export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline } = gameManagerSlice.actions;
+export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline, toggleEventPannel } = gameManagerSlice.actions;
 
 export default gameManagerSlice.reducer;
