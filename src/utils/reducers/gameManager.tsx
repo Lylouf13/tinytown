@@ -37,7 +37,7 @@ const timelineRoll = () => {
 
   for (var i = 0; i < 12; i++) {
     if (i <= 1 || (i < 11 && eventCooldown) || (i < 11 && totalEvents >= maxEvents)) {
-      timeline.push(WEEK_TYPES.EVENT);
+      timeline.push(WEEK_TYPES.NORMAL);
       eventCooldown = false;
     } else if (i < 11 && !eventCooldown && totalEvents < maxEvents) {
       roll = randomInt(0, weekTypes.length - 2);

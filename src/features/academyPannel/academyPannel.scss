@@ -21,11 +21,19 @@
     align-items: center;
     margin-bottom: 20px;
     border-bottom: #24282b 2px solid;
-
+    &__icon{
+      width: 32px;
+      height: 32px;
+      image-rendering: pixelated;
+    }
     &__stat {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0;
       padding: 0;
       font-size: 23px;
+      gap: 5px;
       &-red {
         color: #db802b;
         display: inline;

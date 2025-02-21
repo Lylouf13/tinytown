@@ -16,10 +16,16 @@ export default function AcademyPannel() {
         <h1 className="academy__title">Academy</h1>
         <div className="academy__statContainer">
           <h2 className="academy__statContainer__stat">
-            Total strength : <span className="academy__statContainer__stat-red">{armySelector.totalStrength}</span>
+            <img className="academy__statContainer__icon" src="assets/icons/misc/meleeStrengthIcon.png" />{" "}
+            <span className="academy__statContainer__stat-red">{armySelector.meleeStrength}</span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            Total defense : <span className="academy__statContainer__stat-blue">{armySelector.totalDefense}</span>
+            <img className="academy__statContainer__icon" src="assets/icons/misc/rangeStrengthIcon.png" />{" "}
+            <span className="academy__statContainer__stat-red">{armySelector.rangedStrength}</span>
+          </h2>
+          <h2 className="academy__statContainer__stat">
+            <img className="academy__statContainer__icon" src="assets/icons/misc/defenseIcon.png" />{" "}
+            <span className="academy__statContainer__stat-blue">{armySelector.totalDefense}</span>
           </h2>
         </div>
 
