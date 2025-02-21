@@ -75,7 +75,7 @@ export class Bower extends Unit {
       defense: 1,
       cost: {
         [RESOURCES.HUMANS]: 1,
-        [RESOURCES.GOLD]: 2,
+        [RESOURCES.GOLD]: 3,
         [RESOURCES.SCAVENGED]: 0,
         [RESOURCES.SOULS]: 0,
       },
@@ -95,12 +95,12 @@ export class Guardian extends Unit {
       defense: 8,
       cost: {
         [RESOURCES.HUMANS]: 1,
-        [RESOURCES.GOLD]: 2,
-        [RESOURCES.SCAVENGED]: 5,
+        [RESOURCES.GOLD]: 5,
+        [RESOURCES.SCAVENGED]: 1,
         [RESOURCES.SOULS]: 0,
       },
       ranged: false,
-      passives: [UNIT_PASSIVES.PILLAGER, UNIT_PASSIVES.PROTECTOR],
+      passives: [UNIT_PASSIVES.PROTECTOR],
       description: `A strong and expensive unit, protects the others from the ennemies assault, adding
             durability to your army`,
     });

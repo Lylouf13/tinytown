@@ -14,6 +14,7 @@ export default function UnitTooltip({ unitData }: UnitTooltipProps) {
       className="tooltip"
       id={`tooltip-${unitData.name}`}
       place="right"
+      opacity={0.99}
     >
       <h3 className="tooltip__title">{unitData.name.toUpperCase()}</h3>
       <p className="tooltip__text">{unitData.description}</p>

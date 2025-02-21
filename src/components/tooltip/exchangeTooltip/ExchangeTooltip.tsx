@@ -15,7 +15,6 @@ export default function ExchangeTooltip({
   const resourceSpent = Object.keys(spent)[0];
   const resourceGained = Object.keys(gained)[0];
 
-  console.log(spent[resourceSpent]);
   return (
     <Tooltip
       disableStyleInjection

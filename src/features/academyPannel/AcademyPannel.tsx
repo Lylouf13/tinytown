@@ -30,17 +30,21 @@ export default function AcademyPannel() {
         </div>
 
         {/*   ICONS GENERATION  */}
-        <div className="academy__iconContainer">
+        {/* <div className="academy__iconContainer">
           {Object.keys(unitDatabase).map((unit) => (
             <UnitIcon key={`${unit}-unitIcon`} unit={unit} />
           ))}
-        </div>
+        </div> */}
 
         <h2 className="academy__subtitle">Training</h2>
         {/*   UNIT TRAINING PANNEL GENERATION  */}
         {Object.keys(unitDatabase).map((unit) => (
           <UnitTrainingRow key={`${unit}-trainingRow`} unit={unit} />
         ))}
+
+        <h2 className="academy__subtitle">Forge</h2>
+        <p>Build the forge first ;)</p>
+
       </div>
       <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />
     </div>

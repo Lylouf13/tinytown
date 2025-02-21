@@ -101,6 +101,7 @@ export const townManagerSlice = createSlice({
       }
     },
     createBuilding: (state, action: { payload: TOWN_BUILDINGS }) => {
+      console.log(action.payload)
       if (!state.buildings[action.payload]) {
         state.buildings[action.payload] = 1;
       } else ++state.buildings[action.payload];

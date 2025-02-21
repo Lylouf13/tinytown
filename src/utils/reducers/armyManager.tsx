@@ -178,7 +178,10 @@ export const armyManagerSlice = createSlice({
         UNIT_TYPES.BOWER,
       ];
 
-      destructionOrder = attackType === ATTACK_TYPES.TWISTED ? destructionOrder.reverse() : destructionOrder;
+      if (attackType === ATTACK_TYPES.TWISTED && state.rangedStrength > 0) {
+        destructionOrder = destructionOrder.reverse();
+      }
+      else destructionOrder = destructionOrder
 
       action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 5;
       

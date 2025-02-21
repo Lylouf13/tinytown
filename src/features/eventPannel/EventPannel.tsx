@@ -5,17 +5,26 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 
 import { WEEK_TYPES } from "enums/WeekTypes";
-import { EVENT_TYPES } from "models/Events";
-import { eventDatabase } from "models/Events";
-import { Event } from "models/Events";
+import { Event, EVENT_TYPES, eventDatabase } from "models/Events";
+import { SliceAction } from "models/Slices";
 
-import { toggleEventPannel } from "utils/reducers/gameManager";
+import { gameManagerSlice, toggleEventPannel } from "utils/reducers/gameManager";
+import { townManagerSlice } from "utils/reducers/townManager";
+import { armyManagerSlice } from "utils/reducers/armyManager";
+import { enemyManagerSlice } from "utils/reducers/enemyManager";
 
 import BuildingResourceExchange from "features/economyPannel/subPannels/buildingsPannel/components/buildingResourceExchange/BuildingResourceExchange";
 
 export default function EventPannel() {
   const gameSelector = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
+
+  const sliceActions: { [key: string]: any } = {
+    game: gameManagerSlice,
+    town: townManagerSlice,
+    army: armyManagerSlice,
+    enemy: enemyManagerSlice,
+  };
 
   useEffect(() => {
     if (gameSelector.timeline[gameSelector.timelineState - 1] === WEEK_TYPES.EVENT) {
@@ -26,6 +35,68 @@ export default function EventPannel() {
 
   const event = gameSelector.currentEvent;
   const eventData: Event = eventDatabase[event];
+
+  const handleChoiceEvent = (action: SliceAction) => {    
+    if (action.sliceName in sliceActions) {
+      const slice = sliceActions[action.sliceName];
+      
+      if (action.actionName in slice.actions) {
+        const actionCreator = slice.actions[action.actionName];
+        const dispatchedAction = actionCreator(action.payload);
+        dispatch(dispatchedAction);
+      } else {
+        console.error(`Action ${action.actionName} not found in slice ${action.sliceName}`);
+      }
+    } else {
+      console.error(`Slice ${action.sliceName} not found`);
+    }
+  };
+  const renderEventContent = () => {
+    // Type guard to narrow down the event effect type
+    const effect = eventData.eventEffect;
+
+    switch (effect.type) {
+      case EVENT_TYPES.SHOP:
+        return (
+          <div>
+            <BuildingResourceExchange
+              name={effect.action}
+              resourceSpent={effect.resourceSpent}
+              resourceGained={effect.resourceGained}
+            />
+          </div>
+        );
+
+      case EVENT_TYPES.EVENT:
+        return (
+          <div>
+            <p>this happened, lucky (or not)</p>
+            <Button 
+              label="Accept" 
+              onClick={() => handleChoiceEvent(effect.effect)} 
+            />
+          </div>
+        );
+
+      case EVENT_TYPES.CHOICE:
+        return (
+          <div>
+            <Button 
+              label={effect.choiceOneDescription} 
+              onClick={() => handleChoiceEvent(effect.choiceOne)} 
+            />
+            <Button 
+              label={effect.choiceTwoDescription} 
+              onClick={() => handleChoiceEvent(effect.choiceTwo)} 
+            />
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
       className={`eventPannel${
@@ -39,28 +110,8 @@ export default function EventPannel() {
       </div>
       <div className="eventPannel__content">
         <h3>{eventData.name}</h3>
-        <p> {eventData.description} </p>
-        {eventData.eventEffect.type === EVENT_TYPES.SHOP && (
-          <div>
-            <BuildingResourceExchange
-              name={eventData.eventEffect.action}
-              resourceSpent={eventData.eventEffect.resourceSpent}
-              resourceGained={eventData.eventEffect.resourceGained}
-            />
-          </div>
-        )}
-
-        {eventData.eventEffect.type === EVENT_TYPES.EVENT && (
-          <div>
-            <p>this happened, lucky (or not) </p>
-          </div>
-        )}
-        {eventData.eventEffect.type === EVENT_TYPES.CHOICE && (
-          <div>
-            <Button label="Choice1" onClick={eventData.eventEffect.choiceOne} />
-            <Button label="Choice2" onClick={eventData.eventEffect.choiceTwo} />
-          </div>
-        )}
+        <p>{eventData.description}</p>
+        {renderEventContent()}
       </div>
       <Button
         label="So be it"

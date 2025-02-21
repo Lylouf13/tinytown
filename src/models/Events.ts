@@ -1,5 +1,7 @@
 import { EVENTS } from "enums/Events";
 import { RESOURCES } from "enums/Resources";
+import { TOWN_BUILDINGS } from "enums/TownBuildings";
+import { SliceAction } from "models/Slices";
 
 export enum EVENT_TYPES {
   EVENT = "Event",
@@ -11,15 +13,15 @@ type EventEffects =
   | {
       // Casualty
       type: EVENT_TYPES.EVENT;
-      effect: () => void;
+      effect: SliceAction;
     }
   | {
       // Choice
       type: EVENT_TYPES.CHOICE;
       choiceOneDescription: string;
       choiceTwoDescription: string;
-      choiceOne: () => void;
-      choiceTwo: () => void;
+      choiceOne: SliceAction;
+      choiceTwo: SliceAction;
     }
   | {
       // Shop
@@ -37,7 +39,19 @@ export interface Event {
 }
 
 export const eventDatabase: { [key in EVENTS]: Event } = {
-  [EVENTS.NONE]: { name: "None", event: EVENTS.NONE, description: "", eventEffect: { type: EVENT_TYPES.EVENT, effect: () => {} } },
+  [EVENTS.NONE]: {
+    name: "None",
+    event: EVENTS.NONE,
+    description: "This should not happen tbh. The game probably broke to end up here, unlucky",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: TOWN_BUILDINGS.FARM,
+      },
+    },
+  },
 
   // ECONOMY
   [EVENTS.ENTHUSIASTIC_MASONRY]: {
@@ -48,8 +62,17 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       type: EVENT_TYPES.CHOICE,
       choiceOneDescription: "Build a free Farm",
       choiceTwoDescription: "Build a free Mine",
-      choiceOne: () => {},
-      choiceTwo: () => {},
+      choiceOne: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: TOWN_BUILDINGS.FARM,
+      },
+
+      choiceTwo: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: TOWN_BUILDINGS.MINE,
+      },
     },
   },
   [EVENTS.EXCEPTIONNAL_HARVEST]: {
@@ -58,7 +81,13 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "The labor of fields replenishes our stocks this season, for now we can feast.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
-      effect: () => {},
+      effect: {
+        sliceName: "town",
+        actionName: "generateResources",
+        payload: {
+          [RESOURCES.HUMANS]: 10,
+        },
+      },
     },
   },
   [EVENTS.GOOD_OMEN]: {
@@ -67,7 +96,13 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "A sign of good faith from the universe, soldiers feel their spirits lifted.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
-      effect: () => {},
+      effect: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: {
+          buildingType: TOWN_BUILDINGS.FARM,
+        },
+      },
     },
   },
   [EVENTS.STRANGE_ORE]: {
@@ -76,10 +111,22 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "We found a peculiar ore in the mines, it feels... otherworldly. What shall we do about it ?",
     eventEffect: {
       type: EVENT_TYPES.CHOICE,
-      choiceOneDescription: "Build a free Mine",
-      choiceTwoDescription: "Build a free Farm",
-      choiceOne: () => {},
-      choiceTwo: () => {},
+      choiceOneDescription: "Get Golds",
+      choiceTwoDescription: "Get Souls",
+      choiceOne: {
+        sliceName: "town",
+        actionName: "generateResources",
+        payload: {
+          [RESOURCES.GOLD]: 100,
+        },
+      },
+      choiceTwo: {
+        sliceName: "town",
+        actionName: "generateResources",
+        payload: {
+          [RESOURCES.SOULS]: 10,
+        },
+      },
     },
   },
   /// TBD
@@ -92,7 +139,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       type: EVENT_TYPES.SHOP,
       action: "sellHuman",
       resourceSpent: { [RESOURCES.HUMANS]: 1 },
-      resourceGained: { [RESOURCES.GOLD]: 1 },
+      resourceGained: { [RESOURCES.GOLD]: 15 },
     },
   },
   [EVENTS.SCAVENGED_BUYER]: {
@@ -102,8 +149,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     eventEffect: {
       type: EVENT_TYPES.SHOP,
       action: "sellScavenged",
-      resourceSpent: { [RESOURCES.SCAVENGED]: 1 },
-      resourceGained: { [RESOURCES.GOLD]: 1 },
+      resourceSpent: { [RESOURCES.SCAVENGED]: 5 },
+      resourceGained: { [RESOURCES.GOLD]: 15 },
     },
   },
 
@@ -115,7 +162,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     eventEffect: {
       type: EVENT_TYPES.SHOP,
       action: "buyHuman",
-      resourceSpent: { [RESOURCES.GOLD]: 1 },
+      resourceSpent: { [RESOURCES.GOLD]: 10 },
       resourceGained: { [RESOURCES.HUMANS]: 1 },
     },
   },
@@ -126,8 +173,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     eventEffect: {
       type: EVENT_TYPES.SHOP,
       action: "buyScavenged",
-      resourceSpent: { [RESOURCES.GOLD]: 1 },
-      resourceGained: { [RESOURCES.SCAVENGED]: 1 },
+      resourceSpent: { [RESOURCES.GOLD]: 15 },
+      resourceGained: { [RESOURCES.SCAVENGED]: 5 },
     },
   },
 
@@ -138,7 +185,13 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "The storm is upon us.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
-      effect: () => {},
+      effect: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: {
+          buildingType: TOWN_BUILDINGS.FARM,
+        },
+      },
     },
   },
   [EVENTS.BURNING_SUN]: {
@@ -147,7 +200,13 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "You have received a burning sun.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
-      effect: () => {},
+      effect: {
+        sliceName: "town",
+        actionName: "createBuilding",
+        payload: {
+          buildingType: TOWN_BUILDINGS.FARM,
+        },
+      },
     },
   },
 };

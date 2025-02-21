@@ -45,7 +45,6 @@ export default function BuildingResourceExchange({
     tooltipId = `tooltip-Sell-${Object.keys(resourceSpent)[0]}`
   }
 
-  console.log(tooltipId)
 
   return (
     <>

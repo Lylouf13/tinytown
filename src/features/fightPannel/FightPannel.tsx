@@ -1,5 +1,7 @@
 import "./fightPannel.scss";
 
+import { useEffect } from "react";
+
 import { AppThunk } from "app/store";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "app/hooks";
@@ -31,17 +33,17 @@ export default function FightPannel() {
       dispatch(setNextWeek());
       dispatch(generateResources(townSelector.weeklyIncome));
       dispatch(generateEnemy(gameSelector.week));
-    })
+    });
   };
 
   const salvaPassive = () => {
     const salvaStrength = armySelector.passives.salva;
-    const generatedResources = fightResources(salvaStrength, 0, 0)
-    batch(()=>{
+    const generatedResources = fightResources(salvaStrength, 0, 0);
+    batch(() => {
       dispatch(destroyEnemy(salvaStrength));
       dispatch(generateResources(generatedResources));
-    })
-  }
+    });
+  };
 
   const fightResources = (gold: number, scavenged: number, souls: number) => {
     return {
@@ -51,13 +53,18 @@ export default function FightPannel() {
     };
   };
 
-  const playerAttack = (destroyedEnemies:number, damageTaken:number, attackType:ATTACK_TYPES, generatedResources:{ [key: string]: number }) => {
-    batch(() => {      
+  const playerAttack = (
+    destroyedEnemies: number,
+    damageTaken: number,
+    attackType: ATTACK_TYPES,
+    generatedResources: { [key: string]: number }
+  ) => {
+    batch(() => {
       dispatch(destroyEnemy(destroyedEnemies));
       dispatch(destroyUnits({ damageTaken, attackType }));
       dispatch(generateResources(generatedResources));
-    })
-  }
+    });
+  };
 
   const attack = (): AppThunk => async (dispatch, getState) => {
     var fight = true;
@@ -79,7 +86,7 @@ export default function FightPannel() {
           case FIGHT_STATE.PRE_FIGHT:
             await sleep(1500);
 
-            state = getState()
+            state = getState();
 
             if (state.enemy.enemyType !== ENEMY_ARMIES.TWISTED_SATYRS) salvaPassive();
 
@@ -105,7 +112,7 @@ export default function FightPannel() {
 
             playerAttack(destroyedEnemies, damageTaken, attackType, generatedResources);
 
-            state = getState()
+            state = getState();
 
             if (state.enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
             else if (state.army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
@@ -165,13 +172,15 @@ export default function FightPannel() {
     displayPhase = "Fight Recap";
   }
 
+
+
   return (
     <div className={`fight ${gameSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""}`}>
       <h2>Fight</h2>
       <div className="fight__overview"></div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
-        <img className="fight__art__image" src={`/assets/banners/enemies/EnemyArt_${enemySelector.enemyType}.png`} alt="enemy art"/>
+        <img className="fight__art__image" src={`/assets/banners/enemies/EnemyArt_${enemySelector.enemyType}.png`} alt="enemy art" />
         <h4 className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}>
           {" "}
           Enemy forces - {enemySelector.enemyForces}
@@ -200,6 +209,7 @@ export default function FightPannel() {
           <>
             <Button label="Cancel" onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))} />
             <Button label={"Start Battle"} onClick={handleButtonClick} />
+            <Button label ="skip" onClick={() => nextWeek()} color = "highlander"/>
           </>
         )}
         {gameSelector.fightState === FIGHT_STATE.POST_FIGHT && <Button label="Back to Town" onClick={() => nextWeek()} />}
