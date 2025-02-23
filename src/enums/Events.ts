@@ -15,7 +15,7 @@ export enum EVENTS {
 
     // TAROT READINGS
         // THE_FOOL = "THE_FOOL",
-        // THE_MAGICIAN = "THE_MAGICIAN",
+        THE_MAGICIAN = "THE_MAGICIAN",
         THE_HIGH_PRIESTESS = "THE_HIGH_PRIESTESS",
         // THE_EMPRESS = "THE_EMPRESS",
         // THE_EMPEROR = "THE_EMPEROR",
@@ -33,7 +33,7 @@ export enum EVENTS {
         THE_DEVIL = "THE_DEVIL",
         // THE_TOWER = "THE_TOWER",
         // THE_STARS = "THE_STARS",
-        // THE_MOON = "THE_MOON",
+        THE_MOON = "THE_MOON",
         // THE_SUN = "THE_SUN",
         THE_WORLD = "THE_WORLD",
     }

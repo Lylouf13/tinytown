@@ -211,6 +211,40 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
   //     },
   //   },
   // }
+  [EVENTS.THE_MAGICIAN]: {
+    name: "I - The Magician",
+    description: "The power to understand and modify matter",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "Transform 25 scavenged to gold",
+      choiceTwoDescription: "Transform 25 gold to scavenged",
+      choiceOne: [
+        {
+          sliceName: "town",
+          actionName: "generateResources",
+          payload: {
+            [RESOURCES.GOLD]: 25,
+          },
+        },
+        {
+          sliceName: "town",
+          actionName: "spendResources",
+          payload: {
+            [RESOURCES.SCAVENGED]: 25,
+          },
+        },
+      ],
+      choiceTwo: [
+        {
+          sliceName: "town",
+          actionName: "generateResources",
+          payload: {
+            [RESOURCES.GOLD]: 10,
+          },
+        },
+      ],
+    },
+  },
   [EVENTS.THE_HIGH_PRIESTESS]: {
     name: "II - The High Priestess",
     description: "The High Priestess, the knowledge of the past and the future.",
@@ -312,7 +346,18 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       ],
     },
   },
-
-
-
+  [EVENTS.THE_MOON]: {
+    name: "XVIII - The Moon",
+    description: "Modify things, at your will",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: [
+        {
+          sliceName: "enemy",
+          actionName: "rerollType",
+          payload: null,
+        },
+      ],
+    },
+  },
 };

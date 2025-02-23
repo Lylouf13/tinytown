@@ -1,7 +1,5 @@
 import "./fightPannel.scss";
 
-import { useEffect } from "react";
-
 import { AppThunk } from "app/store";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "app/hooks";
