@@ -54,6 +54,7 @@ const timelineRoll = () => {
 const eventRoll = () => {
   var eventKeys: string[] = Object.keys(EVENTS);
   return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
+  // return EVENTS.THE_WORLD
 };
 
 const initialState: GameState = {
@@ -113,9 +114,12 @@ export const gameManagerSlice = createSlice({
         eventPannel: !state.eventPannel,
       };
     },
+    modifyNextWeek: (state, action) => {
+      state.timeline[state.timelineState] = action.payload;
+    },
   },
 });
 
-export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline, toggleEventPannel } = gameManagerSlice.actions;
+export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline, toggleEventPannel, modifyNextWeek } = gameManagerSlice.actions;
 
 export default gameManagerSlice.reducer;

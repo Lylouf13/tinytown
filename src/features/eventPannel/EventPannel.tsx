@@ -36,34 +36,25 @@ export default function EventPannel() {
   const event = gameSelector.currentEvent;
   const eventData: Event = eventDatabase[event];
 
-  const handleChoiceEvent = (action: SliceAction) => {    
-    if (action.sliceName in sliceActions) {
-      const slice = sliceActions[action.sliceName];
-      
-      if (action.actionName in slice.actions) {
-        const actionCreator = slice.actions[action.actionName];
-        const dispatchedAction = actionCreator(action.payload);
-        dispatch(dispatchedAction);
-      } else {
-        console.error(`Action ${action.actionName} not found in slice ${action.sliceName}`);
+  const handleChoiceEvent = (actions: SliceAction[]) => {
+    actions.forEach(action => {
+      if (action.sliceName in sliceActions) {
+        const slice = sliceActions[action.sliceName];
+        if (action.actionName in slice.actions) {
+          const actionCreator = slice.actions[action.actionName];
+          dispatch(actionCreator(action.payload));
+        }
       }
-    } else {
-      console.error(`Slice ${action.sliceName} not found`);
-    }
+    });
   };
   const renderEventContent = () => {
-    // Type guard to narrow down the event effect type
     const effect = eventData.eventEffect;
 
     switch (effect.type) {
       case EVENT_TYPES.SHOP:
         return (
           <div>
-            <BuildingResourceExchange
-              name={effect.action}
-              resourceSpent={effect.resourceSpent}
-              resourceGained={effect.resourceGained}
-            />
+            <BuildingResourceExchange name={effect.action} resourceSpent={effect.resourceSpent} resourceGained={effect.resourceGained} />
           </div>
         );
 
@@ -71,24 +62,15 @@ export default function EventPannel() {
         return (
           <div>
             <p>this happened, lucky (or not)</p>
-            <Button 
-              label="Accept" 
-              onClick={() => handleChoiceEvent(effect.effect)} 
-            />
+            <Button label="Accept" onClick={() => handleChoiceEvent(effect.effect)} />
           </div>
         );
 
       case EVENT_TYPES.CHOICE:
         return (
           <div>
-            <Button 
-              label={effect.choiceOneDescription} 
-              onClick={() => handleChoiceEvent(effect.choiceOne)} 
-            />
-            <Button 
-              label={effect.choiceTwoDescription} 
-              onClick={() => handleChoiceEvent(effect.choiceTwo)} 
-            />
+            <Button label={effect.choiceOneDescription} onClick={() => handleChoiceEvent(effect.choiceOne)} />
+            <Button label={effect.choiceTwoDescription} onClick={() => handleChoiceEvent(effect.choiceTwo)} />
           </div>
         );
 

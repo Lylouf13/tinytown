@@ -1,5 +1,6 @@
 export enum EVENTS {
         NONE = "NONE",
+
     // ECONOMY EVENTS
         HUMAN_BUYER = "HUMAN_BUYER",
         SCAVENGED_BUYER = "SCAVENGED_BUYER",
@@ -12,7 +13,27 @@ export enum EVENTS {
         GOOD_OMEN = "GOOD_OMEN",
         STRANGE_ORE = "STRANGE_ORE",
 
-    // ARMY EVENTS
-        RAINSTORM = "RAINSTORM",
-        BURNING_SUN = "BURNING_SUN",
+    // TAROT READINGS
+        // THE_FOOL = "THE_FOOL",
+        // THE_MAGICIAN = "THE_MAGICIAN",
+        THE_HIGH_PRIESTESS = "THE_HIGH_PRIESTESS",
+        // THE_EMPRESS = "THE_EMPRESS",
+        // THE_EMPEROR = "THE_EMPEROR",
+        // THE_HIEROPHANT = "THE_HIEROPHANT",
+        // THE_LOVERS = "THE_LOVERS",
+        // THE_CHARIOT = "THE_CHARIOT",
+        // STRENGTH = "STRENGTH",
+        // JUSTICE = "JUSTICE",
+        JUDGEMENT = "JUDGEMENT",
+        THE_HERMIT = "THE_HERMIT",
+        // WHEEL_OF_FORTUNE = "WHEEL_OF_FORTUNE",
+        // THE_HANGED_MAN = "THE_HANGED_MAN",
+        // DEATH = "DEATH",
+        // TEMPERANCE = "TEMPERANCE",
+        THE_DEVIL = "THE_DEVIL",
+        // THE_TOWER = "THE_TOWER",
+        // THE_STARS = "THE_STARS",
+        // THE_MOON = "THE_MOON",
+        // THE_SUN = "THE_SUN",
+        THE_WORLD = "THE_WORLD",
     }
