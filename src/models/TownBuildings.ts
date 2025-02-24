@@ -53,7 +53,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     name: "Mine",
     description: "Gives regular gold income",
     cost: {
-      [RESOURCES.HUMANS]: 1,
+      [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 10,
       [RESOURCES.SOULS]: 0,

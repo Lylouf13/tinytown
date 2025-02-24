@@ -1,10 +1,10 @@
 import { useAppSelector } from "app/hooks";
 import { unitDatabase } from "models/Units";
 
-import UnitIcon from "features/academyPannel/components/unitIcon/UnitIcon";
 import UnitTrainingRow from "./components/unitTrainingRow/UnitTrainingRow";
 
 import "./academyPannel.scss";
+import TBI from "components/dev/TBI";
 
 export default function AcademyPannel() {
   const armySelector = useAppSelector((state) => state.army);
@@ -16,15 +16,15 @@ export default function AcademyPannel() {
         <h1 className="academy__title">Academy</h1>
         <div className="academy__statContainer">
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" src="assets/icons/misc/meleeStrengthIcon.png" />{" "}
+            <img className="academy__statContainer__icon" alt="meleeStrength" src="assets/icons/misc/meleeStrengthIcon.png" />{" "}
             <span className="academy__statContainer__stat-red">{armySelector.meleeStrength}</span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" src="assets/icons/misc/rangeStrengthIcon.png" />{" "}
+            <img className="academy__statContainer__icon" alt="rangeStrength" src="assets/icons/misc/rangeStrengthIcon.png" />{" "}
             <span className="academy__statContainer__stat-red">{armySelector.rangedStrength}</span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" src="assets/icons/misc/defenseIcon.png" />{" "}
+            <img className="academy__statContainer__icon" alt="defense" src="assets/icons/misc/defenseIcon.png" />{" "}
             <span className="academy__statContainer__stat-blue">{armySelector.totalDefense}</span>
           </h2>
         </div>
@@ -44,7 +44,7 @@ export default function AcademyPannel() {
 
         <h2 className="academy__subtitle">Forge</h2>
         <p>Build the forge first ;)</p>
-
+        <TBI />
       </div>
       <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />
     </div>

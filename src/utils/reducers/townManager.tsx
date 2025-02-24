@@ -56,7 +56,7 @@ export const townManagerSlice = createSlice({
       var weeklyIncome = {
         ...state.weeklyIncome,
         [RESOURCES.HUMANS]: 10 + (state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1)),
-        [RESOURCES.GOLD]: 0 + (state.buildings[TOWN_BUILDINGS.MINE]*5),
+        [RESOURCES.GOLD]: 0 + (state.buildings[TOWN_BUILDINGS.MINE]*10),
         [RESOURCES.SCAVENGED]: 0,
         [RESOURCES.SOULS]: 0,
       }

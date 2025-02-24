@@ -52,9 +52,9 @@ const timelineRoll = () => {
 };
 
 const eventRoll = () => {
-  // var eventKeys: string[] = Object.keys(EVENTS);
-  // return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
-  return EVENTS.THE_MOON
+  var eventKeys: string[] = Object.keys(EVENTS);
+  return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
+  // return EVENTS.THE_MOON
 };
 
 const initialState: GameState = {
@@ -72,6 +72,7 @@ export const gameManagerSlice = createSlice({
   name: "gameManager",
   initialState,
   reducers: {
+    /// Global reducers
     setNextWeek: (state) => {
       const week = state.week + 1;
       var currentEvent = state.currentEvent;
@@ -117,6 +118,8 @@ export const gameManagerSlice = createSlice({
     modifyNextWeek: (state, action) => {
       state.timeline[state.timelineState] = action.payload;
     },
+
+    /// Event reducers
   },
 });
 
