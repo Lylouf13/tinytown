@@ -51,20 +51,19 @@ export const townManagerSlice = createSlice({
   name: "townManager",
   initialState,
   reducers: {
+    /// Global Reducers
     updateWeeklyIncome: (state) => {
-
       var weeklyIncome = {
         ...state.weeklyIncome,
-        [RESOURCES.HUMANS]: 10 + (state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1)),
-        [RESOURCES.GOLD]: 0 + (state.buildings[TOWN_BUILDINGS.MINE]*10),
+        [RESOURCES.HUMANS]: 10 + state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1),
+        [RESOURCES.GOLD]: 0 + state.buildings[TOWN_BUILDINGS.MINE] * 10,
         [RESOURCES.SCAVENGED]: 0,
         [RESOURCES.SOULS]: 0,
-      }
+      };
       return {
         ...state,
-        weeklyIncome
+        weeklyIncome,
       };
-      
     },
     generateResources: (state, action) => {
       var resources = { ...state.resources };
@@ -72,8 +71,7 @@ export const townManagerSlice = createSlice({
 
       Object.keys(action.payload).forEach((key) => {
         previousFightResources[key] = action.payload[key];
-        resources[key as keyof typeof resources] =
-          resources[key as keyof typeof resources] + action.payload[key];
+        resources[key as keyof typeof resources] = resources[key as keyof typeof resources] + action.payload[key];
       });
 
       return {
@@ -85,8 +83,7 @@ export const townManagerSlice = createSlice({
     spendResources: (state, action) => {
       var resources = { ...state.resources };
       Object.keys(action.payload).forEach((key) => {
-        resources[key as keyof typeof resources] =
-          resources[key as keyof typeof resources] - action.payload[key];
+        resources[key as keyof typeof resources] = resources[key as keyof typeof resources] - action.payload[key];
       });
       return {
         ...state,
@@ -101,20 +98,46 @@ export const townManagerSlice = createSlice({
       }
     },
     createBuilding: (state, action: { payload: TOWN_BUILDINGS }) => {
-      console.log(action.payload)
+      console.log(action.payload);
       if (!state.buildings[action.payload]) {
         state.buildings[action.payload] = 1;
       } else ++state.buildings[action.payload];
     },
+
+    /// Event reducers
+    generateRandomResources: (state, action: { payload: number }) => {
+      var resources = state.resources;
+
+      Object.keys(resources).forEach((key) => {
+        if (key !== RESOURCES.SOULS) {
+          var randomResource: number = Math.floor(Math.random() * action.payload);
+          action.payload -= randomResource;
+          resources[key as keyof typeof resources] = resources[key as keyof typeof resources] + randomResource;
+        } else resources[key as keyof typeof resources] = resources[key as keyof typeof resources] + action.payload;
+      });
+    },
+
+    balanceResources: (state, action: { payload: [RESOURCES] }) => {
+      var resources = state.resources;
+      console.log(action.payload);
+      var totalResources: number = 0; 
+      Object.keys(resources).forEach((key) => {
+        if (action.payload.includes(key as RESOURCES)) {
+          console.log(totalResources)
+          totalResources += resources[key as keyof typeof resources];
+        }
+      })
+      var splitValue: number = Math.floor(totalResources / action.payload.length);
+
+      Object.keys(resources).forEach((key) => {
+        if (action.payload.includes(key as RESOURCES)) {
+          resources[key as keyof typeof resources] = splitValue;
+        }
+      })
+    },
   },
 });
 
-export const {
-  generateResources,
-  updateWeeklyIncome,
-  unlockUnitUpgrade,
-  createBuilding,
-  spendResources,
-} = townManagerSlice.actions;
+export const { generateResources, updateWeeklyIncome, unlockUnitUpgrade, createBuilding, spendResources } = townManagerSlice.actions;
 
 export default townManagerSlice.reducer;

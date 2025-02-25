@@ -21,6 +21,7 @@ interface GameState {
   week: number;
   currentEvent: EVENTS;
   eventPannel: boolean;
+  eventConsumed: boolean;
   timeline: WEEK_TYPES[];
   timelineState: number;
   timelineDuration: number;
@@ -52,9 +53,9 @@ const timelineRoll = () => {
 };
 
 const eventRoll = () => {
-  var eventKeys: string[] = Object.keys(EVENTS);
-  return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
-  // return EVENTS.THE_MOON
+  // var eventKeys: string[] = Object.keys(EVENTS);
+  // return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
+  return EVENTS.THE_EMPEROR;
 };
 
 const initialState: GameState = {
@@ -63,6 +64,7 @@ const initialState: GameState = {
   week: 1,
   currentEvent: EVENTS.NONE,
   eventPannel: false,
+  eventConsumed: true,
   timeline: timelineRoll(),
   timelineState: 1,
   timelineDuration: 12,
@@ -76,12 +78,13 @@ export const gameManagerSlice = createSlice({
     setNextWeek: (state) => {
       const week = state.week + 1;
       var currentEvent = state.currentEvent;
-
       var timelineState = state.timelineState;
+      var eventConsumed = state.eventConsumed;
       timelineState = state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1;
 
       if (state.timeline[timelineState - 1] === WEEK_TYPES.EVENT) {
         currentEvent = eventRoll();
+        eventConsumed = false;
       }
 
       return {
@@ -89,6 +92,7 @@ export const gameManagerSlice = createSlice({
         week,
         timelineState,
         currentEvent,
+        eventConsumed,
       };
     },
     updateGameState: (state, action) => {
@@ -119,10 +123,18 @@ export const gameManagerSlice = createSlice({
       state.timeline[state.timelineState] = action.payload;
     },
 
+    consumeEvent: (state) => {
+      return {
+        ...state,
+        eventConsumed: true,
+      };
+    },
+
     /// Event reducers
   },
 });
 
-export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline, toggleEventPannel, modifyNextWeek } = gameManagerSlice.actions;
+export const { setNextWeek, updateGameState, updateFightState, generateNewTimeline, toggleEventPannel, modifyNextWeek, consumeEvent } =
+  gameManagerSlice.actions;
 
 export default gameManagerSlice.reducer;

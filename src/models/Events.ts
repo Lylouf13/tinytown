@@ -187,30 +187,31 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
 
   // TAROT READING
 
-  // [EVENTS.THE_FOOL]: {
-  //   name: "The Fool",
-  //   event: EVENTS.THE_FOOL,
-  //   description: "The fool, extravagant beginnings and a lack of foresight.",
-  //   eventEffect: {
-  //     type: EVENT_TYPES.CHOICE,
-  //     choiceOneDescription: "Get Golds",
-  //     choiceTwoDescription: "Get Souls",
-  //     choiceOne: {
-  //       sliceName: "town",
-  //       actionName: "generateResources",
-  //       payload: {
-  //         [RESOURCES.GOLD]: 100,
-  //       },
-  //     },
-  //     choiceTwo: {
-  //       sliceName: "town",
-  //       actionName: "generateResources",
-  //       payload: {
-  //         [RESOURCES.SOULS]: 10,
-  //       },
-  //     },
-  //   },
-  // }
+  [EVENTS.THE_FOOL]: {
+    name: "0 - The Fool",
+    description: "Begginings",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "5",
+      choiceTwoDescription: "TEST",
+      choiceOne: [
+        {
+          sliceName: "town",
+          actionName: "generateResources",
+          payload: {
+            [RESOURCES.HUMANS]: 5,
+          },
+        }
+      ],
+      choiceTwo: [
+        {
+          sliceName: "town",
+          actionName: "generateRandomResources",
+          payload: 15
+        },
+      ],
+    },
+  },
   [EVENTS.THE_MAGICIAN]: {
     name: "I - The Magician",
     description: "The power to understand and modify matter",
@@ -322,6 +323,32 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       ],
     },
   },
+
+  [EVENTS.THE_EMPEROR]: {
+    name: "IV - The EMPEROR",
+    description: "Guide thy people",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "Power",
+      choiceTwoDescription: "Riches",
+      choiceOne: [
+        {
+          sliceName: "army",
+          actionName: "addMostFormedUnit",
+          payload: 10,
+        },
+      ],
+      choiceTwo: [
+        {
+          sliceName: "town",
+          actionName: "generateResources",
+          payload: {
+            [RESOURCES.GOLD]: 25,
+          },
+        },
+      ],
+    },
+  },
   [EVENTS.THE_DEVIL]: {
     name: "XV - The Devil",
     description: "Pacts, Sacrifices, Riches",
@@ -330,6 +357,20 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       action: "sellHumans",
       resourceSpent: { [RESOURCES.HUMANS]: 5 },
       resourceGained: { [RESOURCES.SOULS]: 5 },
+    },
+  },
+  [EVENTS.JUSTICE]: {
+    name: "XI - Justice",
+    description: "The universe changes over your gaze",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: [
+        {
+          sliceName: "town",
+          actionName: "balanceResources",
+          payload: [RESOURCES.GOLD, RESOURCES.SCAVENGED],
+        },
+      ],
     },
   },
   [EVENTS.THE_WORLD]: {

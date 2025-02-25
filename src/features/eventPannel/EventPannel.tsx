@@ -8,7 +8,7 @@ import { WEEK_TYPES } from "enums/WeekTypes";
 import { Event, EVENT_TYPES, eventDatabase } from "models/Events";
 import { SliceAction } from "models/Slices";
 
-import { gameManagerSlice, toggleEventPannel } from "utils/reducers/gameManager";
+import { consumeEvent, gameManagerSlice, toggleEventPannel } from "utils/reducers/gameManager";
 import { townManagerSlice } from "utils/reducers/townManager";
 import { armyManagerSlice } from "utils/reducers/armyManager";
 import { enemyManagerSlice } from "utils/reducers/enemyManager";
@@ -46,6 +46,7 @@ export default function EventPannel() {
         }
       }
     });
+    dispatch(consumeEvent())
   };
   const renderEventContent = () => {
     const effect = eventData.eventEffect;
@@ -61,16 +62,16 @@ export default function EventPannel() {
       case EVENT_TYPES.EVENT:
         return (
           <div>
-            <p>this happened, lucky (or not)</p>
-            <Button label="Accept" onClick={() => handleChoiceEvent(effect.effect)} />
+            <p>this happened</p>
+            <Button active={!gameSelector.eventConsumed} label="Accept" onClick={() => handleChoiceEvent(effect.effect)} />
           </div>
         );
 
       case EVENT_TYPES.CHOICE:
         return (
           <div>
-            <Button label={effect.choiceOneDescription} onClick={() => handleChoiceEvent(effect.choiceOne)} />
-            <Button label={effect.choiceTwoDescription} onClick={() => handleChoiceEvent(effect.choiceTwo)} />
+            <Button active={!gameSelector.eventConsumed} label={effect.choiceOneDescription} onClick={() => handleChoiceEvent(effect.choiceOne)} />
+            <Button active={!gameSelector.eventConsumed} label={effect.choiceTwoDescription} onClick={() => handleChoiceEvent(effect.choiceTwo)} />
           </div>
         );
 
