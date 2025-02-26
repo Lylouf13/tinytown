@@ -4,7 +4,7 @@ import { AppThunk } from "app/store";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { destroyEnemy, generateEnemy } from "utils/reducers/enemyManager";
-import { destroyUnits, getMeleeCount, getRangedCount } from "utils/reducers/armyManager";
+import { destroyUnits, getMeleeCount, getRangedCount, updateShields } from "utils/reducers/armyManager";
 import { updateFightState, setNextWeek, updateGameState, FIGHT_STATE, GAME_STATE } from "utils/reducers/gameManager";
 import { generateResources } from "utils/reducers/townManager";
 import { sleep } from "utils/sleep";
@@ -103,7 +103,11 @@ export default function FightPannel() {
 
             state = getState();
             destroyedEnemies = Math.min(state.army.meleeStrength, state.enemy.enemyForces);
-            damageTaken = Math.min(getMeleeCount(state.army.units), state.enemy.enemyForces);
+            if (!state.army.meleeShield) damageTaken = Math.min(getMeleeCount(state.army.units), state.enemy.enemyForces);
+            else 
+              {damageTaken = 0;
+                dispatch(updateShields({ target: "melee", value: false }));
+              }
             generatedResources = fightResources(destroyedEnemies, state.army.passives.pillager, 0);
             attackType = enemyArmiesDatabase[state.enemy.enemyType].attackType;
             isFrontlane = true;

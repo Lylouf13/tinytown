@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 
 import { WEEK_TYPES } from "enums/WeekTypes";
-import { Event, EVENT_TYPES, eventDatabase } from "models/Events";
+import { Event, EVENT_TYPES, eventDatabase, ShopAction } from "models/Events";
 import { SliceAction } from "models/Slices";
 
 import { consumeEvent, gameManagerSlice, toggleEventPannel } from "utils/reducers/gameManager";
@@ -55,7 +55,9 @@ export default function EventPannel() {
       case EVENT_TYPES.SHOP:
         return (
           <div>
-            <BuildingResourceExchange name={effect.action} resourceSpent={effect.resourceSpent} resourceGained={effect.resourceGained} />
+            {effect.shops.map((shop: ShopAction) => (
+              <BuildingResourceExchange name={shop.action} resourceSpent={shop.resourceSpent} resourceGained={shop.resourceGained} />
+            ))}
           </div>
         );
 

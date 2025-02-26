@@ -4,12 +4,19 @@ import { UNIT_TYPES } from "enums/UnitTypes";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { SliceAction } from "models/Slices";
 import { WEEK_TYPES } from "enums/WeekTypes";
+import { randomInt } from "utils/resources/random";
 
 export enum EVENT_TYPES {
   EVENT = "Event",
   CHOICE = "Choice",
   SHOP = "Shop",
 }
+
+export type ShopAction = {
+  action: string;
+  resourceSpent: { [key: string]: number };
+  resourceGained: { [key: string]: number };
+};
 
 type EventEffects =
   | {
@@ -28,9 +35,7 @@ type EventEffects =
   | {
       // Shop
       type: EVENT_TYPES.SHOP;
-      action: string;
-      resourceSpent: { [key: string]: number };
-      resourceGained: { [key: string]: number };
+      shops: ShopAction[];
     };
 
 export interface Event {
@@ -147,9 +152,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "The merchant only has his lashes for now, perhaps we could let go some to save the others.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      action: "sellHuman",
-      resourceSpent: { [RESOURCES.HUMANS]: 1 },
-      resourceGained: { [RESOURCES.GOLD]: 15 },
+      shops: [{ action: "sellHumans", resourceSpent: { [RESOURCES.HUMANS]: 1 }, resourceGained: { [RESOURCES.GOLD]: 10 } }],
     },
   },
   [EVENTS.SCAVENGED_BUYER]: {
@@ -157,9 +160,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "He comes around in his caroussel of ticks and tocks, looking for new pieces to add to his rough mechanism.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      action: "sellScavenged",
-      resourceSpent: { [RESOURCES.SCAVENGED]: 5 },
-      resourceGained: { [RESOURCES.GOLD]: 15 },
+      shops: [{ action: "sellScavenged", resourceSpent: { [RESOURCES.SCAVENGED]: 5 }, resourceGained: { [RESOURCES.GOLD]: 15 } }],
     },
   },
 
@@ -169,9 +170,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       "The sounds of lashing, and the complaining of the poor caged devils... Some look like they could be useful, if we have what it takes to pay.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      action: "buyHuman",
-      resourceSpent: { [RESOURCES.GOLD]: 10 },
-      resourceGained: { [RESOURCES.HUMANS]: 1 },
+      shops: [{ action: "buyHumans", resourceSpent: { [RESOURCES.GOLD]: 12 }, resourceGained: { [RESOURCES.HUMANS]: 1 } }],
     },
   },
   [EVENTS.SCAVENGED_SELLER]: {
@@ -179,9 +178,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "He roams in the battlefields, checking for useful resources... A rat selling junk, at a fair price.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      action: "buyScavenged",
-      resourceSpent: { [RESOURCES.GOLD]: 15 },
-      resourceGained: { [RESOURCES.SCAVENGED]: 5 },
+      shops: [{ action: "buyScavenged", resourceSpent: { [RESOURCES.GOLD]: 15 }, resourceGained: { [RESOURCES.SCAVENGED]: 5 } }],
     },
   },
 
@@ -201,13 +198,13 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
           payload: {
             [RESOURCES.HUMANS]: 5,
           },
-        }
+        },
       ],
       choiceTwo: [
         {
           sliceName: "town",
           actionName: "generateRandomResources",
-          payload: 15
+          payload: 15,
         },
       ],
     },
@@ -354,9 +351,10 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     description: "Pacts, Sacrifices, Riches",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      action: "sellHumans",
-      resourceSpent: { [RESOURCES.HUMANS]: 5 },
-      resourceGained: { [RESOURCES.SOULS]: 5 },
+      shops: [
+        { action: "sellHuman", resourceSpent: { [RESOURCES.HUMANS]: 5 }, resourceGained: { [RESOURCES.SOULS]: 5 } },
+        { action: "sellSoul", resourceSpent: { [RESOURCES.SOULS]: 1 }, resourceGained: { [RESOURCES.GOLD]: 10 } },
+      ],
     },
   },
   [EVENTS.JUSTICE]: {
@@ -397,6 +395,43 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
           sliceName: "enemy",
           actionName: "rerollType",
           payload: null,
+        },
+      ],
+    },
+  },
+  [EVENTS.THE_CHARIOT]: {
+    name: "VII - The Charriot",
+    description: "Nothing can stop you",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: [
+        {
+          sliceName: "army",
+          actionName: "updateShields",
+          payload: {
+            target: "melee",
+            value: true,
+          },
+        },
+      ],
+    },
+  },
+
+  [EVENTS.DEATH]: {
+    name: "XIII - Death",
+    description: "The universe changes over your gaze",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: [
+        {
+          sliceName: "enemy",
+          actionName: "destroyEnemy",
+          payload: randomInt(5, 15),
+        },
+        {
+          sliceName: "army",
+          actionName: "destroyUnits",
+          payload: randomInt(3, 10),
         },
       ],
     },

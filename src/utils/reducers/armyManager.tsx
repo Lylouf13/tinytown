@@ -22,6 +22,8 @@ interface ArmyState {
   totalDefense: number;
   meleeStrength: number;
   rangedStrength: number;
+  meleeShield: boolean;
+  rangedShield: boolean;
 }
 
 const initialState: ArmyState = {
@@ -44,6 +46,8 @@ const initialState: ArmyState = {
   totalDefense: 0,
   meleeStrength: 0,
   rangedStrength: 0,
+  meleeShield: false,
+  rangedShield: false,
 };
 
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
@@ -220,9 +224,25 @@ export const armyManagerSlice = createSlice({
         passives,
       };
     },
+    updateShields: (state, action: {payload: {target :"melee" | "ranged" |"both", value: boolean}}) => {
+      var meleeShield = state.meleeShield;
+      var rangedShield = state.rangedShield;
+      if (action.payload.target === "melee") meleeShield = action.payload.value;
+      if (action.payload.target === "ranged") rangedShield = action.payload.value;
+      if (action.payload.target === "both") {
+        meleeShield = action.payload.value;
+        rangedShield = action.payload.value;
+      }
+
+      return {
+        ...state,
+        meleeShield,
+        rangedShield,
+      };
+    }
   },
 });
 
-export const { updateStats, addUnit, destroyUnits } = armyManagerSlice.actions;
+export const { updateStats, addUnit, destroyUnits, updateShields } = armyManagerSlice.actions;
 
 export default armyManagerSlice.reducer;
