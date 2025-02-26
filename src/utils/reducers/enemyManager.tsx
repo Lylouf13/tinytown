@@ -58,6 +58,14 @@ export const enemyManagerSlice = createSlice({
         enemyType,
       };
     },
+
+    /// Event Reducers
+    divideEnemyForces: (state, action: { payload: number }) => {
+      return {
+        ...state,
+        enemyForces: Math.floor(state.enemyForces * action.payload),
+      };
+    },
   },
 });
 

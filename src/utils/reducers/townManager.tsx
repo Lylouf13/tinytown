@@ -19,6 +19,7 @@ interface TownState {
   buildings: {
     [key: string]: number;
   };
+  freeForgeToken: boolean;
 }
 
 const initialState: TownState = {
@@ -45,6 +46,7 @@ const initialState: TownState = {
     [TOWN_BUILDINGS.MAGE_ACADEMY]: 0,
     [TOWN_BUILDINGS.QUESTIONABLE_CONCLAVE]: 0,
   },
+  freeForgeToken: false,
 };
 
 export const townManagerSlice = createSlice({
@@ -135,6 +137,9 @@ export const townManagerSlice = createSlice({
         }
       })
     },
+    updateForgeToken: (state, action: { payload: boolean }) => {
+      state.freeForgeToken = action.payload;
+    }
   },
 });
 

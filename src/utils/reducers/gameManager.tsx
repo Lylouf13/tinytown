@@ -35,17 +35,21 @@ const timelineRoll = () => {
   var roll: number = 0;
   var totalEvents: number = 0;
   var maxEvents: number = 3;
+  var badLuckProtection: number = 0;
 
   for (var i = 0; i < 12; i++) {
     if (i <= 1 || (i < 11 && eventCooldown) || (i < 11 && totalEvents >= maxEvents)) {
       timeline.push(WEEK_TYPES.NORMAL);
       eventCooldown = false;
     } else if (i < 11 && !eventCooldown && totalEvents < maxEvents) {
-      roll = randomInt(0, weekTypes.length - 2);
-      if (roll === 1) {
+      roll = Math.floor(randomInt(0, weekTypes.length - 2)+badLuckProtection);
+      if (roll === 2) roll = 1;
+      if (roll >= 1 ) {
         eventCooldown = true;
         totalEvents++;
+        badLuckProtection=0;
       }
+      badLuckProtection+=0.3;
       timeline.push(weekTypes[roll] as WEEK_TYPES);
     } else timeline.push(WEEK_TYPES.BOSS);
   }
@@ -53,9 +57,9 @@ const timelineRoll = () => {
 };
 
 const eventRoll = () => {
-  // var eventKeys: string[] = Object.keys(EVENTS);
-  // return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
-  return EVENTS.DEATH;
+  var eventKeys: string[] = Object.keys(EVENTS);
+  return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
+  // return EVENTS.THE_STARS;
 };
 
 const initialState: GameState = {

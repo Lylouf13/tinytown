@@ -6,7 +6,7 @@
   flex-direction: column;
   &__pannel{
     @include mixins.pannel;
-    
+
   }
   &__title {
     margin: 0;

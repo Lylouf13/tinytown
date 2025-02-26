@@ -4,14 +4,27 @@ import { AppThunk } from "app/store";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { destroyEnemy, generateEnemy } from "utils/reducers/enemyManager";
-import { destroyUnits, getMeleeCount, getRangedCount, updateShields } from "utils/reducers/armyManager";
-import { updateFightState, setNextWeek, updateGameState, FIGHT_STATE, GAME_STATE } from "utils/reducers/gameManager";
+import {
+  destroyUnits,
+  getMeleeCount,
+  getRangedCount,
+  updateSeeker,
+  updateShields,
+} from "utils/reducers/armyManager";
+import {
+  updateFightState,
+  setNextWeek,
+  updateGameState,
+  FIGHT_STATE,
+  GAME_STATE,
+} from "utils/reducers/gameManager";
 import { generateResources } from "utils/reducers/townManager";
 import { sleep } from "utils/sleep";
 
 import { ENEMY_ARMIES } from "enums/EnemyArmies";
 import { ATTACK_TYPES } from "enums/AttackTypes";
 import { RESOURCES } from "enums/Resources";
+import { SEEKER } from "enums/Seeker";
 
 import { enemyArmiesDatabase } from "models/EnemyArmies";
 import Button from "components/button/Button";
@@ -31,6 +44,7 @@ export default function FightPannel() {
       dispatch(setNextWeek());
       dispatch(generateResources(townSelector.weeklyIncome));
       dispatch(generateEnemy(gameSelector.week));
+      dispatch(updateSeeker(SEEKER.NONE));
     });
   };
 
@@ -49,6 +63,21 @@ export default function FightPannel() {
       [RESOURCES.SCAVENGED]: scavenged,
       [RESOURCES.SOULS]: souls,
     };
+  };
+
+  const calculateResources = (
+    seekerMode: SEEKER,
+    destroyedEnemies: number,
+    pillagers: number
+  ) => {
+    if (seekerMode !== SEEKER.NONE) {
+      var totalGenerated = destroyedEnemies + pillagers;
+      if (seekerMode === SEEKER.GOLDSEEKER) {
+        return fightResources(totalGenerated, 0, 0);
+      } else if (seekerMode === SEEKER.SCAVENGESEEKER) {
+        return fightResources(0, totalGenerated, 0);
+      }
+    } else return fightResources(destroyedEnemies, pillagers, 0);
   };
 
   const playerAttack = (
@@ -88,12 +117,20 @@ export default function FightPannel() {
 
             if (state.enemy.enemyType !== ENEMY_ARMIES.TWISTED_SATYRS) salvaPassive();
 
-            if (state.enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS || state.army.meleeStrength === 0) {
-              if (state.army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-              else if (state.army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            if (state.army.rangedShield)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else if (
+              state.enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS ||
+              state.army.meleeStrength === 0
+            ) {
+              if (state.army.rangedStrength !== 0)
+                dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+              else if (state.army.meleeStrength !== 0)
+                dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
               else dispatch(updateGameState(GAME_STATE.DEFEAT));
             } else {
-              if (state.army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+              if (state.army.meleeStrength !== 0)
+                dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
               else dispatch(updateGameState(GAME_STATE.DEFEAT));
             }
             break;
@@ -102,13 +139,25 @@ export default function FightPannel() {
             await sleep(1500);
 
             state = getState();
-            destroyedEnemies = Math.min(state.army.meleeStrength, state.enemy.enemyForces);
-            if (!state.army.meleeShield) damageTaken = Math.min(getMeleeCount(state.army.units), state.enemy.enemyForces);
-            else 
-              {damageTaken = 0;
-                dispatch(updateShields({ target: "melee", value: false }));
-              }
-            generatedResources = fightResources(destroyedEnemies, state.army.passives.pillager, 0);
+            destroyedEnemies = Math.min(
+              state.army.meleeStrength,
+              state.enemy.enemyForces
+            );
+            if (!state.army.meleeShield)
+              damageTaken = Math.min(
+                getMeleeCount(state.army.units),
+                state.enemy.enemyForces
+              );
+            else {
+              damageTaken = 0;
+              dispatch(updateShields({ target: "melee", value: false }));
+            }
+
+            generatedResources = calculateResources(
+              state.army.seeker,
+              destroyedEnemies,
+              state.army.passives.pillager
+            ) as { [key: string]: number };
             attackType = enemyArmiesDatabase[state.enemy.enemyType].attackType;
             isFrontlane = true;
 
@@ -116,9 +165,12 @@ export default function FightPannel() {
 
             state = getState();
 
-            if (state.enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-            else if (state.army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
-            else if (state.army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            if (state.enemy.enemyForces <= 0)
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (state.army.rangedStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            else if (state.army.meleeStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 
@@ -126,9 +178,26 @@ export default function FightPannel() {
             await sleep(1500);
 
             state = getState();
-            destroyedEnemies = Math.min(state.army.rangedStrength, state.enemy.enemyForces);
-            damageTaken = isFrontlane ? 0 : Math.min(getRangedCount(state.army.units), state.enemy.enemyForces);
-            generatedResources = fightResources(destroyedEnemies, 0, 0);
+            destroyedEnemies = Math.min(
+              state.army.rangedStrength,
+              state.enemy.enemyForces
+            );
+            if (isFrontlane || state.army.rangedShield) {
+              damageTaken = 0;
+              dispatch(updateShields({ target: "ranged", value: false }));
+            } else
+              damageTaken = Math.min(
+                getRangedCount(state.army.units),
+                state.enemy.enemyForces
+              );
+
+            generatedResources = calculateResources(
+              state.army.seeker,
+              destroyedEnemies,
+              0
+            ) as { [key: string]: number };
+            attackType = enemyArmiesDatabase[state.enemy.enemyType].attackType;
+            isFrontlane = true;
             attackType = enemyArmiesDatabase[state.enemy.enemyType].attackType;
 
             playerAttack(destroyedEnemies, damageTaken, attackType, generatedResources);
@@ -136,9 +205,12 @@ export default function FightPannel() {
             isFrontlane = false;
             state = getState();
 
-            if (state.enemy.enemyForces <= 0) dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
-            else if (state.army.meleeStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
-            else if (state.army.rangedStrength !== 0) dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
+            if (state.enemy.enemyForces <= 0)
+              dispatch(updateFightState(FIGHT_STATE.POST_FIGHT));
+            else if (state.army.meleeStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));
+            else if (state.army.rangedStrength !== 0)
+              dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
             else dispatch(updateGameState(GAME_STATE.DEFEAT));
             break;
 
@@ -166,24 +238,38 @@ export default function FightPannel() {
     displayPhase = "Prepare for battle";
   } else if (gameSelector.fightState === FIGHT_STATE.PRE_FIGHT) {
     displayPhase = "Pre-fight";
-  } else if (gameSelector.fightState === FIGHT_STATE.ATTACK_MELEE && enemySelector.enemyForces !== 0) {
+  } else if (
+    gameSelector.fightState === FIGHT_STATE.ATTACK_MELEE &&
+    enemySelector.enemyForces !== 0
+  ) {
     displayPhase = "Melee Attacks !";
-  } else if (gameSelector.fightState === FIGHT_STATE.ATTACK_RANGED && enemySelector.enemyForces !== 0) {
+  } else if (
+    gameSelector.fightState === FIGHT_STATE.ATTACK_RANGED &&
+    enemySelector.enemyForces !== 0
+  ) {
     displayPhase = "Ranged Attack !";
   } else {
     displayPhase = "Fight Recap";
   }
 
-
-
   return (
-    <div className={`fight ${gameSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""}`}>
+    <div
+      className={`fight ${
+        gameSelector.state === GAME_STATE.PREPARATION ? "fight-hidden" : ""
+      }`}
+    >
       <h2>Fight</h2>
       <div className="fight__overview"></div>
       <h3>{displayPhase}</h3>
       <div className="fight__art">
-        <img className="fight__art__image" src={`/assets/banners/enemies/EnemyArt_${enemySelector.enemyType}.png`} alt="enemy art" />
-        <h4 className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}>
+        <img
+          className="fight__art__image"
+          src={`/assets/banners/enemies/EnemyArt_${enemySelector.enemyType}.png`}
+          alt="enemy art"
+        />
+        <h4
+          className={`fight__art__frame fight__art__frame-enemy-${enemySelector.enemyType.toLowerCase()}`}
+        >
           {" "}
           Enemy forces - {enemySelector.enemyForces}
         </h4>
@@ -209,12 +295,17 @@ export default function FightPannel() {
       <div className="fight__buttons">
         {gameSelector.fightState === FIGHT_STATE.BEFORE && (
           <>
-            <Button label="Cancel" onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))} />
+            <Button
+              label="Cancel"
+              onClick={() => dispatch(updateGameState(GAME_STATE.PREPARATION))}
+            />
             <Button label={"Start Battle"} onClick={handleButtonClick} />
-            <Button label ="skip" onClick={() => nextWeek()} color = "highlander"/>
+            <Button label="skip" onClick={() => nextWeek()} color="highlander" />
           </>
         )}
-        {gameSelector.fightState === FIGHT_STATE.POST_FIGHT && <Button label="Back to Town" onClick={() => nextWeek()} />}
+        {gameSelector.fightState === FIGHT_STATE.POST_FIGHT && (
+          <Button label="Back to Town" onClick={() => nextWeek()} />
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { SliceAction } from "models/Slices";
 import { WEEK_TYPES } from "enums/WeekTypes";
 import { randomInt } from "utils/resources/random";
+import { SEEKER } from "enums/Seeker";
 
 export enum EVENT_TYPES {
   EVENT = "Event",
@@ -47,7 +48,8 @@ export interface Event {
 export const eventDatabase: { [key in EVENTS]: Event } = {
   [EVENTS.NONE]: {
     name: "None",
-    description: "This should not happen tbh. The game probably broke to end up here, anyway get a free farm ig",
+    description:
+      "This should not happen tbh. The game probably broke to end up here, anyway get a free farm ig",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
       effect: [
@@ -63,7 +65,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
   // ECONOMY
   [EVENTS.ENTHUSIASTIC_MASONRY]: {
     name: "Enthusiastic Masonry",
-    description: "Masons are working their life for this town, reasonable or not, it's a good thing for our resources.",
+    description:
+      "Masons are working their life for this town, reasonable or not, it's a good thing for our resources.",
     eventEffect: {
       type: EVENT_TYPES.CHOICE,
       choiceOneDescription: "Build a free Farm",
@@ -87,7 +90,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
   },
   [EVENTS.EXCEPTIONNAL_HARVEST]: {
     name: "Exceptionnal Harvest",
-    description: "The labor of fields replenishes our stocks this season, for now we can feast.",
+    description:
+      "The labor of fields replenishes our stocks this season, for now we can feast.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
       effect: [
@@ -103,7 +107,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
   },
   [EVENTS.GOOD_OMEN]: {
     name: "Good Omen",
-    description: "A sign of good faith from the universe, people give what they have to help the defense.",
+    description:
+      "A sign of good faith from the universe, people give what they have to help the defense.",
     eventEffect: {
       type: EVENT_TYPES.EVENT,
       effect: [
@@ -120,7 +125,8 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
   },
   [EVENTS.STRANGE_ORE]: {
     name: "Strange Ore",
-    description: "We found a peculiar ore in the mines, it feels... otherworldly. What shall we do about it ?",
+    description:
+      "We found a peculiar ore in the mines, it feels... otherworldly. What shall we do about it ?",
     eventEffect: {
       type: EVENT_TYPES.CHOICE,
       choiceOneDescription: "Get Golds",
@@ -149,18 +155,32 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
 
   [EVENTS.HUMAN_BUYER]: {
     name: "Human Buyer",
-    description: "The merchant only has his lashes for now, perhaps we could let go some to save the others.",
+    description:
+      "The merchant only has his lashes for now, perhaps we could let go some to save the others.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      shops: [{ action: "sellHumans", resourceSpent: { [RESOURCES.HUMANS]: 1 }, resourceGained: { [RESOURCES.GOLD]: 10 } }],
+      shops: [
+        {
+          action: "sellHumans",
+          resourceSpent: { [RESOURCES.HUMANS]: 1 },
+          resourceGained: { [RESOURCES.GOLD]: 10 },
+        },
+      ],
     },
   },
   [EVENTS.SCAVENGED_BUYER]: {
     name: "Scavenged Buyer",
-    description: "He comes around in his caroussel of ticks and tocks, looking for new pieces to add to his rough mechanism.",
+    description:
+      "He comes around in his caroussel of ticks and tocks, looking for new pieces to add to his rough mechanism.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      shops: [{ action: "sellScavenged", resourceSpent: { [RESOURCES.SCAVENGED]: 5 }, resourceGained: { [RESOURCES.GOLD]: 15 } }],
+      shops: [
+        {
+          action: "sellScavenged",
+          resourceSpent: { [RESOURCES.SCAVENGED]: 5 },
+          resourceGained: { [RESOURCES.GOLD]: 15 },
+        },
+      ],
     },
   },
 
@@ -170,15 +190,28 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       "The sounds of lashing, and the complaining of the poor caged devils... Some look like they could be useful, if we have what it takes to pay.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      shops: [{ action: "buyHumans", resourceSpent: { [RESOURCES.GOLD]: 12 }, resourceGained: { [RESOURCES.HUMANS]: 1 } }],
+      shops: [
+        {
+          action: "buyHumans",
+          resourceSpent: { [RESOURCES.GOLD]: 12 },
+          resourceGained: { [RESOURCES.HUMANS]: 1 },
+        },
+      ],
     },
   },
   [EVENTS.SCAVENGED_SELLER]: {
     name: "Scavenged Seller",
-    description: "He roams in the battlefields, checking for useful resources... A rat selling junk, at a fair price.",
+    description:
+      "He roams in the battlefields, checking for useful resources... A rat selling junk, at a fair price.",
     eventEffect: {
       type: EVENT_TYPES.SHOP,
-      shops: [{ action: "buyScavenged", resourceSpent: { [RESOURCES.GOLD]: 15 }, resourceGained: { [RESOURCES.SCAVENGED]: 5 } }],
+      shops: [
+        {
+          action: "buyScavenged",
+          resourceSpent: { [RESOURCES.GOLD]: 15 },
+          resourceGained: { [RESOURCES.SCAVENGED]: 5 },
+        },
+      ],
     },
   },
 
@@ -352,8 +385,16 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
     eventEffect: {
       type: EVENT_TYPES.SHOP,
       shops: [
-        { action: "sellHuman", resourceSpent: { [RESOURCES.HUMANS]: 5 }, resourceGained: { [RESOURCES.SOULS]: 5 } },
-        { action: "sellSoul", resourceSpent: { [RESOURCES.SOULS]: 1 }, resourceGained: { [RESOURCES.GOLD]: 10 } },
+        {
+          action: "sellHuman",
+          resourceSpent: { [RESOURCES.HUMANS]: 5 },
+          resourceGained: { [RESOURCES.SOULS]: 5 },
+        },
+        {
+          action: "sellSoul",
+          resourceSpent: { [RESOURCES.SOULS]: 1 },
+          resourceGained: { [RESOURCES.GOLD]: 10 },
+        },
       ],
     },
   },
@@ -432,6 +473,94 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
           sliceName: "army",
           actionName: "destroyUnits",
           payload: randomInt(3, 10),
+        },
+      ],
+    },
+  },
+  [EVENTS.THE_SUN]: {
+    name: "XIX - The Sun",
+    description: "The sun shines bright on us",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "Riches",
+      choiceTwoDescription: "Wisdom",
+      choiceOne: [
+        {
+          sliceName: "town",
+          actionName: "generateResources",
+          payload: {
+            [RESOURCES.GOLD]: 50,
+          },
+        },
+      ],
+      choiceTwo: [
+        {
+          sliceName: "town",
+          actionName: "updateForgeToken",
+          payload: true,
+        },
+      ],
+    },
+  },
+  [EVENTS.THE_HANGED_MAN]: {
+    name: "XII - The Hanged Man",
+    description: "The universe changes over your gaze",
+    eventEffect: {
+      type: EVENT_TYPES.EVENT,
+      effect: [
+        {
+          sliceName: "army",
+          actionName: "updateShields",
+          payload: {
+            target: "ranged",
+            value: true,
+          },
+        },
+      ],
+    },
+  },
+  [EVENTS.THE_EMPRESS]: {
+    name: "III - The Empress",
+    description: "The silken hand of our beloved leader shall guide us",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "Decay",
+      choiceTwoDescription: "Prosperity",
+      choiceOne: [
+        {
+          sliceName: "enemy",
+          actionName: "divideEnemyForces",
+          payload: 0.5,
+        },
+      ],
+      choiceTwo: [
+        {
+          sliceName: "town",
+          actionName: "createBuilding",
+          payload: [TOWN_BUILDINGS.FARM],
+        },
+      ],
+    },
+  },
+  [EVENTS.THE_STARS]: {
+    name: "XVII - The Stars",
+    description: "May we find what we look for",
+    eventEffect: {
+      type: EVENT_TYPES.CHOICE,
+      choiceOneDescription: "Gold",
+      choiceTwoDescription: "Scavenged goods",
+      choiceOne: [
+        {
+          sliceName: "army",
+          actionName: "updateSeeker",
+          payload: SEEKER.GOLDSEEKER,
+        },
+      ],
+      choiceTwo: [
+        {
+          sliceName: "army",
+          actionName: "updateSeeker",
+          payload: SEEKER.SCAVENGESEEKER,
         },
       ],
     },

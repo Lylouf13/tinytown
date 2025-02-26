@@ -4,6 +4,7 @@ import { UNIT_TYPES } from "enums/UnitTypes";
 import { unitDatabase } from "models/Units";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { ATTACK_TYPES } from "enums/AttackTypes";
+import { SEEKER } from "enums/Seeker";
 
 interface ArmyState {
   units: {
@@ -24,6 +25,7 @@ interface ArmyState {
   rangedStrength: number;
   meleeShield: boolean;
   rangedShield: boolean;
+  seeker: SEEKER;
 }
 
 const initialState: ArmyState = {
@@ -48,6 +50,7 @@ const initialState: ArmyState = {
   rangedStrength: 0,
   meleeShield: false,
   rangedShield: false,
+  seeker: SEEKER.NONE,
 };
 
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
@@ -239,10 +242,16 @@ export const armyManagerSlice = createSlice({
         meleeShield,
         rangedShield,
       };
+    },
+    updateSeeker: (state, action: {payload: SEEKER}) => {
+      return {
+        ...state,
+        seeker: action.payload,
+      };
     }
   },
 });
 
-export const { updateStats, addUnit, destroyUnits, updateShields } = armyManagerSlice.actions;
+export const { updateStats, addUnit, destroyUnits, updateShields, updateSeeker } = armyManagerSlice.actions;
 
 export default armyManagerSlice.reducer;
