@@ -1,20 +1,20 @@
 import { UNIT_TYPES } from "enums/UnitTypes";
 import { RESOURCES } from "../enums/Resources";
-import { UNIT_TALENTS } from "../enums/UnitTalents";
+import { UNIT_UPGRADES } from "../enums/UnitUpgrades";
 import { UNIT_PASSIVES } from "enums/UnitPassives";
 import { unitDatabase } from "./Units";
 
 export interface Talent {
   name: string;
   description: string;
-  requirements: UNIT_TALENTS[];
+  requirements: UNIT_UPGRADES[];
   cost: { [key in RESOURCES]: number };
   unlocked: boolean;
   effect: () => void;
 }
 
-export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
-  [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS]: {
+export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Talent } = {
+  [UNIT_UPGRADES.BERSERK_1]: {
     name: "Rage of the Ancients",
     description: "increases strength by 1",
     requirements: [],
@@ -28,10 +28,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1),
   },
 
-  [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2]: {
+  [UNIT_UPGRADES.BERSERK_2]: {
     name: "Rage of the Ancients 2",
     description: "increases strength by 2",
-    requirements: [UNIT_TALENTS.RAGE_OF_THE_ANCIENTS],
+    requirements: [UNIT_UPGRADES.BERSERK_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -42,12 +42,11 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 2),
   },
 
-  [UNIT_TALENTS.NOT_A_TEST_UPGRADE]: {
+  [UNIT_UPGRADES.BERSERK_3]: {
     name: "Not a test upgrade",
     description: "increases strength by 1000",
     requirements: [
-      UNIT_TALENTS.RAGE_OF_THE_ANCIENTS,
-      UNIT_TALENTS.RAGE_OF_THE_ANCIENTS_2,
+      UNIT_UPGRADES.BERSERK_2,
     ],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -59,10 +58,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].strength += 1000),
   },
 
-  [UNIT_TALENTS.KING_OF_THE_HILL]: {
+  [UNIT_UPGRADES.BERSERK_4]: {
     name: "King Of The Hill",
     description: "Each pack of 3 berserk scavenges 1 more resource",
-    requirements: [],
+    requirements: [UNIT_UPGRADES.BERSERK_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -72,7 +71,20 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BERSERK].addPassive(UNIT_PASSIVES.SALVA)),
   },
-  [UNIT_TALENTS.BOWER_1]: {
+  [UNIT_UPGRADES.BERSERK_5]: {
+    name: "King Of The Hill",
+    description: "Each pack of 3 berserk scavenges 1 more resource",
+    requirements: [UNIT_UPGRADES.BERSERK_4],
+    cost: {
+      [RESOURCES.HUMANS]: 0,
+      [RESOURCES.GOLD]: 0,
+      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.SOULS]: 0,
+    },
+    unlocked: false,
+    effect: () => (unitDatabase[UNIT_TYPES.BERSERK].addPassive(UNIT_PASSIVES.SALVA)),
+  },
+  [UNIT_UPGRADES.BOWER_1]: {
     name: "Bower 1",
     description: "1 more strength !!!",
     requirements: [],
@@ -85,10 +97,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BOWER].strength += 1),
   },
-  [UNIT_TALENTS.BOWER_2]: {
+  [UNIT_UPGRADES.BOWER_2]: {
     name: "Bower 2",
     description: "1 more strength !!!",
-    requirements: [UNIT_TALENTS.BOWER_1],
+    requirements: [UNIT_UPGRADES.BOWER_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -98,10 +110,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BOWER].addPassive(UNIT_PASSIVES.SALVA)),
   },
-  [UNIT_TALENTS.BOWER_3]: {
+  [UNIT_UPGRADES.BOWER_3]: {
     name: "Bower 3",
     description: "1 more strength !!!",
-    requirements: [UNIT_TALENTS.BOWER_1],
+    requirements: [UNIT_UPGRADES.BOWER_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -111,10 +123,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BOWER].strength += 1),
   },
-  [UNIT_TALENTS.BOWER_4]: {
+  [UNIT_UPGRADES.BOWER_4]: {
     name: "Bower 4",
     description: "1 more strength !!!",
-    requirements: [UNIT_TALENTS.BOWER_2, UNIT_TALENTS.BOWER_3],
+    requirements: [UNIT_UPGRADES.BOWER_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -124,10 +136,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BOWER].strength += 1),
   },
-  [UNIT_TALENTS.BOWER_5]: {
+  [UNIT_UPGRADES.BOWER_5]: {
     name: "Bower 5",
     description: "1 more strength !!!",
-    requirements: [UNIT_TALENTS.BOWER_4],
+    requirements: [UNIT_UPGRADES.BOWER_4],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -137,7 +149,7 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.BOWER].strength += 1),
   },
-  [UNIT_TALENTS.GUARDIAN_1]:{
+  [UNIT_UPGRADES.GUARDIAN_1]:{
     name: "Guardian 1",
     description: "1 more DEF !!!",
     requirements: [],
@@ -150,10 +162,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
   },
-  [UNIT_TALENTS.GUARDIAN_2]:{
+  [UNIT_UPGRADES.GUARDIAN_2]:{
     name: "Guardian 2",
     description: "1 more DEF !!!",
-    requirements: [UNIT_TALENTS.GUARDIAN_1],
+    requirements: [UNIT_UPGRADES.GUARDIAN_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -163,10 +175,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
   },
-  [UNIT_TALENTS.GUARDIAN_3]:{
+  [UNIT_UPGRADES.GUARDIAN_3]:{
     name: "Guardian 3",
     description: "1 more DEF !!!",
-    requirements: [UNIT_TALENTS.GUARDIAN_2],
+    requirements: [UNIT_UPGRADES.GUARDIAN_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -176,10 +188,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
   },
-  [UNIT_TALENTS.GUARDIAN_4]:{
+  [UNIT_UPGRADES.GUARDIAN_4]:{
     name: "Guardian 4",
     description: "1 more DEF !!!",
-    requirements: [UNIT_TALENTS.GUARDIAN_2],
+    requirements: [UNIT_UPGRADES.GUARDIAN_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
@@ -189,10 +201,10 @@ export const unitTalentsDatabase: { [key in UNIT_TALENTS]: Talent } = {
     unlocked: false,
     effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
   },
-  [UNIT_TALENTS.GUARDIAN_5]:{
+  [UNIT_UPGRADES.GUARDIAN_5]:{
     name: "Guardian 5",
     description: "1 more DEF !!!",
-    requirements: [UNIT_TALENTS.GUARDIAN_3,UNIT_TALENTS.GUARDIAN_4],
+    requirements: [UNIT_UPGRADES.GUARDIAN_4,],
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,

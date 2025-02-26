@@ -1,8 +1,8 @@
 import { Tooltip } from "react-tooltip";
 import { RESOURCES } from "enums/Resources";
-import { UNIT_TALENTS } from "enums/UnitTalents";
-import { Talent } from "models/UnitTalents";
-import { unitTalentsDatabase } from "models/UnitTalents";
+import { UNIT_TALENTS } from "enums/UnitUpgrades";
+import { Talent } from "models/UnitUpgrades";
+import { unitTalentsDatabase } from "models/UnitUpgrades";
 
 import "../customTooltip.scss";
 

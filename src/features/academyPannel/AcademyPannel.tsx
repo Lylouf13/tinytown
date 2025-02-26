@@ -5,6 +5,7 @@ import UnitTrainingRow from "./components/unitTrainingRow/UnitTrainingRow";
 
 import "./academyPannel.scss";
 import TBI from "components/dev/TBI";
+import ForgePannel from "features/forgePannel/ForgePannel";
 
 export default function AcademyPannel() {
   const armySelector = useAppSelector((state) => state.army);
@@ -43,7 +44,7 @@ export default function AcademyPannel() {
         ))}
 
         <h2 className="academy__subtitle">Forge</h2>
-        <p>Build the forge first ;)</p>
+        <ForgePannel />
         <TBI />
       </div>
       <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { unitTalentsDatabase } from "models/UnitTalents";
-import { UNIT_TALENTS } from "enums/UnitTalents";
+import { unitUpgradesDatabase } from "models/UnitUpgrades";
+import { UNIT_UPGRADES } from "enums/UnitUpgrades";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { RESOURCES } from "enums/Resources";
 
@@ -15,7 +15,7 @@ interface TownState {
   weeklyIncome: {
     [keys in RESOURCES]: number;
   };
-  unlockedUnitTalents: UNIT_TALENTS[];
+  unlockedUnitTalents: UNIT_UPGRADES[];
   buildings: {
     [key: string]: number;
   };
@@ -90,11 +90,11 @@ export const townManagerSlice = createSlice({
         resources,
       };
     },
-    unlockUnitUpgrade: (state, action: { payload: UNIT_TALENTS }) => {
+    unlockUnitUpgrade: (state, action: { payload: UNIT_UPGRADES }) => {
       if (!state.unlockedUnitTalents.includes(action.payload)) {
         state.unlockedUnitTalents.push(action.payload);
-        unitTalentsDatabase[action.payload].unlocked = true;
-        unitTalentsDatabase[action.payload].effect();
+        unitUpgradesDatabase[action.payload].unlocked = true;
+        unitUpgradesDatabase[action.payload].effect();
       }
     },
     createBuilding: (state, action: { payload: TOWN_BUILDINGS }) => {

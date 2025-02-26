@@ -7,18 +7,19 @@ interface UnitIconProps {
   unit: string;
   row?: boolean;
   tooltip?: boolean;
+  count?: boolean;
 }
 
-export default function UnitIcon({ unit, row, tooltip = true }: UnitIconProps) {
+export default function UnitIcon({ unit, row, tooltip = true, count = true}: UnitIconProps) {
   const armySelector = useAppSelector((state) => state.army);
 
   return (
     <>
       <div className={row ? "unitIcon unitIcon--row" : `unitIcon`}>
-        <p className="unitIcon__caption">{armySelector.units[unit]}</p>
+        {count && <p className="unitIcon__caption">{armySelector.units[unit]}</p>}
         <img
           className={
-            armySelector.units[unit] > 0
+            armySelector.units[unit] > 0 || !count
               ? "unitIcon__image"
               : "unitIcon__image unitIcon__image--inactive"
           }
