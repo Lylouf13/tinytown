@@ -15,10 +15,13 @@ export default function Timeline() {
       <TBI />
       <div className="timeline__nodes">
         {gameSelector.timeline.map((node, index) => (
-          <TimelineNode state={currentNode} id={index +1} key={node + index} type={node} />
-
+          <TimelineNode
+            state={currentNode}
+            id={index + 1}
+            key={node + index}
+            type={node}
+          />
         ))}
-
       </div>
     </div>
   );

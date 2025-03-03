@@ -4,6 +4,7 @@
 .academy {
   display: flex;
   flex-direction: column;
+
   &__pannel{
     @include mixins.pannel;
 

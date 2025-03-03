@@ -2,12 +2,15 @@
 
 .buildingsPannel{
     margin-top: 30px;
+    &:last-of-type{
+        border-bottom: variables.$secondary-color-dark 2px solid ;
+      }
     &-hidden{
         display: none;
     }
     &__subtitle{
-        border-bottom: 2px solid #5c5c5c;
-        border-top: 2px solid #5c5c5c;
+        border-bottom: 2px solid variables.$secondary-color-dark;
+        border-top: 2px solid variables.$secondary-color-dark;
     }
     &__section{
         display: flex;
@@ -24,10 +27,10 @@
     }
     &__marketPannel{
         width: 50%;
-        border: 2px solid #5c5c5c;
+        border: 2px solid variables.$secondary-color-dark;
 
         &__title{
-            border-bottom: 2px solid #5c5c5c;
+            border-bottom: 2px solid variables.$secondary-color-dark;
         }
         &__buttons{
             display: flex;

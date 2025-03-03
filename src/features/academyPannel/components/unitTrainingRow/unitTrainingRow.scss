@@ -1,3 +1,5 @@
+@use "utils/style/variables.scss";
+
 .unit{
     display: grid;
     align-items: center;
@@ -5,8 +7,11 @@
     width: 100%;
     gap: 10px;
     padding: 20px 0px;
-    border-top: #5c5c5c 2px solid;
-    background-color: #24282b;
+    border-top: variables.$secondary-color-dark 2px solid;
+    background-color: variables.$primary-color-light;
+    &:last-of-type{
+        border-bottom: variables.$secondary-color-dark 2px solid ;
+      }
 
     &__count{
         display: flex;
@@ -16,7 +21,7 @@
         padding: 0px 25px;
         gap: 50px;
         
-        border-right: #5c5c5c 2px solid;
+        border-right: variables.$secondary-color-dark 2px solid;
     }
 
     &__cost{

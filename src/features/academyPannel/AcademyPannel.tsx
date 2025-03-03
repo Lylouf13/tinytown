@@ -17,16 +17,34 @@ export default function AcademyPannel() {
         <h1 className="academy__title">Academy</h1>
         <div className="academy__statContainer">
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" alt="meleeStrength" src="assets/icons/misc/meleeStrengthIcon.png" />{" "}
-            <span className="academy__statContainer__stat-red">{armySelector.meleeStrength}</span>
+            <img
+              className="academy__statContainer__icon"
+              alt="meleeStrength"
+              src="assets/icons/misc/meleeStrengthIcon.png"
+            />{" "}
+            <span className="academy__statContainer__stat-red">
+              {armySelector.meleeStrength}
+            </span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" alt="rangeStrength" src="assets/icons/misc/rangeStrengthIcon.png" />{" "}
-            <span className="academy__statContainer__stat-red">{armySelector.rangedStrength}</span>
+            <img
+              className="academy__statContainer__icon"
+              alt="rangeStrength"
+              src="assets/icons/misc/rangeStrengthIcon.png"
+            />{" "}
+            <span className="academy__statContainer__stat-red">
+              {armySelector.rangedStrength}
+            </span>
           </h2>
           <h2 className="academy__statContainer__stat">
-            <img className="academy__statContainer__icon" alt="defense" src="assets/icons/misc/defenseIcon.png" />{" "}
-            <span className="academy__statContainer__stat-blue">{armySelector.totalDefense}</span>
+            <img
+              className="academy__statContainer__icon"
+              alt="defense"
+              src="assets/icons/misc/defenseIcon.png"
+            />{" "}
+            <span className="academy__statContainer__stat-blue">
+              {armySelector.totalDefense}
+            </span>
           </h2>
         </div>
 
@@ -38,10 +56,12 @@ export default function AcademyPannel() {
         </div> */}
 
         <h2 className="academy__subtitle">Training</h2>
-        {/*   UNIT TRAINING PANNEL GENERATION  */}
-        {Object.keys(unitDatabase).map((unit) => (
-          <UnitTrainingRow key={`${unit}-trainingRow`} unit={unit} />
-        ))}
+        <div>
+          {/*   UNIT TRAINING PANNEL GENERATION  */}
+          {Object.keys(unitDatabase).map((unit) => (
+            <UnitTrainingRow key={`${unit}-trainingRow`} unit={unit} />
+          ))}
+        </div>
 
         <h2 className="academy__subtitle">Forge</h2>
         <ForgePannel />
