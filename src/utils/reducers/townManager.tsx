@@ -27,14 +27,12 @@ const initialState: TownState = {
     [RESOURCES.HUMANS]: 10,
     [RESOURCES.GOLD]: 10,
     [RESOURCES.SCAVENGED]: 10,
-    [RESOURCES.SOULS]: 0,
   },
   previousFightResources: {},
   weeklyIncome: {
     [RESOURCES.HUMANS]: 10,
     [RESOURCES.GOLD]: 0,
     [RESOURCES.SCAVENGED]: 0,
-    [RESOURCES.SOULS]: 0,
   },
   unlockedUnitTalents: [],
   buildings: {
@@ -60,7 +58,6 @@ export const townManagerSlice = createSlice({
         [RESOURCES.HUMANS]: 10 + state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1),
         [RESOURCES.GOLD]: 0 + state.buildings[TOWN_BUILDINGS.MINE] * 10,
         [RESOURCES.SCAVENGED]: 0,
-        [RESOURCES.SOULS]: 0,
       };
       return {
         ...state,
@@ -111,7 +108,7 @@ export const townManagerSlice = createSlice({
       var resources = state.resources;
 
       Object.keys(resources).forEach((key) => {
-        if (key !== RESOURCES.SOULS) {
+        if (key !== RESOURCES.SCAVENGED) {
           var randomResource: number = Math.floor(Math.random() * action.payload);
           action.payload -= randomResource;
           resources[key as keyof typeof resources] = resources[key as keyof typeof resources] + randomResource;

@@ -145,7 +145,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
           sliceName: "town",
           actionName: "generateResources",
           payload: {
-            [RESOURCES.SOULS]: 10,
+            [RESOURCES.GOLD]: 10,
           },
         },
       ],
@@ -388,12 +388,12 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
         {
           action: "sellHuman",
           resourceSpent: { [RESOURCES.HUMANS]: 5 },
-          resourceGained: { [RESOURCES.SOULS]: 5 },
+          resourceGained: { [RESOURCES.GOLD]: 25 },
         },
         {
-          action: "sellSoul",
-          resourceSpent: { [RESOURCES.SOULS]: 1 },
-          resourceGained: { [RESOURCES.GOLD]: 10 },
+          action: "sellHuman",
+          resourceSpent: { [RESOURCES.HUMANS]: 5 },
+          resourceGained: { [RESOURCES.SCAVENGED]: 25 },
         },
       ],
     },

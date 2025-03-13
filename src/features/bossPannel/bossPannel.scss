@@ -1,0 +1,84 @@
+@use '/src/utils/style/mixins.scss';
+@use '/src/utils/style/variables.scss';
+
+.bossPannel {
+    @include mixins.pannel;
+    animation-name: growBossPannel;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode:forwards;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding:0px;
+    z-index: 10;
+    height: fit-content;
+    overflow: clip;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        border-bottom: 2px solid variables.$secondary-color;
+        background-color: variables.$primary-color;
+
+        &__title{
+            margin:0px;
+            padding: 0px;
+        }
+        img{
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+    }
+    &__content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 30px;
+        gap: 20px;
+        margin-bottom: 20px;
+
+    }
+
+    &__art{
+        width: 600px;
+        image-rendering: pixelated;
+        border: 2px solid variables.$enemy-color;
+
+    }
+    &__description{
+        text-align: center;
+        padding: 0px 100px;
+        font-style: italic;
+        color: variables.$enemy-color;
+    }
+    &-hidden{
+        opacity: 0;
+        height: 0px;
+        transition: all 1s;
+        pointer-events: none;
+    }
+
+    @keyframes growBossPannel{
+        0%{
+            width: 0px;
+            height: 0px;
+            opacity: 1;
+        }
+        50%{
+            width: 650px;
+            height: 0px;
+        }
+        100%{
+            width: 650px;
+            height: 550px;
+            opacity: 1;
+        }
+    }
+}

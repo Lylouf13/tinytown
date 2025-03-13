@@ -1,0 +1,6 @@
+export enum BOSSES{
+    ARYA = "ARYA",
+    TEMPLAR_KING = "TEMPLAR_KING",
+    STORM_CALLER = "STORM_CALLER",
+    SATYR_LORD = "SATYR_LORD",
+}

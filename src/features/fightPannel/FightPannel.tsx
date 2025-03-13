@@ -50,18 +50,17 @@ export default function FightPannel() {
 
   const salvaPassive = () => {
     const salvaStrength = armySelector.passives.salva;
-    const generatedResources = fightResources(salvaStrength, 0, 0);
+    const generatedResources = fightResources(salvaStrength, 0);
     batch(() => {
       dispatch(destroyEnemy(salvaStrength));
       dispatch(generateResources(generatedResources));
     });
   };
 
-  const fightResources = (gold: number, scavenged: number, souls: number) => {
+  const fightResources = (gold: number, scavenged: number) => {
     return {
       [RESOURCES.GOLD]: gold,
       [RESOURCES.SCAVENGED]: scavenged,
-      [RESOURCES.SOULS]: souls,
     };
   };
 
@@ -73,11 +72,11 @@ export default function FightPannel() {
     if (seekerMode !== SEEKER.NONE) {
       var totalGenerated = destroyedEnemies + pillagers;
       if (seekerMode === SEEKER.GOLDSEEKER) {
-        return fightResources(totalGenerated, 0, 0);
+        return fightResources(totalGenerated, 0);
       } else if (seekerMode === SEEKER.SCAVENGESEEKER) {
-        return fightResources(0, totalGenerated, 0);
+        return fightResources(0, totalGenerated);
       }
-    } else return fightResources(destroyedEnemies, pillagers, 0);
+    } else return fightResources(destroyedEnemies, pillagers);
   };
 
   const playerAttack = (
