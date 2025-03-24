@@ -11,12 +11,14 @@ interface BuildingResourceExchangeProps {
   name: string;
   resourceSpent: { [key: string]: number };
   resourceGained: { [key: string]: number };
+  location: string
 }
 
 export default function BuildingResourceExchange({
   name,
   resourceSpent,
   resourceGained,
+  location
 }: BuildingResourceExchangeProps) {
   const dispatch = useAppDispatch();
   const townSelector = useAppSelector((state) => state.town);
@@ -40,9 +42,9 @@ export default function BuildingResourceExchange({
 
   var tooltipId = "";
   if (action==="Buy"){
-    tooltipId = `tooltip-Buy-${Object.keys(resourceGained)[0]}`
+    tooltipId = `tooltip-Buy-${Object.keys(resourceGained)[0]} ${location}`
   }else {
-    tooltipId = `tooltip-Sell-${Object.keys(resourceSpent)[0]}`
+    tooltipId = `tooltip-Sell-${Object.keys(resourceSpent)[0]} ${location}`
   }
 
 

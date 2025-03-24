@@ -93,8 +93,11 @@ export default function FightPannel() {
   };
 
   const attack = (): AppThunk => async (dispatch, getState) => {
-    var fight = true;
-    var isFrontlane = false;
+    var fight: boolean = true;
+    var isFrontlane: boolean = false;
+
+    var secondAttack: boolean = false;
+    var viciousPassive: boolean = true;
     var state = getState();
 
     try {
@@ -142,12 +145,21 @@ export default function FightPannel() {
               state.army.meleeStrength,
               state.enemy.enemyForces
             );
-            if (!state.army.meleeShield)
+
+            // Damage taken Check
+            if (!state.army.meleeShield) {
               damageTaken = Math.min(
                 getMeleeCount(state.army.units),
                 state.enemy.enemyForces
               );
-            else {
+              if (viciousPassive && !secondAttack) {
+                secondAttack = true;
+              } else if (viciousPassive && secondAttack) {
+                damageTaken -= armySelector.passives.vicious;
+                viciousPassive = false;
+                secondAttack = false;
+              }
+            } else {
               damageTaken = 0;
               dispatch(updateShields({ target: "melee", value: false }));
             }

@@ -192,7 +192,7 @@ export const eventDatabase: { [key in EVENTS]: Event } = {
       type: EVENT_TYPES.SHOP,
       shops: [
         {
-          action: "buyHumans",
+          action: "buyHuman",
           resourceSpent: { [RESOURCES.GOLD]: 12 },
           resourceGained: { [RESOURCES.HUMANS]: 1 },
         },

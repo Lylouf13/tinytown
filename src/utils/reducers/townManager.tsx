@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { unitUpgradesDatabase } from "models/UnitUpgrades";
-import { UNIT_UPGRADES } from "enums/UnitUpgrades";
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { RESOURCES } from "enums/Resources";
 
@@ -11,15 +9,14 @@ interface TownState {
   previousFightResources: {
     [key: string]: number;
   };
-
   weeklyIncome: {
     [keys in RESOURCES]: number;
   };
-  unlockedUnitTalents: UNIT_UPGRADES[];
   buildings: {
     [key: string]: number;
   };
   freeForgeToken: boolean;
+  isGlitterfield: boolean;
 }
 
 const initialState: TownState = {
@@ -34,7 +31,6 @@ const initialState: TownState = {
     [RESOURCES.GOLD]: 0,
     [RESOURCES.SCAVENGED]: 0,
   },
-  unlockedUnitTalents: [],
   buildings: {
     [TOWN_BUILDINGS.FARM]: 0,
     [TOWN_BUILDINGS.MILL]: 0,
@@ -45,6 +41,7 @@ const initialState: TownState = {
     [TOWN_BUILDINGS.QUESTIONABLE_CONCLAVE]: 0,
   },
   freeForgeToken: false,
+  isGlitterfield: false,
 };
 
 export const townManagerSlice = createSlice({
@@ -55,9 +52,9 @@ export const townManagerSlice = createSlice({
     updateWeeklyIncome: (state) => {
       var weeklyIncome = {
         ...state.weeklyIncome,
-        [RESOURCES.HUMANS]: 10 + state.buildings[TOWN_BUILDINGS.FARM] * (state.buildings[TOWN_BUILDINGS.MILL] + 1),
+        [RESOURCES.HUMANS]: 10 + state.buildings[TOWN_BUILDINGS.FARM],
         [RESOURCES.GOLD]: 0 + state.buildings[TOWN_BUILDINGS.MINE] * 10,
-        [RESOURCES.SCAVENGED]: 0,
+        [RESOURCES.SCAVENGED]: state.isGlitterfield ? 0 + state.buildings[TOWN_BUILDINGS.FARM] * 1 : 0,
       };
       return {
         ...state,
@@ -89,18 +86,16 @@ export const townManagerSlice = createSlice({
         resources,
       };
     },
-    unlockUnitUpgrade: (state, action: { payload: UNIT_UPGRADES }) => {
-      if (!state.unlockedUnitTalents.includes(action.payload)) {
-        state.unlockedUnitTalents.push(action.payload);
-        unitUpgradesDatabase[action.payload].unlocked = true;
-        unitUpgradesDatabase[action.payload].effect();
-      }
-    },
+
     createBuilding: (state, action: { payload: TOWN_BUILDINGS }) => {
       console.log(action.payload);
       if (!state.buildings[action.payload]) {
         state.buildings[action.payload] = 1;
       } else ++state.buildings[action.payload];
+    },
+    
+    setGlitterfield: (state, action: { payload: boolean }) => {
+      state.isGlitterfield = action.payload
     },
 
     /// Event reducers
@@ -136,10 +131,11 @@ export const townManagerSlice = createSlice({
     },
     updateForgeToken: (state, action: { payload: boolean }) => {
       state.freeForgeToken = action.payload;
-    }
+    },
+
   },
 });
 
-export const { generateResources, updateWeeklyIncome, unlockUnitUpgrade, createBuilding, spendResources } = townManagerSlice.actions;
+export const { generateResources, updateWeeklyIncome, createBuilding, spendResources, setGlitterfield } = townManagerSlice.actions;
 
 export default townManagerSlice.reducer;

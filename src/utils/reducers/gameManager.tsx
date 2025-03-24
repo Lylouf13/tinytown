@@ -62,7 +62,7 @@ const timelineRoll = () => {
 const eventRoll = () => {
   var eventKeys: string[] = Object.keys(EVENTS);
   return eventKeys[randomInt(1, eventKeys.length - 1)] as EVENTS;
-  // return EVENTS.THE_STARS;
+  //  return EVENTS.HUMAN_SELLER;
 };
 
 const bossRoll = () => {
@@ -96,8 +96,10 @@ export const gameManagerSlice = createSlice({
       timelineState =
         state.timelineState < state.timelineDuration ? state.timelineState + 1 : 1;
 
-      if (state.timeline[timelineState - 1] === WEEK_TYPES.EVENT) {
-        currentEvent = eventRoll();
+      if (state.timeline[timelineState - 1] !== WEEK_TYPES.NORMAL) {
+        if (state.timeline[timelineState - 1] === WEEK_TYPES.EVENT) {
+          currentEvent = eventRoll();
+        }
         eventConsumed = false;
       }
 

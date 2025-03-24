@@ -1,16 +1,19 @@
 import "./forgeRow.scss";
 
 import React from "react";
+import { useAppSelector } from "app/hooks";
 import { UNIT_UPGRADES } from "enums/UnitUpgrades";
 import { UNIT_TYPES } from "enums/UnitTypes";
 import { unitDatabase } from "models/Units";
 
-import ForgeUpgrades from "../forgeUpgrades/ForgeUpgrades";
+import ForgeNode from "../forgeNode/ForgeNode";
 
 interface ForgeRowProps {
   unit: string;
 }
 export default function ForgeRow({ unit }: ForgeRowProps) {
+
+  const armySelector = useAppSelector((state) => state.army);
   const unitData = unitDatabase[unit];
 
   var unitUpgrades: UNIT_UPGRADES[] = [];
@@ -67,7 +70,7 @@ export default function ForgeRow({ unit }: ForgeRowProps) {
       <div className="forgeRow__upgrades">
         {unitUpgrades.map((unitUpgrade: UNIT_UPGRADES, index) => (
           <React.Fragment key={unitUpgrade}>
-            <ForgeUpgrades unitUpgrade={unitUpgrade} key={unitUpgrade} />
+            <ForgeNode unitUpgrade={unitUpgrade} locked={index !== 0 ? armySelector.unlockedUnitUpgrades.includes(unitUpgrades[index-1]) : true} key={unitUpgrade} />
             {index < 4 && (
               <span className="forgeRow__link" key={`${unitUpgrade}-link`}></span>
             )}

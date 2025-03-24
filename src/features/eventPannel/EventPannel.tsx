@@ -56,7 +56,7 @@ export default function EventPannel() {
         return (
           <div>
             {effect.shops.map((shop: ShopAction) => (
-              <BuildingResourceExchange name={shop.action} resourceSpent={shop.resourceSpent} resourceGained={shop.resourceGained} />
+              <BuildingResourceExchange location="event"name={shop.action} resourceSpent={shop.resourceSpent} resourceGained={shop.resourceGained} />
             ))}
           </div>
         );

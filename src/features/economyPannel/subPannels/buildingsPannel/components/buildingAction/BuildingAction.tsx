@@ -16,7 +16,7 @@ export default function BuildingAction({
       <img
         onClick={handleClick}
         className="buildingAction__icon"
-        src={`assets/icons/actions/${name}${active ? "-active" : ""}.png`}
+        src={`assets/icons/spells/${name}${active ? "-active" : ""}.png`}
         alt={`buildingAction-${name}`}
       />
     </button>
