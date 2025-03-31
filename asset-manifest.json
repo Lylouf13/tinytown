@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.e17ff357.css",
-    "main.js": "/static/js/main.c16ca7d2.js",
-    "index.html": "/index.html",
-    "main.e17ff357.css.map": "/static/css/main.e17ff357.css.map",
-    "main.c16ca7d2.js.map": "/static/js/main.c16ca7d2.js.map"
+    "main.css": "/tinytown/static/css/main.e17ff357.css",
+    "main.js": "/tinytown/static/js/main.90dcb094.js",
+    "index.html": "/tinytown/index.html",
+    "main.e17ff357.css.map": "/tinytown/static/css/main.e17ff357.css.map",
+    "main.90dcb094.js.map": "/tinytown/static/js/main.90dcb094.js.map"
   },
   "entrypoints": [
     "static/css/main.e17ff357.css",
-    "static/js/main.c16ca7d2.js"
+    "static/js/main.90dcb094.js"
   ]
 }
