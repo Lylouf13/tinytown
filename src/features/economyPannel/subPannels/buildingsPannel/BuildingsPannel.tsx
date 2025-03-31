@@ -1,6 +1,6 @@
 import "./buildingsPannel.scss";
 import { useState } from "react";
-import { useAppSelector,useAppDispatch } from "app/hooks";
+import { useAppSelector, useAppDispatch } from "app/hooks";
 
 import { TOWN_BUILDINGS } from "enums/TownBuildings";
 import { RESOURCES } from "enums/Resources";
@@ -8,7 +8,6 @@ import { RESOURCES } from "enums/Resources";
 import BuildingNode from "./components/buildingNode/BuildingNode";
 import BuildingAction from "./components/buildingAction/BuildingAction";
 import BuildingResourceExchange from "./components/buildingResourceExchange/BuildingResourceExchange";
-import TBI from "components/dev/TBI";
 
 import { updateSpell, updateStats } from "utils/reducers/armyManager";
 import { setGlitterfield, updateWeeklyIncome } from "utils/reducers/townManager";
@@ -20,22 +19,21 @@ interface BuildingsPannelProps {
 
 export default function BuildingsPannel({ active = false }: BuildingsPannelProps) {
   const [selectedMageSpell, setSelectedMageSpell] = useState(SPELLS.NONE);
-  
+
   const townSelector = useAppSelector((state) => state.town);
   const dispatch = useAppDispatch();
 
   const handleClick = (spell: SPELLS) => {
     setSelectedMageSpell(spell);
+    dispatch(updateSpell(spell));
+    dispatch(updateStats());
+
     if (spell === SPELLS.GLITTERFIELD) {
-      dispatch(setGlitterfield(true))
-      dispatch(updateWeeklyIncome())
+      dispatch(setGlitterfield(true));
+      dispatch(updateWeeklyIncome());
+    } else {
+      dispatch(setGlitterfield(false));
     }
-    else{
-      dispatch(setGlitterfield(false))
-      dispatch(updateSpell(spell));
-      dispatch(updateStats())
-    }
-    
   };
 
   return (
@@ -96,27 +94,32 @@ export default function BuildingsPannel({ active = false }: BuildingsPannelProps
       </div>
       <h3 className="buildingsPannel__subtitle">Mage Quarter</h3>
       <div className="buildingsPannel__section">
-        <BuildingNode building={TOWN_BUILDINGS.MAGE_ACADEMY} />
-        <BuildingAction
-          name={"fireHeart"}
-          active={selectedMageSpell === SPELLS.FIREHEART}
-          handleClick={() => handleClick(SPELLS.FIREHEART)}
-        />
-                <BuildingAction
-          name={"stormstrike"}
-          active={selectedMageSpell === SPELLS.STORMSTRIKE}
-          handleClick={() => handleClick(SPELLS.STORMSTRIKE)}
-        />
-        <BuildingAction
-          name={"glitterFields"}
-          active={selectedMageSpell === SPELLS.GLITTERFIELD}
-          handleClick={() => handleClick(SPELLS.GLITTERFIELD)}
-        />
+        {townSelector.buildings[TOWN_BUILDINGS.MAGE_ACADEMY] !== 0 ? (
+          <div className="buildingsPannel__magePannel">
+            <BuildingAction
+              name={SPELLS.FIREHEART}
+              active={selectedMageSpell === SPELLS.FIREHEART}
+              handleClick={() => handleClick(SPELLS.FIREHEART)}
+            />
+            <BuildingAction
+              name={SPELLS.STORMSTRIKE}
+              active={selectedMageSpell === SPELLS.STORMSTRIKE}
+              handleClick={() => handleClick(SPELLS.STORMSTRIKE)}
+            />
+            <BuildingAction
+              name={SPELLS.GLITTERFIELD}
+              active={selectedMageSpell === SPELLS.GLITTERFIELD}
+              handleClick={() => handleClick(SPELLS.GLITTERFIELD)}
+            />
+          </div>
+        ) : (
+          <BuildingNode building={TOWN_BUILDINGS.MAGE_ACADEMY} />
+        )}
       </div>
-      <div className="buildingsPannel__section">
+      {/* <div className="buildingsPannel__section">
         <BuildingNode building={TOWN_BUILDINGS.QUESTIONABLE_CONCLAVE} />
         <TBI />
-      </div>
+      </div> */}
     </div>
   );
 }

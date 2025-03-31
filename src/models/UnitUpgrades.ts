@@ -17,7 +17,7 @@ export interface Upgrade {
 export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   [UNIT_UPGRADES.BERSERK_1]: {
     name: "Iron weapons",
-    description: "increases strength by 1",
+    description: "Berserks : +1 Strength",
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -30,7 +30,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.BERSERK_2]: {
     name: "For the ancients",
-    description: "Melee pack keeps fallen berserks' strength for this fight",
+    description: "Melee pack keeps half of fallen berserks' strength for this fight",
     requirements: [UNIT_UPGRADES.BERSERK_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -43,7 +43,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.BERSERK_3]: {
     name: "Boiled leather",
-    description: "+1 Def",
+    description: "Berserks : +1 Defense",
     requirements: [UNIT_UPGRADES.BERSERK_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -56,7 +56,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.BERSERK_4]: {
     name: "Improved dual wield",
-    description: "+1 Strength",
+    description: "Berserks : +1 Strength",
     requirements: [UNIT_UPGRADES.BERSERK_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -81,7 +81,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.BOWER_1]: {
     name: "Tempered arrowheads",
-    description: "+1 strength",
+    description: "Bowers : +1 Strength",
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -105,7 +105,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   },
   [UNIT_UPGRADES.BOWER_3]: {
     name: "Close quarters",
-    description: "+1 def",
+    description: "Bowers : +1 Defense",
     requirements: [UNIT_UPGRADES.BOWER_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -117,7 +117,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   },
   [UNIT_UPGRADES.BOWER_4]: {
     name: "Recurved bows",
-    description: "+1 Strength",
+    description: "Bowers : +1 Strength",
     requirements: [UNIT_UPGRADES.BOWER_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -142,7 +142,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.GUARDIAN_1]: {
     name: "Tempered Shields",
-    description: "+1 Def",
+    description: "Guardians : +1 Defense",
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -166,7 +166,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
   },
   [UNIT_UPGRADES.GUARDIAN_3]: {
     name: "Wrecking Crew",
-    description: "1 more DEF !!!",
+    description: "Guardians : +1 Defense",
     requirements: [UNIT_UPGRADES.GUARDIAN_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -177,8 +177,8 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
   },
   [UNIT_UPGRADES.GUARDIAN_4]: {
-    name: "TBD G4",
-    description: "1 more DEF !!!",
+    name: "Spiked shields",
+    description: "Guardians : +1 Strength",
     requirements: [UNIT_UPGRADES.GUARDIAN_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -186,11 +186,11 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].strength += 1),
   },
   [UNIT_UPGRADES.GUARDIAN_5]: {
     name: "Frontline Veteran",
-    description: "1 more DEF !!!",
+    description: "Destroyed guardians become berserks",
     requirements: [UNIT_UPGRADES.GUARDIAN_4],
     cost: {
       [RESOURCES.HUMANS]: 0,
@@ -198,6 +198,6 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].addPassive(UNIT_PASSIVES.VETERAN)),
   },
 };

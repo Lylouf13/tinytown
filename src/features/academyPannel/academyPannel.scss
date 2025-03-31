@@ -1,4 +1,5 @@
 @use "utils/style/mixins.scss";
+@use "utils/style/variables.scss";
 
 
 .academy {
@@ -56,5 +57,10 @@
     justify-content: center;
     margin-bottom: 50px;
     gap: 15px;
+  }
+  &__forge_subtext{
+    background-color: variables.$primary-color-light;
+    border-bottom: 2px solid variables.$secondary-color-dark;
+    border-top: 2px solid variables.$secondary-color-dark;
   }
 }

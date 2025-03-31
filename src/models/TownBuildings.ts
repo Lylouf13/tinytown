@@ -19,16 +19,16 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
       [RESOURCES.SCAVENGED]: 10,
     },
     count: 0,
-    maxCount: 100000000000,
+    maxCount: 25,
   },
 
   [TOWN_BUILDINGS.FORGE]: {
     name: "Forge",
-    description: "Unlocks Talents System",
+    description: "Unlocks powerful unit upgrades",
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 500,
-      [RESOURCES.SCAVENGED]: 150,
+      [RESOURCES.GOLD]: 50,
+      [RESOURCES.SCAVENGED]: 50,
     },
     count: 0,
     maxCount: 1,
@@ -36,7 +36,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
 
   [TOWN_BUILDINGS.MILL]: {
     name: "Mill",
-    description: "Buffs farms",
+    description: "Removes the farm cap of 25",
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 300,
@@ -48,45 +48,45 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
 
   [TOWN_BUILDINGS.MINE]: {
     name: "Mine",
-    description: "Gives regular gold income",
+    description: "Gives weekly gold income (+10 / Mine) ",
     cost: {
       [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 10,
     },
     count: 0,
-    maxCount: 100000000,
+    maxCount: 100,
   },
 
   [TOWN_BUILDINGS.TOWER]: {
     name: "Tower",
-    description: "Adds permanent defense",
+    description: "Adds permanent ranged strength (+5 / tower)",
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 0,
       [RESOURCES.SCAVENGED]: 30,
     },
     count: 0,
-    maxCount: 25,
+    maxCount: 10,
   },
   [TOWN_BUILDINGS.MARKET]: {
     name: "Market",
     description: "Buy and sell resources at the market",
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 0,
+      [RESOURCES.GOLD]: 25,
+      [RESOURCES.SCAVENGED]: 25,
     },
     count: 0,
     maxCount: 1,
   },
   [TOWN_BUILDINGS.MAGE_ACADEMY]: {
     name: "Mage Academy",
-    description: "Send powerful spells to buff your army for the next fight",
+    description: "Send powerful spells to buff your army or generate resources",
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 0,
-      [RESOURCES.SCAVENGED]: 30,
+      [RESOURCES.GOLD]: 50,
+      [RESOURCES.SCAVENGED]: 0,
     },
     count: 0,
     maxCount: 1,

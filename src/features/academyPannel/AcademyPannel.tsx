@@ -1,14 +1,15 @@
 import { useAppSelector } from "app/hooks";
 import { unitDatabase } from "models/Units";
+import { TOWN_BUILDINGS } from "enums/TownBuildings";
 
 import UnitTrainingRow from "./components/unitTrainingRow/UnitTrainingRow";
 
 import "./academyPannel.scss";
-import TBI from "components/dev/TBI";
 import ForgePannel from "features/forgePannel/ForgePannel";
 
 export default function AcademyPannel() {
   const armySelector = useAppSelector((state) => state.army);
+  const townSelector = useAppSelector((state) => state.town);
 
   return (
     <div className="academy">
@@ -64,8 +65,11 @@ export default function AcademyPannel() {
         </div>
 
         <h2 className="academy__subtitle">Forge</h2>
-        <ForgePannel />
-        <TBI />
+        {townSelector.buildings[TOWN_BUILDINGS.FORGE] !== 0 ? (
+          <ForgePannel />
+        ) : (
+          <h3 className="academy__forge_subtext">Build a forge to upgrade units</h3>
+        )}
       </div>
       <img className="town__banner" src="assets/banners/BannerBottom.png" alt="banner" />
     </div>

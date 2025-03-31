@@ -27,10 +27,12 @@ interface ArmyState {
   totalDefense: number;
   meleeStrength: number;
   rangedStrength: number;
+
   meleeShield: boolean;
   rangedShield: boolean;
   seeker: SEEKER;
   activeSpell: SPELLS;
+  vengefulStrength: number;
 }
 
 const initialState: ArmyState = {
@@ -55,10 +57,12 @@ const initialState: ArmyState = {
   totalDefense: 0,
   meleeStrength: 0,
   rangedStrength: 0,
+
   meleeShield: false,
   rangedShield: false,
   seeker: SEEKER.NONE,
   activeSpell: SPELLS.NONE,
+  vengefulStrength: 0,
 };
 
 // Takes current passives list, specified unit's passives and quantity to modify passives count accordingly
@@ -142,7 +146,7 @@ export const createUnit = (unit: string, quantity: number, state: ArmyState) => 
 
   var totalStrength = modifyTotalStrength(units, state.activeSpell);
   var totalDefense = modifyTotalDefense(units);
-  var meleeStrength = modifyMeleeStrength(units, state.activeSpell);
+  var meleeStrength = (modifyMeleeStrength(units, state.activeSpell) + state.vengefulStrength);
   var rangedStrength = modifyRangedStrength(units, state.activeSpell);
 
   return {
@@ -163,8 +167,8 @@ export const armyManagerSlice = createSlice({
     updateStats: (state) => {
       const totalDefense = modifyTotalDefense(state.units);
       const totalStrength = modifyTotalStrength(state.units, state.activeSpell);
-      const meleeStrength = modifyMeleeStrength(state.units, state.activeSpell);
-      const rangedStrength = modifyRangedStrength(state.units, state.activeSpell);
+      const meleeStrength = (modifyMeleeStrength(state.units, state.activeSpell)  + state.vengefulStrength);
+      const rangedStrength = (modifyRangedStrength(state.units, state.activeSpell) + state.fortifications[TOWN_BUILDINGS.TOWER]*5);
 
       return {
         ...state,
@@ -186,6 +190,7 @@ export const armyManagerSlice = createSlice({
       var totalDefense = state.totalDefense;
       var meleeStrength = state.meleeStrength;
       var rangedStrength = state.rangedStrength;
+      var vengefulStrength = state.vengefulStrength;
 
       var damageTaken = action.payload.damageTaken! || action.payload;
       var attackType: string = action.payload.attackType || ATTACK_TYPES.NORMAL;
@@ -202,13 +207,18 @@ export const armyManagerSlice = createSlice({
         currentDestructionOrder = destructionOrder.reverse();
       } else currentDestructionOrder = destructionOrder;
 
-      action.payload -= state.fortifications[TOWN_BUILDINGS.TOWER] * 5;
 
       // Removes units, decrementing passives as necessary
       for (const unitDestroyed of currentDestructionOrder) {
         while (damageTaken > 0 && units[unitDestroyed] > 0) {
           units[unitDestroyed]--;
           lostUnits[unitDestroyed] = (lostUnits[unitDestroyed] || 0) + 1;
+          if (unitDatabase[unitDestroyed].passives.includes(UNIT_PASSIVES.VENGEFUL)) {
+            vengefulStrength += Math.floor(unitDatabase[unitDestroyed].strength / 2);
+          }
+          if(unitDatabase[unitDestroyed].passives.includes(UNIT_PASSIVES.VETERAN)){
+            units[UNIT_TYPES.BERSERK] += 1
+          }
           passives = modifyPassives(passives, unitDatabase[unitDestroyed].passives, -1);
           if (attackType === ATTACK_TYPES.CRUSHING) {
             damageTaken -= 1;
@@ -217,9 +227,8 @@ export const armyManagerSlice = createSlice({
         if (damageTaken <= 0) {
           totalStrength = modifyTotalStrength(units, state.activeSpell);
           totalDefense = modifyTotalDefense(units);
-          meleeStrength = modifyMeleeStrength(units, state.activeSpell);
+          meleeStrength = (modifyMeleeStrength(units, state.activeSpell) + vengefulStrength);
           rangedStrength = modifyRangedStrength(units, state.activeSpell);
-
           break;
         }
       }
@@ -232,7 +241,14 @@ export const armyManagerSlice = createSlice({
         totalDefense,
         meleeStrength,
         rangedStrength,
+        vengefulStrength,
         passives,
+      };
+    },
+    resetVengefulPassive: (state) => {
+      return {
+        ...state,
+        vengefulStrength: 0,
       };
     },
 
@@ -249,6 +265,12 @@ export const armyManagerSlice = createSlice({
         ...state,
         activeSpell: action.payload,
       };
+    },
+
+    createTower: (state, action: { payload: TOWN_BUILDINGS }) => {
+      if (!state.fortifications[action.payload]) {
+        state.fortifications[action.payload] = 1;
+      } else ++state.fortifications[action.payload];
     },
     /// Event Reducers
     ///// NEED TO REFACTOR THE WAY I CREATE UNITS
@@ -303,8 +325,10 @@ export const {
   destroyUnits,
   updateShields,
   unlockUnitUpgrade,
+  createTower,
   updateSeeker,
   updateSpell,
+  resetVengefulPassive,
 } = armyManagerSlice.actions;
 
 export default armyManagerSlice.reducer;

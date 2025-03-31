@@ -1,7 +1,9 @@
+import { SPELLS } from "enums/Spells";
 import "./buildingAction.scss";
+import SpellTooltip from "components/tooltip/spellTooltip/SpellTooltip";
 
 interface BuildingActionProps {
-  name: string;
+  name: SPELLS;
   active?: boolean;
   handleClick?: () => void;
 }
@@ -12,13 +14,16 @@ export default function BuildingAction({
   handleClick,
 }: BuildingActionProps) {
   return (
-    <button className="buildingAction">
-      <img
-        onClick={handleClick}
-        className="buildingAction__icon"
-        src={`assets/icons/spells/${name}${active ? "-active" : ""}.png`}
-        alt={`buildingAction-${name}`}
-      />
-    </button>
+    <>
+      <button className="buildingAction" data-tooltip-id={`tooltip-${name}`}>
+        <img
+          onClick={handleClick}
+          className="buildingAction__icon"
+          src={`assets/icons/spells/${name.toLowerCase()}${active ? "-active" : ""}.png`}
+          alt={`buildingAction-${name}`}
+        />
+      </button>
+      <SpellTooltip spell={name} />
+    </>
   );
 }

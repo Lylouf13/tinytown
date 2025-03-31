@@ -8,4 +8,5 @@ export enum UNIT_PASSIVES {
 
   SALVA = "salva",
   PREPARED = "prepared",
+  VETERAN = "veteran",
 }

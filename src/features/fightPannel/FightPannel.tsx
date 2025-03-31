@@ -8,8 +8,10 @@ import {
   destroyUnits,
   getMeleeCount,
   getRangedCount,
+  resetVengefulPassive,
   updateSeeker,
   updateShields,
+  updateStats,
 } from "utils/reducers/armyManager";
 import {
   updateFightState,
@@ -39,12 +41,15 @@ export default function FightPannel() {
 
   const nextWeek = () => {
     batch(() => {
+      dispatch(resetVengefulPassive());
       dispatch(updateFightState(FIGHT_STATE.BEFORE));
       dispatch(updateGameState(GAME_STATE.PREPARATION));
+
       dispatch(setNextWeek());
       dispatch(generateResources(townSelector.weeklyIncome));
       dispatch(generateEnemy(gameSelector.week));
       dispatch(updateSeeker(SEEKER.NONE));
+      dispatch(updateStats());
     });
   };
 
@@ -142,7 +147,7 @@ export default function FightPannel() {
 
             state = getState();
             destroyedEnemies = Math.min(
-              state.army.meleeStrength,
+              state.army.meleeStrength + state.army.vengefulStrength,
               state.enemy.enemyForces
             );
 

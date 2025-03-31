@@ -54,7 +54,10 @@ const timelineRoll = () => {
       }
       badLuckProtection += 0.3;
       timeline.push(weekTypes[roll] as WEEK_TYPES);
-    } else timeline.push(WEEK_TYPES.BOSS);
+    } 
+    // REPLACE WHEN IMPLEMENTING BOSSES
+    // else timeline.push(WEEK_TYPES.BOSS);
+    else timeline.push(WEEK_TYPES.NORMAL);
   }
   return timeline;
 };

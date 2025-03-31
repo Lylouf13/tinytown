@@ -2,8 +2,43 @@
 @use "utils/style/mixins.scss";
 
 .buildingNode{
-  @include mixins.iconButton;
-  border: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+  background-color: variables.$primary-color;
+  border: 1px solid variables.$secondary-color-dark;
+  width:80%;
+  transition: all 0.5s;
+
+  &:last-child{
+    margin-bottom: 15px;
+  }
+  &:hover{
+    cursor: pointer;
+    background-color: variables.$secondary-color-dark;
+    transition: all 0.5s;
+  }
+
+  &__button{
+  
+    @include mixins.iconButton;
+  }
+  &__name{
+    color: variables.$secondary-color;
+    text-align: center;
+    justify-self:start;
+
+    margin: 0;
+    padding-left: 20px;
+  }
+  &__count{
+    color: variables.$secondary-color;
+    font-size: 18px;
+    justify-self:end;
+    margin: 0;
+    padding-left: 20px;
+  }
   &__icon{
     border: none;
   }
