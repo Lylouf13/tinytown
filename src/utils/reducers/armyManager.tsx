@@ -147,7 +147,7 @@ export const createUnit = (unit: string, quantity: number, state: ArmyState) => 
   var totalStrength = modifyTotalStrength(units, state.activeSpell);
   var totalDefense = modifyTotalDefense(units);
   var meleeStrength = (modifyMeleeStrength(units, state.activeSpell) + state.vengefulStrength);
-  var rangedStrength = modifyRangedStrength(units, state.activeSpell);
+  var rangedStrength = modifyRangedStrength(units, state.activeSpell)  + state.fortifications[TOWN_BUILDINGS.TOWER]*5;
 
   return {
     ...state,
