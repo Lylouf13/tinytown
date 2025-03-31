@@ -28,7 +28,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 50,
-      [RESOURCES.SCAVENGED]: 50,
+      [RESOURCES.SCAVENGED]: 0,
     },
     count: 0,
     maxCount: 1,
@@ -48,7 +48,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
 
   [TOWN_BUILDINGS.MINE]: {
     name: "Mine",
-    description: "Gives weekly gold income (+10 / Mine) ",
+    description: "Gives weekly gold income (+7 / Mine) ",
     cost: {
       [RESOURCES.HUMANS]: 2,
       [RESOURCES.GOLD]: 0,
@@ -86,7 +86,7 @@ export const townBuildingDatabase: { [key in TOWN_BUILDINGS]: Building } = {
     cost: {
       [RESOURCES.HUMANS]: 0,
       [RESOURCES.GOLD]: 50,
-      [RESOURCES.SCAVENGED]: 0,
+      [RESOURCES.SCAVENGED]: 20,
     },
     count: 0,
     maxCount: 1,

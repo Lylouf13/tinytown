@@ -23,7 +23,7 @@ export const enemyArmiesDatabase: { [key in ENEMY_ARMIES]: EnemyArmies } = {
     name: "Hill Giants",
     enemyType: ENEMY_ARMIES.HILL_GIANTS,
     attackType: ATTACK_TYPES.CRUSHING,
-    forcesMultiplier: 0.4,
+    forcesMultiplier: 0.7,
     description: "The ground shakes, as misty figures of stone and earth rise from the ground.",
     effect: "Ignores army defense",
   },
@@ -32,7 +32,7 @@ export const enemyArmiesDatabase: { [key in ENEMY_ARMIES]: EnemyArmies } = {
     name: "Twisted Satyrs",
     enemyType: ENEMY_ARMIES.TWISTED_SATYRS,
     attackType: ATTACK_TYPES.TWISTED,
-    forcesMultiplier: 0.7,
+    forcesMultiplier: 0.9,
     description: "The roots are moving, the swamp howls a wicked song, the satyrs are at our doors.",
     effect: "Ambushes ranged pack first"
   },

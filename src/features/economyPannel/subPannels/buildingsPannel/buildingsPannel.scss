@@ -23,11 +23,16 @@
       gap: 0;
       display: flex;
       flex-direction: row;
+    }
+    &-marketUnlocked{
+      gap: 0;
+      display: flex;
+      flex-direction: row;
       padding: 15px;
     }
   }
   &__marketPannel {
-    width: 45%;
+    width: 50%;
     border: 2px solid variables.$secondary-color-dark;
 
     &__title {

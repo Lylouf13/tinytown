@@ -22,8 +22,9 @@ export const enemyManagerSlice = createSlice({
   reducers: {
     generateEnemy: (state, action) => {
       var enemyType = enemyRoll()
-
-      var enemyForces = state.enemyForces + state.weeklyForces * (action.payload + 1) + randomInt(0, action.payload);
+      var globalMultiplier = (action.payload/4 +1)
+      console.log(globalMultiplier)
+      var enemyForces = state.enemyForces + state.weeklyForces * (action.payload + 1) + (randomInt(action.payload/3, action.payload)*globalMultiplier);
       enemyForces = Math.floor(enemyArmiesDatabase[enemyType].forcesMultiplier * enemyForces);
       return {
         ...state,

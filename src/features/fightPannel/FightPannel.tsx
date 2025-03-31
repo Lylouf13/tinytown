@@ -130,7 +130,7 @@ export default function FightPannel() {
               state.enemy.enemyType === ENEMY_ARMIES.TWISTED_SATYRS ||
               state.army.meleeStrength === 0
             ) {
-              if (state.army.rangedStrength !== 0)
+              if (getRangedCount(state.army.units) !== 0)
                 dispatch(updateFightState(FIGHT_STATE.ATTACK_RANGED));
               else if (state.army.meleeStrength !== 0)
                 dispatch(updateFightState(FIGHT_STATE.ATTACK_MELEE));

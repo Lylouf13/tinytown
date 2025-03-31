@@ -1,11 +1,13 @@
 import "./forgeNode.scss";
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useState } from "react";
 
 import { UNIT_UPGRADES } from "enums/UnitUpgrades";
 import { unlockUnitUpgrade } from "utils/reducers/armyManager";
 import { unitUpgradesDatabase } from "models/UnitUpgrades";
 import UpgradeTooltip from "components/tooltip/talentTooltip/UpgradeTooltip";
+import { checkResources } from "utils/resources/checkResources";
+import { spendResources } from "utils/reducers/townManager";
 
 type ForgeNodeProps = {
   unitUpgrade: UNIT_UPGRADES;
@@ -15,10 +17,14 @@ export default function ForgeNode({ unitUpgrade, locked }: ForgeNodeProps) {
   const [toSell, setToSell] = useState(true);
   const upgradeData = unitUpgradesDatabase[unitUpgrade];
   const dispatch = useAppDispatch();
+  const townSelector = useAppSelector((state) => state.town);
   const onClickHandler = () => {
-    if (locked) {
-      dispatch(unlockUnitUpgrade(unitUpgrade));
-      setToSell(false);
+    if (locked && toSell) {
+      if(checkResources(townSelector.resources, upgradeData.cost)) {
+        dispatch(unlockUnitUpgrade(unitUpgrade));
+        dispatch(spendResources(upgradeData.cost));
+        setToSell(false);
+      }
     }
   };
   return (

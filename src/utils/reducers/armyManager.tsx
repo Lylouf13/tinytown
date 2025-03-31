@@ -189,7 +189,7 @@ export const armyManagerSlice = createSlice({
       var totalStrength = state.totalStrength;
       var totalDefense = state.totalDefense;
       var meleeStrength = state.meleeStrength;
-      var rangedStrength = state.rangedStrength;
+      var rangedStrength = state.rangedStrength  + state.fortifications[TOWN_BUILDINGS.TOWER]*5;
       var vengefulStrength = state.vengefulStrength;
 
       var damageTaken = action.payload.damageTaken! || action.payload;
@@ -228,7 +228,7 @@ export const armyManagerSlice = createSlice({
           totalStrength = modifyTotalStrength(units, state.activeSpell);
           totalDefense = modifyTotalDefense(units);
           meleeStrength = (modifyMeleeStrength(units, state.activeSpell) + vengefulStrength);
-          rangedStrength = modifyRangedStrength(units, state.activeSpell);
+          rangedStrength = modifyRangedStrength(units, state.activeSpell)  + state.fortifications[TOWN_BUILDINGS.TOWER]*5;
           break;
         }
       }

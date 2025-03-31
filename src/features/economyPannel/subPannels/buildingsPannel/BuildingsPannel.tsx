@@ -41,7 +41,7 @@ export default function BuildingsPannel({ active = false }: BuildingsPannelProps
       <h3 className="buildingsPannel__subtitle">Countryside</h3>
       <div className="buildingsPannel__section">
         <BuildingNode building={TOWN_BUILDINGS.FARM} />
-        <BuildingNode building={TOWN_BUILDINGS.MILL} />
+        {/* <BuildingNode building={TOWN_BUILDINGS.MILL} /> */}
         <BuildingNode building={TOWN_BUILDINGS.MINE} />
       </div>
       <h3 className="buildingsPannel__subtitle">Military Quarter</h3>
@@ -50,7 +50,13 @@ export default function BuildingsPannel({ active = false }: BuildingsPannelProps
         <BuildingNode building={TOWN_BUILDINGS.TOWER} />
       </div>
       <h3 className="buildingsPannel__subtitle">The Market</h3>
-      <div className="buildingsPannel__section buildingsPannel__section-market">
+      <div
+        className={`buildingsPannel__section buildingsPannel__section${
+          townSelector.buildings[TOWN_BUILDINGS.MARKET] === 0
+            ? "-market"
+            : "-marketUnlocked"
+        }`}
+      >
         {townSelector.buildings[TOWN_BUILDINGS.MARKET] !== 0 ? (
           <>
             <div className="buildingsPannel__marketPannel">

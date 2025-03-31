@@ -21,7 +21,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 20,
+      [RESOURCES.GOLD]: 100,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -34,7 +34,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BERSERK_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 50,
+      [RESOURCES.GOLD]: 250,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -47,7 +47,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BERSERK_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 100,
+      [RESOURCES.GOLD]: 400,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -60,7 +60,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BERSERK_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 150,
+      [RESOURCES.GOLD]: 800,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -72,7 +72,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BERSERK_4],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 200,
+      [RESOURCES.GOLD]: 1000,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -85,7 +85,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 20,
+      [RESOURCES.GOLD]: 100,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -97,7 +97,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BOWER_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 50,
+      [RESOURCES.GOLD]: 250,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -109,7 +109,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BOWER_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 100,
+      [RESOURCES.GOLD]: 400,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -121,7 +121,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BOWER_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 150,
+      [RESOURCES.GOLD]: 800,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -133,7 +133,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.BOWER_4],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 200,
+      [RESOURCES.GOLD]: 1000,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -142,15 +142,15 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
 
   [UNIT_UPGRADES.GUARDIAN_1]: {
     name: "Tempered Shields",
-    description: "Guardians : +1 Defense",
+    description: "Guardians : +2 Defense",
     requirements: [],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 20,
+      [RESOURCES.GOLD]: 100,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 2),
   },
   [UNIT_UPGRADES.GUARDIAN_2]: {
     name: "Scavengers",
@@ -158,23 +158,23 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.GUARDIAN_1],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 50,
+      [RESOURCES.GOLD]: 250,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].addPassive(UNIT_PASSIVES.PILLAGER)),
   },
   [UNIT_UPGRADES.GUARDIAN_3]: {
     name: "Wrecking Crew",
-    description: "Guardians : +1 Defense",
+    description: "Guardians : +3 Defense",
     requirements: [UNIT_UPGRADES.GUARDIAN_2],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 100,
+      [RESOURCES.GOLD]: 400,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
-    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 1),
+    effect: () => (unitDatabase[UNIT_TYPES.GUARDIAN].defense += 3),
   },
   [UNIT_UPGRADES.GUARDIAN_4]: {
     name: "Spiked shields",
@@ -182,7 +182,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.GUARDIAN_3],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 150,
+      [RESOURCES.GOLD]: 800,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
@@ -194,7 +194,7 @@ export const unitUpgradesDatabase: { [key in UNIT_UPGRADES]: Upgrade } = {
     requirements: [UNIT_UPGRADES.GUARDIAN_4],
     cost: {
       [RESOURCES.HUMANS]: 0,
-      [RESOURCES.GOLD]: 200,
+      [RESOURCES.GOLD]: 1000,
       [RESOURCES.SCAVENGED]: 0,
     },
     unlocked: false,
