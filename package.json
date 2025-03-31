@@ -1,6 +1,7 @@
 {
   "name": "tinytown",
   "version": "0.1.0",
+  "homepage": "https://lylouf13.github.io/tinytown",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
